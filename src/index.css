@@ -31,3 +31,30 @@ body {
     overflow-x: hidden;
     /* Отключает горизонтальную прокрутку */
 }
+
+.shimmer-button {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shimmer-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%; /* Начинаем анимацию за левой границей кнопки */
+    width: 200%; /* Достаточно широкая полоса для покрытия кнопки */
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+    transform: skewX(-30deg);
+    animation: shimmer 2s infinite; /* Настройте скорость, если нужно */
+  }
+  
+  @keyframes shimmer {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+  

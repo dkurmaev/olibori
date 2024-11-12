@@ -10,42 +10,43 @@ const HomeSlider = () => {
 
   return (
     <section
-    id="home"
-    className="relative w-full h-screen bg-cover bg-center flex items-center justify-center"
-    style={{
+      id="home"
+      className="relative w-full h-fit bg-cover bg-center flex items-center justify-center"
+      style={{
         backgroundImage: "url('/images/main_page.jpg')",
-    }}
->
-      {/* Темный фильтр поверх баннера */}
+        backgroundAttachment: "fixed", // Parallax effect
+      }}
+    >
+      {/* Dark overlay for the banner */}
       <div
         className={`absolute inset-0 bg-black bg-opacity-50 transition-all duration-500 ${
           isModalOpen ? "backdrop-blur-sm" : ""
         }`}
       ></div>
 
-      {/* Текст с анимацией */}
+      {/* Animated text */}
       <div
-        className={`relative z-10 text-center transition-all duration-500 ${
+        className={`relative z-10 text-center transition-all my-52 md:my-64 sm:my-24 duration-500 ${
           isModalOpen ? "blur-sm" : ""
         }`}
       >
-        <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-8xl font-heading font-bold text-white uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
+        <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-8xl font-heading font-bold  text-white uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
           Qualität. Gewährleistung. Zuverlässigkeit.
         </h1>
-        <p className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-sans text-yellow-400 italic mt-6 animate__animated animate__fadeIn animate__delay-3s">
+        <p className="text-sm sm:text-sm md:text-2xl lg:text-4xl font-sans text-yellow-400 italic mt-6 animate__animated animate__fadeIn animate__delay-3s">
           Wir bieten die besten Lösungen für Ihr Dach!
         </p>
 
-        {/* Кнопка "Anfrage stellen" */}
+        {/* Inquiry button */}
         <button
           onClick={handleModalToggle}
-          className="mt-8 px-6 py-3 bg-teal-900 text-white text-xl font-bold uppercase rounded-full hover:bg-teal-700 transition animate__animated animate__fadeIn animate__delay-5s"
+          className="mt-8 px-6 py-3 bg-teal-900 text-white text-xl font-bold uppercase rounded-full hover:bg-teal-700 transition animate__animated animate__fadeIn animate__delay-5s shimmer-button"
         >
           Anfrage senden
         </button>
       </div>
 
-      {/* Модальное окно с контактной формой */}
+      {/* Modal Contact Form */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md"></div>
@@ -54,11 +55,11 @@ const HomeSlider = () => {
               className="absolute top-2 right-2 text-teal-900 hover:text-teal-200"
               onClick={handleModalToggle}
             >
-              {/* Используем GIF как иконку закрытия */}
+              {/* Close icon */}
               <img
-                src="/images/close-icon.gif" // Путь к вашему GIF-файлу
+                src="/images/close-icon.gif"
                 alt="close"
-                className="w-16 h-16 relative" // Размеры GIF, можно изменить
+                className="w-16 h-16 relative"
               />
             </button>
 
@@ -67,7 +68,6 @@ const HomeSlider = () => {
             </h2>
 
             <form>
-              {/* Поле для имени */}
               <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700">
                   Name <span className="text-red-500">*</span>
@@ -80,7 +80,6 @@ const HomeSlider = () => {
                 />
               </div>
 
-              {/* Поле для email */}
               <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700">
                   E-Mail <span className="text-red-500">*</span>
@@ -93,7 +92,6 @@ const HomeSlider = () => {
                 />
               </div>
 
-              {/* Поле для телефона (необязательно) */}
               <div className="mb-4">
                 <label htmlFor="phone" className="block text-gray-700">
                   Telefon (optional)
@@ -105,7 +103,6 @@ const HomeSlider = () => {
                 />
               </div>
 
-              {/* Кнопка отправки формы */}
               <button
                 type="submit"
                 className="w-full bg-teal-900 text-white font-bold py-2 rounded-md hover:bg-teal-700 transition"

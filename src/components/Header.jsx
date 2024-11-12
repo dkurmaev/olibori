@@ -30,10 +30,10 @@ const Header = () => {
                 <div className="flex  items-center">
                     <img 
                     src="/images/Logo.png" alt="Olidort Bedachungen" 
-                    className="w-16 h-10 mr-2 sm:w-20 sm:h-14 sm:mr-4 md:w-24 md:h-16"
+                    className="w-16 h-10 mr-2 mt-1 sm:w-12 sm:h-8 sm:mr-4 md:w-24 md:h-16"
                     />
                     <div>
-        <h1 className="text-lg sm:text-xl md:text-2xl text-teal-600 font-bold">Olidort Bedachungen</h1>
+        <h1 className="text-lg sm:text-xl md:text-2xl text-teal-600 font-bold ">Olidort Bedachungen</h1>
         <p className="text-xs sm:text-sm italic text-yellow-400">&quot;Dicht ist unsere Pflicht&quot;</p>
     </div>
                 </div>
@@ -51,7 +51,7 @@ const Header = () => {
                     </a>
 
                     <div className="flex items-center space-x-4">
-                        <a href="tel:+49123456789" className="bg-yellow-400 text-dark px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition hidden lg:flex">
+                        <a href="tel:+49123456789" className="bg-yellow-400 text-dark px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition hidden lg:flex shimmer-button">
                             Anruf
                         </a>
                         <div className="text-left hidden lg:block">
@@ -63,7 +63,7 @@ const Header = () => {
 
                 {/* Бургер-меню для мобильной версии */}
                 <div className="md:hidden">
-                    <button onClick={toggleMenu} className="focus:outline-none text-teal-700 hover:text-teal-600 transition-all">
+                    <button onClick={toggleMenu} className="focus:outline-none text-yellow-500 hover:text-teal-600 transition-all">
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                         </svg>

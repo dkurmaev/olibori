@@ -30,16 +30,16 @@ const services = [
     imageUrl: '/images/Slide13.jpg',
     description: 'Die Flachdachabdichtung bietet eine robuste Lösung zur Abdichtung Ihres Flachdachs und schützt es vor Umwelteinflüssen.',
   },
-  {
-    title: 'Unterkonstruktion',
-    options: [
-      { name: 'Beton', price: 30, description: 'Beschreibung Beton', imageUrl: '/images/Beton.jpg' },
-      { name: 'Trapezblech', price: 50, description: 'Beschreibung Trapezblech', imageUrl: '/images/Trapezblech.jpg' },
-    ],
-    imageUrl: '/images/Trapezblech.jpg',
-    description: 'Die Unterkonstruktion bildet die tragende Basis des Daches und sorgt für Stabilität.',
-  },
-  //TODO Добавьте другие услуги с подуслугами...
+  // {
+  //   title: 'Unterkonstruktion',
+  //   options: [
+  //     { name: 'Beton', price: 30, description: 'Beschreibung Beton', imageUrl: '/images/Beton.jpg' },
+  //     { name: 'Trapezblech', price: 50, description: 'Beschreibung Trapezblech', imageUrl: '/images/Trapezblech.jpg' },
+  //   ],
+  //   imageUrl: '/images/Trapezblech.jpg',
+  //   description: 'Die Unterkonstruktion bildet die tragende Basis des Daches und sorgt für Stabilität.',
+  // },
+  // //TODO Добавьте другие услуги с подуслугами...
 ];
 
 const Services = () => {
