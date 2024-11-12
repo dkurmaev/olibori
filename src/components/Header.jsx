@@ -27,12 +27,15 @@ const Header = () => {
         <header className={`fixed top-0 left-0 w-full p-4 z-20 py-4 shadow-lg backdrop-blur-md transition-all duration-500 ${scrolled ? 'bg-opacity-100' : 'bg-opacity-10'}`}>
             <div className="container mx-auto flex justify-between items-center">
                 {/* Логотип */}
-                <div className="flex items-center">
-                    <img src="/images/Logo.png" alt="Olidort Bedachungen" className="w-24 h-16 mr-4" />
+                <div className="flex  items-center">
+                    <img 
+                    src="/images/Logo.png" alt="Olidort Bedachungen" 
+                    className="w-16 h-10 mr-2 sm:w-20 sm:h-14 sm:mr-4 md:w-24 md:h-16"
+                    />
                     <div>
-                        <h1 className="text-2xl text-teal-600 font-bold">Olidort Bedachungen</h1>
-                        <p className="text-sm italic text-yellow-400">&quot;Ihr Dach in sicheren Händen&quot;</p>
-                    </div>
+        <h1 className="text-lg sm:text-xl md:text-2xl text-teal-600 font-bold">Olidort Bedachungen</h1>
+        <p className="text-xs sm:text-sm italic text-yellow-400">&quot;Dicht ist unsere Pflicht&quot;</p>
+    </div>
                 </div>
 
                 {/* Меню для десктопа */}
@@ -60,7 +63,7 @@ const Header = () => {
 
                 {/* Бургер-меню для мобильной версии */}
                 <div className="md:hidden">
-                    <button onClick={toggleMenu} className="focus:outline-none text-teal-800">
+                    <button onClick={toggleMenu} className="focus:outline-none text-teal-700 hover:text-teal-600 transition-all">
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                         </svg>
