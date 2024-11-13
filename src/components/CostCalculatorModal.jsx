@@ -1,171 +1,200 @@
-import { useState, useEffect } from 'react';
-import emailjs from 'emailjs-com';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import ContactFormModal from './ContactFormModal';
 
-const CostCalculatorModal = ({ isOpen, onClose, selectedService }) => {
-    const [selectedOption, setSelectedOption] = useState(null);
-    const [size, setSize] = useState(1);
-    const [calculationMessage, setCalculationMessage] = useState('');
-    const [sendingStatus, setSendingStatus] = useState(''); // статус отправки письма
+const CostCalculatorModal = ({ closeModal }) => {
+  const [selectedTypeOfWork, setSelectedTypeOfWork] = useState(null);
+  const [selectedUnterkonstruktion, setSelectedUnterkonstruktion] = useState(null);
+  const [selectedDaemmung, setSelectedDaemmung] = useState(null);
+  const [selectedAbdichtung, setSelectedAbdichtung] = useState(null);
+  const [size, setSize] = useState(1);
+  const [calculationMessage, setCalculationMessage] = useState("");
+  const [showContactButton, setShowContactButton] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [calculationDetails, setCalculationDetails] = useState({});
 
-    useEffect(() => {
-        // Инициализация выбранной опции, если данные услуги изменились
-        if (selectedService && selectedService.options) {
-            setSelectedOption(selectedService.options[0]);
-        }
-    }, [selectedService]);
+  const mainCategory = {
+    subCategories: [
+      {
+        name: "Unterkonstruktion",
+        options: [
+          { name: "Beton", price: 100 },
+          { name: "Trapezblech", price: 120 },
+        ],
+      },
+      {
+        name: "Dämmung",
+        options: [
+          { name: "EPS", price: 50 },
+          { name: "PIR", price: 70 },
+          { name: "A1", price: 90 },
+        ],
+      },
+      {
+        name: "Abdichtung",
+        options: [
+          { name: "PVC", price: 80 },
+          { name: "FPO", price: 100 },
+          { name: "Bitumenbahn", price: 110 },
+        ],
+      },
+    ],
+  };
 
-    if (!isOpen || !selectedService) return null;
+  const handleTypeOfWorkChange = (event) => {
+    setSelectedTypeOfWork(event.target.value);
+  };
 
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const userId = import.meta.env.VITE_EMAILJS_USER_ID;
+  const handleUnterkonstruktionChange = (event) => {
+    const selectedOption = mainCategory.subCategories[0].options.find(option => option.name === event.target.value);
+    setSelectedUnterkonstruktion(selectedOption);
+  };
 
-    const handleOptionChange = (event) => {
-        const optionName = event.target.value;
-        const newOption = selectedService.options.find((option) => option.name === optionName);
-        setSelectedOption(newOption);
-    };
+  const handleDaemmungChange = (event) => {
+    const selectedOption = mainCategory.subCategories[1].options.find(option => option.name === event.target.value);
+    setSelectedDaemmung(selectedOption);
+  };
 
-    const handleSizeChange = (event) => {
-        setSize(event.target.value);
-    };
+  const handleAbdichtungChange = (event) => {
+    const selectedOption = mainCategory.subCategories[2].options.find(option => option.name === event.target.value);
+    setSelectedAbdichtung(selectedOption);
+  };
 
-    const calculatePrice = () => {
-        return selectedOption ? selectedOption.price * size : 0;
-    };
+  const handleSizeChange = (event) => {
+    setSize(event.target.value);
+  };
 
-    const handleCalculation = () => {
-        const price = calculatePrice();
-        setCalculationMessage(`Geschätzte Kosten: €${price}. Für eine genauere Berechnung werden wir uns mit Ihnen in Verbindung setzen.`);
-    };
+  const calculatePrice = () => {
+    const unterkonstruktionPrice = selectedUnterkonstruktion ? selectedUnterkonstruktion.price : 0;
+    const daemmungPrice = selectedDaemmung ? selectedDaemmung.price : 0;
+    const abdichtungPrice = selectedAbdichtung ? selectedAbdichtung.price : 0;
 
-    const handleSendEmail = () => {
-        if (!serviceId || !templateId || !userId) {
-            console.error("EmailJS configuration missing in environment variables");
-            return;
-        }
-        
-        setSendingStatus('sending'); // Установка статуса на "отправка"
+    const totalPrice = (unterkonstruktionPrice + daemmungPrice + abdichtungPrice) * size;
+    return totalPrice;
+  };
 
-        const templateParams = {
-            name: "Имя пользователя",
-            email: "user@example.com",
-            message: "Запрос на расчет стоимости",
-            calculated_cost: calculatePrice(),
-        };
+  const handleCalculation = () => {
+    if (!selectedTypeOfWork || !selectedUnterkonstruktion || !selectedDaemmung || !selectedAbdichtung) {
+      setCalculationMessage("Bitte wählen Sie alle Optionen aus.");
+      setShowContactButton(false);
+    } else {
+      const price = calculatePrice();
+      const details = {
+        typeOfWork: selectedTypeOfWork,
+        unterkonstruktion: selectedUnterkonstruktion.name,
+        daemmung: selectedDaemmung.name,
+        abdichtung: selectedAbdichtung.name,
+        size,
+        price
+      };
+      setCalculationDetails(details); // Сохраняем детали для передачи в контактную форму
+      setCalculationMessage(
+        <>
+          <div className='mb-4'>
+            Geschätzte Kosten: <span className="font-bold ">€{price}</span>
+          </div>
+          <div>
+            Für eine genauere Berechnung werden wir uns mit Ihnen in Verbindung setzen.
+          </div>
+        </>
+      );
+      setShowContactButton(true);
+    }
+  };
 
-        emailjs.send(serviceId, templateId, templateParams, userId)
-            .then((response) => {
-                console.log('SUCCESS!', response.status, response.text);
-                setSendingStatus('success');
-                setTimeout(onClose, 3000);
-            })
-            .catch((error) => {
-                console.error('FAILED...', error);
-                setSendingStatus('error');
-            });
-    };
+  const handleContactModalToggle = () => {
+    setIsContactModalOpen(!isContactModalOpen);
+  };
 
-    return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50">
-            <div className="bg-white p-8 rounded-lg shadow-lg max-w-6xl w-full relative">
-                <button onClick={onClose} className="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-                    <img
-                      src="/images/close-icon.gif"
-                      alt="close"
-                      className="w-6 h-6"
-                    />
-                </button>
-                <h3 className="text-xl font-bold mb-4">{selectedService.title}</h3>
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 px-4 py-4 overflow-y-auto">
+      <div className="bg-white p-6 rounded-lg w-full max-w-md sm:max-w-lg mx-auto relative overflow-y-auto max-h-screen">
+        <h3 className="text-xl font-semibold mb-6 text-center">Kalkulation</h3>
 
-                {/* Опции подуслуг */}
-                <label htmlFor="option" className="block text-sm font-medium mb-2">Wählen Sie eine Option:</label>
-                <select
-                    id="option"
-                    value={selectedOption ? selectedOption.name : ''}
-                    onChange={handleOptionChange}
-                    className="mb-4 w-full p-2 border border-gray-300 rounded-md"
-                >
-                    {selectedService.options.map((option, index) => (
-                        <option key={index} value={option.name}>
-                            {option.name}
-                        </option>
-                    ))}
-                </select>
+        {/* Выбор типа работы */}
+        <label>Wählen Sie die Art der Arbeit:</label>
+        <select onChange={handleTypeOfWorkChange} className="w-full mb-4 p-2 border rounded">
+          <option value="">Bitte auswählen</option>
+          <option value="Neubau">Neubau</option>
+          <option value="Reparatur">Reparatur</option>
+          <option value="Wartung">Wartung</option>
+          <option value="Sanierung">Sanierung</option>
+        </select>
 
-                {/* Описание и цена выбранной опции */}
-                {selectedOption && (
-                    <>
-                        <div
-                            className="text-gray-700 mb-4"
-                            dangerouslySetInnerHTML={{ __html: selectedOption.description }}
-                        />
-                        <p className="text-lg font-semibold">Preis pro Quadratmeter (m²): {selectedOption.price},-EUR</p>
-                    </>
-                )}
+        {/* Выбор Unterkonstruktion */}
+        <label>Wählen Sie Unterkonstruktion:</label>
+        <select onChange={handleUnterkonstruktionChange} className="w-full mb-4 p-2 border rounded">
+          <option value="">Bitte auswählen</option>
+          {mainCategory.subCategories[0].options.map((option, index) => (
+            <option key={index} value={option.name}>{option.name}</option>
+          ))}
+        </select>
 
-                {/* Поле для ввода размера */}
-                <label htmlFor="size" className="block text-sm font-medium mt-4">Geben Sie Ihre Fläche in Quadratmetern (m²) an:</label>
-                <input
-                    type="number"
-                    id="size"
-                    value={size}
-                    onChange={handleSizeChange}
-                    min="1"
-                    className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                />
+        {/* Выбор Dämmung */}
+        <label>Wählen Sie Dämmung:</label>
+        <select onChange={handleDaemmungChange} className="w-full mb-4 p-2 border rounded">
+          <option value="">Bitte auswählen</option>
+          {mainCategory.subCategories[1].options.map((option, index) => (
+            <option key={index} value={option.name}>{option.name}</option>
+          ))}
+        </select>
 
-                <div className="mt-6 flex flex-col space-y-4">
-                    {/* Кнопка для расчета и сообщение о расчетной стоимости */}
-                    <button
-                        onClick={handleCalculation}
-                        className="bg-teal-900 text-white py-2 px-6 rounded-lg hover:bg-teal-700 transition"
-                    >
-                        Berechnen
-                    </button>
-                    {calculationMessage && (
-                        <p className="text-center text-lg font-semibold text-teal-900 mt-4">{calculationMessage}</p>
-                    )}
+        {/* Выбор Abdichtung */}
+        <label>Wählen Sie Abdichtung:</label>
+        <select onChange={handleAbdichtungChange} className="w-full mb-4 p-2 border rounded">
+          <option value="">Bitte auswählen</option>
+          {mainCategory.subCategories[2].options.map((option, index) => (
+            <option key={index} value={option.name}>{option.name}</option>
+          ))}
+        </select>
 
-                    {/* Кнопка для отправки запроса */}
-                    <button
-                        onClick={handleSendEmail}
-                        className="bg-green-600 text-white py-2 px-6 rounded-lg hover:bg-green-500 transition"
-                    >
-                        Anfrage senden
-                    </button>
+        {/* Ввод площади */}
+        <label>Geben Sie Ihre Fläche in Quadratmetern (m²) an:</label>
+        <input type="number" value={size} onChange={handleSizeChange} className="w-full mb-4 p-2 border rounded" />
 
-                    {/* Сообщения о статусе отправки */}
-                    {sendingStatus === 'sending' && (
-                        <p className="text-center text-lg font-semibold text-gray-700 mt-4">Nachricht wird gesendet...</p>
-                    )}
-                    {sendingStatus === 'success' && (
-                        <p className="text-center text-lg font-semibold text-green-600 mt-4">Nachricht erfolgreich gesendet! Wir werden uns bald mit Ihnen in Verbindung setzen.</p>
-                    )}
-                    {sendingStatus === 'error' && (
-                        <p className="text-center text-lg font-semibold text-red-600 mt-4">Fehler beim Senden der Nachricht. Bitte versuchen Sie es erneut.</p>
-                    )}
-                </div>
-            </div>
-        </div>
-    );
+        <button onClick={handleCalculation} className="bg-teal-900 text-white py-2 px-4 w-full hover:bg-teal-800 rounded-md">
+          Berechnen
+        </button>
+
+        {/* Показать сообщение о расчете */}
+        {calculationMessage && <div className="mt-4 text-lg">{calculationMessage}</div>}
+
+        {/* Кнопка "Связаться с нами" */}
+        {showContactButton && (
+          <button
+            onClick={handleContactModalToggle}
+            className="bg-green-600 text-white py-2 w-full px-6 rounded-lg hover:bg-green-500 transition mt-4"
+          >
+            Kontaktieren Sie uns
+          </button>
+        )}
+
+        {/* Кнопка закрытия модалки калькулятора */}
+        <button
+          className="absolute top-2 right-2 text-teal-900 hover:text-teal-200"
+          onClick={closeModal}
+        >
+          <img
+            src='/images/close-icon.gif'
+            alt="close"
+            className="w-8 h-8"
+          />
+        </button>
+      </div>
+
+      {/* Модалка с контактной формой */}
+      {isContactModalOpen && (
+        <ContactFormModal
+          closeModal={handleContactModalToggle}
+          calculationDetails={calculationDetails}
+        />
+      )}
+    </div>
+  );
 };
 
 CostCalculatorModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    selectedService: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        options: PropTypes.arrayOf(
-            PropTypes.shape({
-                name: PropTypes.string.isRequired,
-                price: PropTypes.number.isRequired,
-                description: PropTypes.string,
-                imageUrl: PropTypes.string,
-            })
-        ).isRequired,
-    }).isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default CostCalculatorModal;
