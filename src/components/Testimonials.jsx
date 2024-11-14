@@ -20,29 +20,29 @@ const testimonialsData = [
 const Testimonials = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const prevSlide = () => {
-        const isFirstSlide = currentIndex === 0;
-        const newIndex = isFirstSlide ? testimonialsData.length - 1 : currentIndex - 1;
-        setCurrentIndex(newIndex);
-    };
+    // const prevSlide = () => {
+    //     const isFirstSlide = currentIndex === 0;
+    //     const newIndex = isFirstSlide ? testimonialsData.length - 1 : currentIndex - 1;
+    //     setCurrentIndex(newIndex);
+    // };
 
-    const nextSlide = () => {
-        const isLastSlide = currentIndex === testimonialsData.length - 1;
-        const newIndex = isLastSlide ? 0 : currentIndex + 1;
-        setCurrentIndex(newIndex);
-    };
+    // const nextSlide = () => {
+    //     const isLastSlide = currentIndex === testimonialsData.length - 1;
+    //     const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    //     setCurrentIndex(newIndex);
+    // };
 
     return (
         <section className="bg-gray-900 py-20">
             <div className="container mx-auto px-6">
                 <div className="relative flex justify-center items-center">
-                    {/* Стрелка ВЛЕВО */}
-                    <button
+                    
+                    {/* <button
                         onClick={prevSlide}
                         className="absolute left-0 text-teal-500 text-2xl bg-gray-800 p-3 rounded-full hover:bg-teal-500 hover:text-white transition"
                     >
-                        &#10094; {/* Символ стрелки влево */}
-                    </button>
+                        &#10094; 
+                    </button> */}
 
                     {/* Текущий отзыв */}
                     <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8 max-w-4xl mx-auto">
@@ -62,13 +62,13 @@ const Testimonials = () => {
                         </div>
                     </div>
 
-                    {/* Стрелка ВПРАВО */}
-                    <button
+                    
+                    {/* <button
                         onClick={nextSlide}
                         className="absolute right-0 text-teal-500 text-2xl bg-gray-800 p-3 rounded-full hover:bg-teal-500 hover:text-white transition"
                     >
-                        &#10095; {/* Символ стрелки вправо */}
-                    </button>
+                        &#10095; 
+                    </button> */}
                 </div>
 
                 {/* Индикаторы слайдов */}

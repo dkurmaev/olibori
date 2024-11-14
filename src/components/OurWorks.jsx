@@ -36,9 +36,9 @@ const OurWorks = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % Math.ceil(sliderImages.length / 3));
     };
 
-    const prevSlide = () => {
-        setCurrentIndex((prevIndex) => (prevIndex === 0 ? Math.ceil(sliderImages.length / 3) - 1 : prevIndex - 1));
-    };
+    // const prevSlide = () => {
+    //     setCurrentIndex((prevIndex) => (prevIndex === 0 ? Math.ceil(sliderImages.length / 3) - 1 : prevIndex - 1));
+    // };
 
     // Открытие модального окна при нажатии на картинку
     const openModal = (image) => {
@@ -74,19 +74,19 @@ const OurWorks = () => {
                         ))}
                     </div>
 
-                    {/* Кнопки для навигации вне слайдов */}
-                    <button
+                   
+                    {/* <button
                         onClick={prevSlide}
                         className="absolute top-1/2 transform -translate-y-1/2 bg-teal-800 text-white rounded-full p-5 hover:bg-teal-600"
                     >
-                        &#10094; {/* Стрелка влево */}
+                        &#10094; 
                     </button>
                     <button
                         onClick={nextSlide}
                         className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-teal-800 text-white rounded-full p-5 hover:bg-teal-600"
                     >
-                        &#10095; {/* Стрелка вправо */}
-                    </button>
+                        &#10095; 
+                    </button> */}
 
                     {/* Индикаторы */}
                     <div className="flex justify-center space-x-2 mt-6">

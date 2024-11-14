@@ -61,7 +61,7 @@ const CookieConsent = () => {
       <button
         onClick={toggleSettings}
         title="Cookies Einstellungen"
-        className="fixed bottom-4 left-4 bg-teal-800 text-white p-3 mb-14 rounded-full shadow-lg z-50 hover:bg-gray-700"
+        className="fixed bottom-5 left-4 bg-teal-800 text-white p-3 mb-14 rounded-full shadow-lg z-50 hover:bg-gray-700"
       >
         <CogIcon className="h-6 w-6" />
       </button>

@@ -42,7 +42,8 @@ const CostCalculator = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 bg-gray-100 rounded-md shadow-lg flex flex-col h-full justify-between lg:flex-row gap-8">
+    
+    <div  id="cost-calculator" className="container mx-auto p-6 bg-gray-100 rounded-md shadow-lg flex flex-col h-full justify-between lg:flex-row gap-8">
       {/* Левая секция — Калькулятор */}
       <div className="flex-1 p-4 bg-gray-100 rounded-lg shadow-md flex flex-col">
         <h2 className="text-xl font-bold text-center mb-4">Kostenberechnung für Dacharbeiten</h2>
@@ -53,7 +54,7 @@ const CostCalculator = () => {
         </div>
 
         {step === 0 && (
-          <button onClick={handleStart} className="bg-teal-600 text-white py-2 px-4 mt-10 rounded-xl w-full text-lg shimmer-button">Anfrage starten</button>
+          <button onClick={handleStart} className="bg-teal-600 text-white py-2 px-4 mt-4 rounded-xl w-full text-lg shimmer-button">Kostenberechnung starten</button>
         )}
 
         {step > 0 && (
@@ -146,7 +147,7 @@ const CostCalculator = () => {
           </>
         )}
 
-        <p className="flex justify-left items-center mt-auto text-center">
+        <p className="flex justify-end items-center mt-auto text-center">
           <FaClock className="mr-2 text-gray-800 text-xs" /> Es dauert weniger als eine Minute.
         </p>
       </div>
