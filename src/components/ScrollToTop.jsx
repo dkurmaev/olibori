@@ -30,7 +30,7 @@ const ScrollToTop = () => {
                 <button
                     onClick={scrollToTop}
                     title="Nach oben scrollen"
-                    className="bg-teal-900 text-white p-3 rounded-full shadow-lg hover:bg-teal-700"
+                    className="bg-teal-900 text-white mb-14 p-4 rounded-full shadow-lg hover:bg-teal-700"
                 >
                     <FaArrowUp />
                 </button>

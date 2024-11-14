@@ -30,17 +30,17 @@ const HomeSlider = () => {
           isModalOpen ? "blur-sm" : ""
         }`}
       >
-        <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-8xl font-heading font-bold  text-white uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
-          Qualität. Gewährleistung. Zuverlässigkeit.
+        <h1 className="text-2xl  sm:text-4xl md:text-4xl lg:text-6xl font-heading font-bold  text-white uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
+        Dachdeckerarbeiten jeder Komplexität schlüsselfertig.
         </h1>
-        <p className="text-sm sm:text-sm md:text-2xl lg:text-4xl font-sans text-yellow-400 italic mt-6 animate__animated animate__fadeIn animate__delay-3s">
+        <p className="text-sm sm:text-sm md:text-2xl lg:text-2xl font-sans text-yellow-400 italic mt-6 animate__animated animate__fadeIn animate__delay-3s">
           Wir bieten die besten Lösungen für Ihr Dach!
         </p>
 
         {/* Inquiry button */}
         <button
           onClick={handleModalToggle}
-          className="mt-8 px-6 py-3 bg-teal-900 text-white text-xl font-bold uppercase rounded-full hover:bg-teal-700 transition animate__animated animate__fadeIn animate__delay-5s shimmer-button"
+          className="mt-8 px-6 py-3 bg-teal-900 text-white text-xl font-bold uppercase rounded-xl hover:bg-teal-700 transition animate__animated animate__fadeIn animate__delay-5s shimmer-button"
         >
           Anfrage senden
         </button>

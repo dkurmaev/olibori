@@ -35,8 +35,8 @@ const ContactForm = () => {
         <section id="contact" className="py-20 bg-gradient-to-r from-gray-900 to-teal-900">
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div className="p-6 bg-white shadow-xl rounded-lg transition-transform hover:scale-105">
-                        <h3 className="text-3xl font-bold text-teal-800 mb-4">Unser Standort</h3>
+                    <div className="p-6 bg-opacity-70 shadow-xl rounded-lg transition-transform hover:scale-105">
+                        <h3 className="text-3xl font-bold text-gray-400 mb-4">Unser Standort</h3>
                         <p className="text-gray-600 mb-4 leading-relaxed">
                             <strong>Olidort Bedachungen GmbH</strong> <br />
                             Sellwigsweg 1, <br />
@@ -63,8 +63,8 @@ const ContactForm = () => {
                         </div>
                     </div>
 
-                    <div className="p-6 bg-white shadow-xl rounded-lg transition-transform hover:scale-105">
-                        <h3 className="text-3xl font-bold text-teal-800 mb-6">Kontaktieren Sie uns</h3>
+                    <div className="p-6 bg-opacity-10 text-gray-400  shadow-xl rounded-lg transition-transform hover:scale-105">
+                        <h3 className="text-3xl font-bold text-gray-400 mb-6">Kontaktieren Sie uns</h3>
 
                         {isSubmitted && (
                             <div className="mb-6 p-4 bg-green-100 text-green-800 rounded-lg animate-pulse">
@@ -80,7 +80,7 @@ const ContactForm = () => {
 
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="relative">
-                                <label htmlFor="name" className="block text-gray-700 font-semibold">
+                                <label htmlFor="name" className="block text-gray-600 font-semibold">
                                     Name <span className="text-red-500">*</span>
                                 </label>
                                 <input
@@ -95,7 +95,7 @@ const ContactForm = () => {
                             </div>
 
                             <div className="relative">
-                                <label htmlFor="email" className="block text-gray-700 font-semibold">
+                                <label htmlFor="email" className="block text-gray-600 font-semibold">
                                     E-Mail <span className="text-red-500">*</span>
                                 </label>
                                 <input
@@ -110,7 +110,7 @@ const ContactForm = () => {
                             </div>
 
                             <div className="relative">
-                                <label htmlFor="message" className="block text-gray-700 font-semibold">
+                                <label htmlFor="message" className="block text-gray-600 font-semibold">
                                     Nachricht
                                 </label>
                                 <textarea

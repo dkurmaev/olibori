@@ -10,9 +10,9 @@ const Footer = () => {
 
     return (
         <footer className="backdrop-filter backdrop-blur-lg bg-white bg-opacity-30 shadow-lg border-t border-gray-200">
-            <div className="container mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center py-4">
-                <p className="text-gray-800 mb-2 md:mb-0">&copy; 2024 Olidort Bedachungen</p>
-                <div className="space-x-4">
+            <div className="container mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center py-4 space-y-2 md:space-y-0">
+                <p className="text-gray-800 text-center md:text-left">&copy; 2024 Olidort Bedachungen</p>
+                <div className="flex flex-wrap justify-center md:justify-end space-x-4">
                     <button onClick={() => setIsImpressumOpen(true)} className="hover:text-secondary">Impressum</button>
                     <button onClick={() => setIsAGBOpen(true)} className="hover:text-secondary">AGB</button>
                     <button onClick={() => setIsDatenschutzOpen(true)} className="hover:text-secondary">Datenschutz</button>
@@ -24,10 +24,14 @@ const Footer = () => {
             {/* Модальные окна */}
             <ImpressumModal isOpen={isImpressumOpen} onClose={() => setIsImpressumOpen(false)} />
             <AGBModal             
-            isOpen={isAGBOpen} 
-            onClose={() => setIsAGBOpen(false)} 
+                isOpen={isAGBOpen} 
+                onClose={() => setIsAGBOpen(false)} 
             />
-            <DatenschutzModal isOpen={isDatenschutzOpen} onClose={() => setIsDatenschutzOpen(false)} onAccept={() => setIsDatenschutzOpen(false)} />
+            <DatenschutzModal 
+                isOpen={isDatenschutzOpen} 
+                onClose={() => setIsDatenschutzOpen(false)} 
+                onAccept={() => setIsDatenschutzOpen(false)} 
+            />
         </footer>
     );
 };
