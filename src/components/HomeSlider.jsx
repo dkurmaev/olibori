@@ -30,6 +30,8 @@ const HomeSlider = () => {
         backgroundImage: "url('/images/main_page.jpg')",
         backgroundAttachment: "fixed",
         backgroundSize: "cover",
+        backgroundPosition: "center top",
+
       }}
     >
       {/* Затемнение фона */}
