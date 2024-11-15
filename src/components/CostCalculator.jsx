@@ -50,7 +50,7 @@ const CostCalculator = () => {
 
         {/* Картинка */}
         <div className="flex justify-center mt-10 mb-4 ">
-          <img src="/images/roofing.jpeg" alt="Dacharbeiten" className="w-auto h-auto rounded shadow-teal-600" />
+          <img src="/images/home.png" alt="Dacharbeiten" className="w-auto h-auto rounded shadow-teal-600" />
         </div>
 
         {step === 0 && (

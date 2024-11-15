@@ -3,6 +3,7 @@ const ParallaxSection = () => {
 
   return (
     <div
+    id="parallax"
       className="relative bg-fixed bg-center bg-cover h-fit flex flex-col items-center justify-center"
       style={{
         backgroundImage: "url('/images/parallax.jpg')",
@@ -16,7 +17,7 @@ const ParallaxSection = () => {
         <h1 className="text-xl sm:text-xl md:text-2xl lg:text-7xl font-heading font-bold text-white uppercase animate__animated animate__fadeIn animate__delay-1s">
           Wir führen einzelne Arten von Dacharbeiten durch:
         </h1>
-        <div className="grid grid-cols-1 gap-24 my-10 lg:px-80  text-gray-300  lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-2 my-10 mx-6 items-center lg:px-80  text-gray-300  lg:grid-cols-3">
           {/* Первый блок с 3 элементами */}
           <div className="flex flex-col">
             <p className="text-md font-sans  text-left mt-4 block lg:hidden">

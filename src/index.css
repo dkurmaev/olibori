@@ -8,6 +8,12 @@
 html {
     scroll-behavior: smooth;
 }
+.home {
+  background-size: contain;
+}
+.parallax {
+  background-size: contain;
+}
 
 .custom-arrow {
     color: #319795 !important;   

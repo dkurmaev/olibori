@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "animate.css";
 
-
 const HomeSlider = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -26,6 +25,8 @@ const HomeSlider = () => {
         backgroundSize: "cover",
       }}
     >
+      
+  
       <div
         className={`absolute inset-0 bg-black bg-opacity-50 transition-all duration-500 ${
           isModalOpen ? "backdrop-blur-sm" : ""
@@ -33,33 +34,32 @@ const HomeSlider = () => {
       ></div>
 
       <div
-        className={`relative z-10 text-center transition-all my-24 md:my-52 lg:my-64 duration-500 ${
+        className={`relative z-10 text-center transition-all my-24 md:my-52 lg:my-64 sm:my-64 duration-500 ${
           isModalOpen ? "blur-sm" : ""
         }`}
       >
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-heading font-bold text-white uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
+        <h1 className="text-2xl sm:text-3xl  md:text-4xl lg:text-6xl font-heading font-bold text-white uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
           Dachdeckerarbeiten jeder Komplexität schlüsselfertig.
         </h1>
         <p className="text-sm sm:text-md md:text-xl lg:text-2xl font-sans text-yellow-400 italic mt-6 animate__animated animate__fadeIn animate__delay-3s">
           Wir bieten die besten Lösungen für Ihr Dach!
         </p>
 
-        <button
-          onClick={handleModalToggle}
-          className="mt-8 px-6 py-3 bg-teal-900 text-white text-xl font-bold uppercase rounded-xl hover:bg-teal-700 transition animate__animated animate__fadeIn animate__delay-5s shimmer-button"
-        >
-          Anfrage senden
-        </button>
-
-        {/* Добавляем текст "oder" и кнопку "Kostenberechnung" */}
-        <span className="mx-4 text-white font-bold">oder</span>
-
-        <button
-          onClick={scrollToCostCalculator}
-          className="mt-4 px-6 py-3 bg-yellow-500 text-teal-900 text-xl font-bold uppercase rounded-xl hover:bg-yellow-400 transition "
-        >
-          Kostenberechnung
-        </button>
+        <div className="flex flex-col md:flex-row lg:flex-grow items-center justify-center gap-4 w-full mt-8 md:mt-12 lg:mt-16">
+          <button
+            onClick={handleModalToggle}
+            className="px-6 py-3 bg-teal-900 text-white text-xl font-bold uppercase rounded-xl hover:bg-teal-700 transition shimmer-button"
+          >
+            Anfrage senden
+          </button>
+          <span className="mx-4 text-white font-bold">oder</span>
+          <button
+            onClick={scrollToCostCalculator}
+            className="px-6 py-3 bg-yellow-500 text-teal-900 text-xl font-bold uppercase rounded-xl hover:bg-yellow-400 transition"
+          >
+            Kostenberechnung
+          </button>
+        </div>
       </div>
 
       {isModalOpen && (
@@ -70,10 +70,16 @@ const HomeSlider = () => {
               className="absolute top-2 right-2 text-teal-900 hover:text-teal-200"
               onClick={handleModalToggle}
             >
-              <img src="/images/close-icon.gif" alt="close" className="w-16 h-16 relative" />
+              <img
+                src="/images/close-icon.gif"
+                alt="close"
+                className="w-16 h-16 relative"
+              />
             </button>
 
-            <h2 className="text-3xl font-bold mb-6 text-center">Kontaktformular</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center">
+              Kontaktformular
+            </h2>
             <form>
               <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700">
