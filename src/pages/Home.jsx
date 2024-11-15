@@ -12,6 +12,7 @@ import ParallaxSection from '../components/ParallaxSection';
 import ReasonsSection from '../components/ReasonsSection';
 import CookieModal from '../components/CookieModal';
 import References from '../components/References';
+import AboutUs from '../components/AboutUs';
 import CostCalculator from '../components/CostCalculator';
 
 const Home = () => {
@@ -27,6 +28,7 @@ const Home = () => {
                 <CostCalculator />              
                 {/* <Services /> */}
                 <OurWorks />
+                <AboutUs />
                 <References />
                 <Testimonials />
                 <Lieferanten />

@@ -43,7 +43,7 @@ const CostCalculator = () => {
 
   return (
     
-    <div  id="cost-calculator" className="container mx-auto p-6 bg-gray-100 rounded-md shadow-lg flex flex-col h-full justify-between lg:flex-row gap-8">
+    <div  id="cost-calculator" className=" mx-auto p-6  rounded-md shadow-lg flex flex-col h-full justify-between lg:flex-row gap-8">
       {/* Левая секция — Калькулятор */}
       <div className="flex-1 p-4 bg-gray-100 rounded-lg shadow-md flex flex-col">
         <h2 className="text-xl font-bold text-center mb-4">Kostenberechnung für Dacharbeiten</h2>
