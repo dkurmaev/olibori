@@ -54,8 +54,8 @@ const OurWorks = () => {
 
     return (
         <section id="works" className="py-20 bg-white">
-            <div className="container mx-auto px-6">
-                <h2 className="text-4xl font-bold text-center">Unser Flachdachlösungen:</h2>
+            <div className="container mx-auto px-6 r">
+                <h2 className="text-2xl text-center sm:text-3xl md:text-6xl lg:text-6xl my-8 font-heading font-bold text-gray-500 uppercase border-b-2 border-gray-300 pb-4">Unser Flachdachlösungen:</h2>
                 <div className="relative mt-10 overflow-hidden">
                     {/* Слайды */}
                     <div

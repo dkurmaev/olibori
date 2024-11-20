@@ -7,13 +7,13 @@ import Lieferanten from '../components/Lieferanten';
 import ContactForm from '../components/ContactForm';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
-// import Services from '../components/Services';
 import ParallaxSection from '../components/ParallaxSection';
 import ReasonsSection from '../components/ReasonsSection';
 import CookieModal from '../components/CookieModal';
 import References from '../components/References';
 import AboutUs from '../components/AboutUs';
 import CostCalculator from '../components/CostCalculator';
+import UnsereEtappen from '../components/UnsereEtappen';
 
 const Home = () => {
     console.log("Rendering Home component");
@@ -25,12 +25,12 @@ const Home = () => {
                 <CookieModal />                             
                 <ReasonsSection />
                 <ParallaxSection /> 
-                <CostCalculator />              
-                {/* <Services /> */}
+                <UnsereEtappen />
+                <CostCalculator />    
                 <OurWorks />
-                <AboutUs />
-                <References />
                 <Testimonials />
+                <AboutUs />
+                <References />                
                 <Lieferanten />
                 <ContactForm />
             </main>

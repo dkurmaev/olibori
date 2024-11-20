@@ -1,87 +1,186 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@400;600&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 .home {
-  background-size: contain;
+  background-size: cover;
 }
 .parallax {
   background-size: contain;
 }
 
 .custom-arrow {
-    color: #319795 !important;   
-    z-index: 1000 !important;
+  color: #319795 !important;
+  z-index: 1000 !important;
 }
 .blur-background {
-    filter: blur(5px);
-    transition: filter 0.3s ease-in-out;
+  filter: blur(5px);
+  transition: filter 0.3s ease-in-out;
 }
 .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 50;
-   
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50;
 }
 
 html,
 body {
-    overflow-x: hidden;
-    /* Отключает горизонтальную прокрутку */
+  overflow-x: hidden;
+  /* Отключает горизонтальную прокрутку */
 }
 
 .shimmer-button {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .shimmer-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%; /* Начинаем анимацию за левой границей кнопки */
-    width: 200%; /* Достаточно широкая полоса для покрытия кнопки */
-    height: 100%;
-    background: linear-gradient(120deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
-    transform: skewX(-30deg);
-    animation: shimmer 2s infinite; /* Настройте скорость, если нужно */
-  }
-  .btn {
-    background-color: #26704d;
-    color: white;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-  }
-  @keyframes slide-up {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
-  
-  .animate-slide-up {
-    animation: slide-up 0.4s ease-out forwards;
-  }
-  
-  
+  position: relative;
+  overflow: hidden;
+}
 
-  @keyframes shimmer {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: 100%;
-    }
+.shimmer-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%; /* Начинаем анимацию за левой границей кнопки */
+  width: 200%; /* Достаточно широкая полоса для покрытия кнопки */
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+  transform: skewX(-30deg);
+  animation: shimmer 2s infinite; /* Настройте скорость, если нужно */
+}
+.btn {
+  background-color: #26704d;
+  color: white;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+.btnRat {
+  background-color: transparent;
+  color: #26704d;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+
+  border: 3px solid #26704d;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
   }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out forwards;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+.ag-courses_item {
+  flex-basis: calc(33.33333% - 30px);
+  margin: 0 15px 30px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.ag-courses-item_link {
+  display: block;
+  padding: 30px 20px;
+  background-color: #0f7169;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+}
+.ag-courses-item_link_midlle {
+  display: block;
+  padding: 30px 20px;
+  background-color: #f1f2f4;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+}
+
+.ag-courses-item_link:hover .ag-courses-item_bg  {
+  transform: scale(10);
+}
+
+.ag-courses-item_title {
+  margin: 35px 0 15px;
+  font-weight: bold;
+  font-size: 30px;  
+  color: #b6bbbb;
+  z-index: 2;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.ag-courses-item_title_middle {
+  margin: 35px 0 15px;
+  font-weight: bold;
+  font-size: 30px;  
+  color: #0f7169;
+  z-index: 2;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.ag-courses-item_date-box {
+  font-size: 16px;
+  color: white;
+  box-shadow: #319795;
   
+  z-index: 2;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.ag-courses-item_date-box_middle {
+  font-size: 16px;
+  color: #0f7169;
+  z-index: 2;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.ag-courses-item_bg {
+  height: 100px;
+  width: 100px;
+  background-color: #f7c331;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  border-radius: 50%;
+  transition: transform 0.5s ease;
+}
+
+.ag-courses_item:nth-child(2n) .ag-courses-item_bg {
+  background-color: #f7c331;
+}
+.ag-courses_item:nth-child(3n) .ag-courses-item_bg {
+  background-color: #f7c331;
+}
+.ag-courses_item:nth-child(4n) .ag-courses-item_bg {
+  background-color: #f7c331;
+}
+
+.my-section .relative.bg-gray-400 {
+  padding-top: 1rem;
+}
+
+.my-section .grid {
+  margin-top: -7rem;
+}
+

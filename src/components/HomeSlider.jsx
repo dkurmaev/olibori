@@ -25,7 +25,7 @@ const HomeSlider = () => {
   return (
     <section
       id="home"
-      className="relative w-full h-[90vh] md:h-[90vh] lg:h-[100vh] bg-cover bg-center  pt-30 md:pt-20 lg:pt-40 flex items-center justify-center"
+      className="relative w-full h-[90vh] md:h-[90vh] lg:h-[80vh] bg-cover bg-center pt-30 md:pt-10 lg:pt-10 flex items-center justify-center"
       style={{
         backgroundImage: "url('/images/main_page.jpg')",
         backgroundAttachment: "fixed",
@@ -38,15 +38,15 @@ const HomeSlider = () => {
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
       {/* Основной контент */}
-      <div className="relative z-10 text-center my-24 md:my-52 lg:my-64">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-heading font-bold text-white uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
+      <div className="relative z-10 text-center my-10 md:my-24 lg:my-28">
+        <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-7xl my-10 font-heading font-bold text-gray-300 uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
           Dachdeckerarbeiten jeder Komplexität schlüsselfertig.
         </h1>
         <p className="text-sm sm:text-md md:text-xl lg:text-2xl font-sans text-yellow-400 italic mt-6 animate__animated animate__fadeIn animate__delay-3s">
           Wir bieten die besten Lösungen für Ihr Dach!
         </p>
         <p
-          className="text-md sm:text-lg md:text-xl lg:text-2xl font-sans text-gray-300 mt-6 cursor-pointer underline hover:text-gray-300 transition"
+          className="text-md sm:text-lg md:text-xl lg:text-2xl font-sans text-gray-400 mt-6 cursor-pointer underline hover:text-gray-200 transition"
           onClick={toggleCertificateModal}
         >
           Zertifizierte Meisterbetrieb
