@@ -1,6 +1,6 @@
 const sliderImages = [
-    { id: 1, src: '/images/bauspezilogo.png', alt: 'BauSpezi Logo' },
-    { id: 2, src: '/images/holzgross.svg', alt: 'Holzgross Logo' },
+    // { id: 1, src: '/images/bauspezilogo.png', alt: 'BauSpezi Logo' },
+    // { id: 2, src: '/images/holzgross.svg', alt: 'Holzgross Logo' },
     { id: 3, src: '/images/mapei.png', alt: 'Mapei Logo' },
     { id: 4, src: '/images/bauder.svg', alt: 'Bauder Logo' },
     { id: 5, src: '/images/rockwool.png', alt: 'Rockwool Logo' },

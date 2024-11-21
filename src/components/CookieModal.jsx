@@ -58,13 +58,16 @@ const CookieConsent = () => {
   return (
     <>
       {/* Шестеренка в левом нижнем углу */}
+      <div className='fixed bottom-5 left-5 z-50'>
       <button
         onClick={toggleSettings}
         title="Cookies Einstellungen"
-        className="fixed bottom-5 left-4 bg-teal-800 text-white p-3 mb-14 rounded-full shadow-lg z-50 hover:bg-gray-700"
+        className="bg-teal-900 text-white text-right p-4 rounded-full shadow-lg h-16 w-24 transform transition-all duration-300 ease-in-out hover:translate-x-8 hover:scale-125"
+        style={{ marginLeft: '-70px' }} 
       >
-        <CogIcon className="h-6 w-6" />
+        <CogIcon className="h-6 w-6 ml-10" />
       </button>
+      </div>
 
       {/* Баннер согласия на куки с анимацией появления снизу */}
       {isVisible && (

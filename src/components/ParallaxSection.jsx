@@ -12,7 +12,7 @@ const ParallaxSection = () => {
         backgroundPosition: "center", // Это поможет разместить изображение по центру
       }}
     >
-      <div className="absolute inset-0 bg-black opacity-50"></div>
+      <div className="absolute inset-0 bg-black opacity-80"></div>
       <div className="relative z-10 text-center text-white my-16">
         <h1 className="text-xl sm:text-xl md:text-2xl lg:text-7xl font-heading font-bold text-gray-200 uppercase animate__animated animate__fadeIn animate__delay-1s">
           Wir führen einzelne Arten von Dacharbeiten durch:
