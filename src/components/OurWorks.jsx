@@ -23,11 +23,9 @@ const OurWorks = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
 
-    // Для отслеживания свайпа
-    const [touchStart, setTouchStart] = useState(null);
-    const [touchEnd, setTouchEnd] = useState(null);
+    const [touchStart, setTouchStart] = useState(0);
+    const [touchEnd, setTouchEnd] = useState(0);
 
-    // Устанавливаем интервал для автоматической прокрутки
     useEffect(() => {
         const interval = setInterval(() => {
             nextSlide();
@@ -46,7 +44,6 @@ const OurWorks = () => {
         );
     };
 
-    // Открытие модального окна
     const openModal = (image) => {
         setSelectedImage(image);
         setIsModalOpen(true);
@@ -57,22 +54,22 @@ const OurWorks = () => {
         setSelectedImage(null);
     };
 
-    // Обработка свайпа
     const handleTouchStart = (e) => {
         setTouchStart(e.targetTouches[0].clientX);
     };
 
-    const handleTouchEnd = (e) => {
-        setTouchEnd(e.changedTouches[0].clientX);
-        if (touchStart - touchEnd > 50) {
-            // Свайп влево
-            nextSlide();
-        }
+    const handleTouchMove = (e) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
 
-        if (touchEnd - touchStart > 50) {
-            // Свайп вправо
+    const handleTouchEnd = () => {
+        if (touchStart - touchEnd > 50) {
+            nextSlide();
+        } else if (touchEnd - touchStart > 50) {
             prevSlide();
         }
+        setTouchStart(0);
+        setTouchEnd(0);
     };
 
     return (
@@ -84,11 +81,11 @@ const OurWorks = () => {
                 <div
                     className="relative mt-10 overflow-hidden"
                     onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
                     onTouchEnd={handleTouchEnd}
                 >
-                    {/* Слайды */}
                     <div
-                        className="flex transition-transform duration-500 "
+                        className="flex transition-transform duration-500"
                         style={{
                             transform: `translateX(-${
                                 currentIndex * (100 / (window.innerWidth < 768 ? 1 : 3))
@@ -107,7 +104,6 @@ const OurWorks = () => {
                         ))}
                     </div>
 
-                    {/* Индикаторы */}
                     <div className="flex justify-center space-x-2 mt-6">
                         {Array.from({
                             length: Math.ceil(sliderImages.length / (window.innerWidth < 768 ? 1 : 3)),
@@ -123,7 +119,6 @@ const OurWorks = () => {
                     </div>
                 </div>
 
-                {/* Модальное окно */}
                 {isModalOpen && selectedImage && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                         <div className="bg-white p-4 rounded-lg max-w-6xl w-full relative">
