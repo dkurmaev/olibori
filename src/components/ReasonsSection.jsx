@@ -26,17 +26,20 @@ const ReasonsSection = () => {
   }, [isVisible]);
 
   return (
-    <section ref={sectionRef} className=" my-section relative bg-gray-100 py-16">
-      <div className="relative grid grid-cols-1 gap-6 mx-auto lg:grid-cols-3 lg:px-80 text-gray-300 -mt-16">
+    <section
+      ref={sectionRef}
+      className=" my-section relative bg-gray-100 py-24"
+    >
+      <div className="relative grid grid-cols-1 gap-6 mx-auto lg:grid-cols-3 lg:px-80 text-gray-300 -mt-16 z-10">
         {/* Card 1 */}
         <div
           className={`relative ag-courses_item transition-all duration-1000 transform ${
             isVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
-          }`}
+          } hover:transform hover:translate-y-[-10px] hover:shadow-6xl`}
         >
-          <div className="ag-courses-item_link shadow-lg rounded-lg bg-white">
+          <div className="ag-courses-item_link shadow-3xl  rounded-lg bg-white ">
             <div className="relative flex flex-col items-center justify-center ">
               {/* Background */}
               <div className="ag-courses-item_bg bg-teal-900"></div>
@@ -68,19 +71,20 @@ const ReasonsSection = () => {
                 <span className="mr-5">&#10004;</span> Individuelle Planung
               </li>
               <li className="flex items-center">
-                <span className="mr-5">&#10004;</span> Umweltfreundliche Lösungen
+                <span className="mr-5">&#10004;</span> Umweltfreundliche
+                Lösungen
               </li>
             </ul>
           </div>
         </div>
 
         {/* Card 2 */}
-        <div
+        <div        
           className={`relative ag-courses_item transition-all duration-1000 transform ${
             isVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
-          }`}
+          } hover:transform hover:translate-y-[-10px] hover:shadow-6xl`}
         >
           <div className="ag-courses-item_link_midlle shadow-2xl rounded-lg bg-white">
             <div className="relative flex flex-col items-center justify-center">
@@ -111,7 +115,8 @@ const ReasonsSection = () => {
                 <span className="mr-5">&#10004;</span> Hohe Qualitätsstandards
               </li>
               <li className="flex items-center">
-                <span className="mr-5">&#10004;</span> Zuverlässige Zusammenarbeit
+                <span className="mr-5">&#10004;</span> Zuverlässige
+                Zusammenarbeit
               </li>
               <li className="flex items-center">
                 <span className="mr-5">&#10004;</span> Problemlösungsorientiert
@@ -126,7 +131,8 @@ const ReasonsSection = () => {
             isVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
-          }`}
+          } hover:transform hover:translate-y-[-10px] hover:shadow-6xl transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+ `}
         >
           <div className="ag-courses-item_link shadow-lg rounded-lg bg-white">
             <div className="relative flex flex-col items-center justify-center">
@@ -157,7 +163,8 @@ const ReasonsSection = () => {
                 <span className="mr-5">&#10004;</span> Zuverlässiger Service
               </li>
               <li className="flex items-center">
-                <span className="mr-5">&#10004;</span> Professionelle Installation
+                <span className="mr-5">&#10004;</span> Professionelle
+                Installation
               </li>
               <li className="flex items-center">
                 <span className="mr-5">&#10004;</span> Kundenorientiert
