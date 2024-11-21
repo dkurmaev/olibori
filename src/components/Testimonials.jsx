@@ -35,13 +35,22 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="bg-gray-900 py-20">
-    <div className="container mx-auto px-6">
-        <div className="relative flex flex-col items-center">
+    <section id="parallax"
+    className="relative bg-fixed bg-center bg-cover flex flex-col items-center justify-center"
+    style={{
+        backgroundImage: "url('/images/parallax.jpg')",
+        backgroundAttachment: "fixed", // Параллакс эффект
+        backgroundSize: "cover", // Это обеспечит правильное масштабирование изображения
+        backgroundPosition: "center", // Это поможет разместить изображение по центру
+      }}
+    >
+        
+    <div className="bg-black w-full opacity-80">
+        <div className="relative flex flex-col items-center z-10 text-center text-white my-16">
             {/* Боковые стрелки для средних и больших экранов */}
             <button
                 onClick={prevSlide}
-                className="hidden md:block absolute left-0 text-teal-500 text-2xl bg-gray-800 p-3 rounded-full hover:bg-teal-500 hover:text-white transition"
+                className="hidden md:block absolute left-10 mx-16 my-16 text-teal-500 text-2xl bg-gray-800 p-3 rounded-full hover:bg-teal-500 hover:text-white transition"
             >
                 &#10094;
             </button>
@@ -80,7 +89,7 @@ const Testimonials = () => {
             {/* Боковые стрелки для средних и больших экранов */}
             <button
                 onClick={nextSlide}
-                className="hidden md:block absolute right-0 text-teal-500 text-2xl bg-gray-800 p-3 rounded-full hover:bg-teal-500 hover:text-white transition"
+                className="hidden md:block absolute mx-16 my-16  right-10 text-teal-500 text-2xl bg-gray-800 p-3 rounded-full hover:bg-teal-500 hover:text-white transition"
             >
                 &#10095;
             </button>

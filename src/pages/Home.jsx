@@ -15,6 +15,7 @@ import AboutUs from '../components/AboutUs';
 import CostCalculator from '../components/CostCalculator';
 import UnsereEtappen from '../components/UnsereEtappen';
 
+
 const Home = () => {
     console.log("Rendering Home component");
     return (        
@@ -24,14 +25,16 @@ const Home = () => {
                 <HomeSlider />   
                 <CookieModal />                             
                 <ReasonsSection />
-                <ParallaxSection /> 
                 <UnsereEtappen />
-                <CostCalculator />    
+                
+                <CostCalculator />
+                <ParallaxSection />
                 <OurWorks />
-                <Testimonials />
+                <Testimonials />                                
                 <AboutUs />
-                <References />                
+                <References />                                
                 <Lieferanten />
+                 
                 <ContactForm />
             </main>
             <Footer />

@@ -23,84 +23,107 @@ const OurWorks = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
 
+    // Для отслеживания свайпа
+    const [touchStart, setTouchStart] = useState(null);
+    const [touchEnd, setTouchEnd] = useState(null);
+
     // Устанавливаем интервал для автоматической прокрутки
     useEffect(() => {
         const interval = setInterval(() => {
             nextSlide();
-        }, 3000); // Поменять слайд каждые 3 секунды
+        }, 3000);
 
-        return () => clearInterval(interval); // Очистка интервала при размонтировании компонента
+        return () => clearInterval(interval);
     }, [currentIndex]);
 
     const nextSlide = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % Math.ceil(sliderImages.length / 3));
     };
 
-    // const prevSlide = () => {
-    //     setCurrentIndex((prevIndex) => (prevIndex === 0 ? Math.ceil(sliderImages.length / 3) - 1 : prevIndex - 1));
-    // };
+    const prevSlide = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === 0 ? Math.ceil(sliderImages.length / 3) - 1 : prevIndex - 1
+        );
+    };
 
-    // Открытие модального окна при нажатии на картинку
+    // Открытие модального окна
     const openModal = (image) => {
         setSelectedImage(image);
         setIsModalOpen(true);
     };
 
-    // Закрытие модального окна
     const closeModal = () => {
         setIsModalOpen(false);
         setSelectedImage(null);
     };
 
+    // Обработка свайпа
+    const handleTouchStart = (e) => {
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const handleTouchEnd = (e) => {
+        setTouchEnd(e.changedTouches[0].clientX);
+        if (touchStart - touchEnd > 50) {
+            // Свайп влево
+            nextSlide();
+        }
+
+        if (touchEnd - touchStart > 50) {
+            // Свайп вправо
+            prevSlide();
+        }
+    };
+
     return (
         <section id="works" className="py-20 bg-white">
-            <div className="container mx-auto px-6 r">
-                <h2 className="text-2xl text-center sm:text-3xl md:text-6xl lg:text-6xl my-8 font-heading font-bold text-gray-500 uppercase border-b-2 border-gray-300 pb-4">Unser Flachdachlösungen:</h2>
-                <div className="relative mt-10 overflow-hidden">
+            <div className="container mx-auto px-6">
+                <h2 className="text-2xl text-center sm:text-3xl md:text-6xl lg:text-6xl my-8 font-heading font-bold text-gray-500 uppercase border-b-2 border-gray-300 pb-4">
+                    Unser Flachdachlösungen:
+                </h2>
+                <div
+                    className="relative mt-10 overflow-hidden"
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                >
                     {/* Слайды */}
                     <div
-                        className="flex right-10 transition-transform duration-500"
-                        style={{ transform: `translateX(-${currentIndex * (100 / (window.innerWidth < 768 ? 1 : 3))}%)` }}
+                        className="flex transition-transform duration-500 "
+                        style={{
+                            transform: `translateX(-${
+                                currentIndex * (100 / (window.innerWidth < 768 ? 1 : 3))
+                            }%)`,
+                        }}
                     >
                         {sliderImages.map((image) => (
-                            <div key={image.id} className="min-w-full md:min-w-[33.33%] p-2">
+                            <div key={image.id} className="min-w-full snap-start md:min-w-[33.33%] p-2">
                                 <img
                                     src={image.src}
                                     alt={image.alt}
                                     className="w-full h-64 object-cover rounded-lg shadow-lg cursor-pointer"
-                                    onClick={() => openModal(image)} // Добавляем обработчик клика
+                                    onClick={() => openModal(image)}
                                 />
                             </div>
                         ))}
                     </div>
 
-                   
-                    {/* <button
-                        onClick={prevSlide}
-                        className="absolute top-1/2 transform -translate-y-1/2 bg-teal-800 text-white rounded-full p-5 hover:bg-teal-600"
-                    >
-                        &#10094; 
-                    </button>
-                    <button
-                        onClick={nextSlide}
-                        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-teal-800 text-white rounded-full p-5 hover:bg-teal-600"
-                    >
-                        &#10095; 
-                    </button> */}
-
                     {/* Индикаторы */}
                     <div className="flex justify-center space-x-2 mt-6">
-                        {Array.from({ length: Math.ceil(sliderImages.length / (window.innerWidth < 768 ? 1 : 3)) }).map((_, idx) => (
+                        {Array.from({
+                            length: Math.ceil(sliderImages.length / (window.innerWidth < 768 ? 1 : 3)),
+                        }).map((_, idx) => (
                             <div
                                 key={idx}
                                 onClick={() => setCurrentIndex(idx)}
-                                className={`cursor-pointer w-3 h-3 rounded-full ${idx === currentIndex ? "bg-teal-500" : "bg-gray-200"}`}
+                                className={`cursor-pointer w-3 h-3 rounded-full ${
+                                    idx === currentIndex ? 'bg-teal-500' : 'bg-gray-200'
+                                }`}
                             ></div>
                         ))}
                     </div>
                 </div>
 
-                {/* Модальное окно для увеличенного изображения */}
+                {/* Модальное окно */}
                 {isModalOpen && selectedImage && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                         <div className="bg-white p-4 rounded-lg max-w-6xl w-full relative">
@@ -108,18 +131,20 @@ const OurWorks = () => {
                                 className="absolute top-2 right-2"
                                 onClick={closeModal}
                             >
-                                {/* Используем GIF как иконку закрытия */}
                                 <img
-                                    src="/images/close-icon.gif" // Путь к вашему GIF-файлу
+                                    src="/images/close-icon.gif"
                                     alt="close"
-                                    className="w-16 h-16" // Размеры GIF, можно изменить
+                                    className="w-16 h-16"
                                 />
                             </button>
-                            <img src={selectedImage.src} alt={selectedImage.alt} className="w-full h-auto rounded-lg" />
+                            <img
+                                src={selectedImage.src}
+                                alt={selectedImage.alt}
+                                className="w-full h-auto rounded-lg"
+                            />
                         </div>
                     </div>
                 )}
-
             </div>
         </section>
     );

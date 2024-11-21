@@ -34,7 +34,7 @@ const UnsereEtappen = () => {
           >
             {/* Большое число */}
             <div
-              className={`text-9xl font-extrabold text-teal-700 border-b-2 border-yellow-300 hover:text-yellow-500 border- pb-4 opacity-40 ${
+              className={`text-9xl font-extrabold text-teal-700 border-b-2 border-yellow-300 hover:text-yellow-500 border- pb-4 opacity-40  ${
                 index % 2 === 0 ? "md:order-1" : "md:order-2" 
               }`}
             >
@@ -54,9 +54,10 @@ const UnsereEtappen = () => {
             </div>
           </div>
         ))}
-      </div>
-    </div>
+      </div> 
+    </div>  
   );
 };
+
 
 export default UnsereEtappen;

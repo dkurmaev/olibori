@@ -66,7 +66,7 @@ const CostCalculator = () => {
   return (
     <div
       id="cost-calculator"
-      className="mx-auto p-6 rounded-md shadow-lg bg-teal-900 flex flex-col h-full justify-between lg:flex-row gap-8"
+      className="mx-auto p-6 rounded-md shadow-lg bg-teal-700  flex flex-col h-full justify-between lg:flex-row gap-8"
     >
       {/* Left Section */}
       <div className="flex-1 p-4 rounded-lg shadow-md flex flex-col">
