@@ -39,7 +39,7 @@ const ContactForm = () => {
   return (
     <section
       id="contact"
-      className="relative bg-cover bg-center bg-fixed"
+      className="relative bg-cover bg-center bg-fixed sm:bg-fixed sm:bg-none"
       style={{
         backgroundImage: "url('/images/parallax.jpg')", // Указываем картинку для фона
         backgroundAttachment: "fixed", // Закрепляем картинку для параллакса

@@ -45,7 +45,7 @@ const Testimonials = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      setOffset(scrollY * 1); // Скорость параллакса
+      setOffset(scrollY * 0.5); // Скорость параллакса
     };
 
     window.addEventListener("scroll", handleScroll);
