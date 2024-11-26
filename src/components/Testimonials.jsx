@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 
 const testimonialsData = [
@@ -20,7 +20,6 @@ const testimonialsData = [
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [offset, setOffset] = useState(0); // Для управления параллаксом
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) =>
@@ -41,29 +40,19 @@ const Testimonials = () => {
     trackMouse: true,
   });
 
-  // Обновляем offset для эффекта параллакса
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setOffset(scrollY * 0.5); // Скорость параллакса
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <section
       id="parallax"
-      className="relative bg-cover flex flex-col items-center justify-center"
-      {...swipeHandlers}
+      className="relative bg-fixed bg-center bg-cover flex flex-col items-center justify-center"
       style={{
         backgroundImage: "url('/images/parallax.jpg')",
-        backgroundPosition: `center ${-offset}px`, // Параллакс через backgroundPosition
+        backgroundAttachment: "fixed",
         backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
+      {...swipeHandlers} // Добавляем обработчики свайпа
     >
-      <div className="bg-black bg-opacity-60 w-full py-16">
+      <div className="bg-black bg-opacity-80 w-full py-16">
         <div className="relative z-10 text-center text-white mx-auto px-6 lg:px-20">
           <h2 className="text-4xl sm:text-5xl font-extrabold uppercase tracking-wider text-teal-400 mb-12">
             Kundenstimmen
@@ -71,13 +60,14 @@ const Testimonials = () => {
           <div className="flex flex-col items-center max-w-5xl mx-auto space-y-8 text-center">
             {/* Изображение клиента */}
             <div className="w-24 h-24 relative mx-auto md:mx-0">
-              <img
-                src={testimonialsData[currentIndex].image}
-                alt={testimonialsData[currentIndex].name}
-                className="w-full h-full object-contain rounded-full border-2 border-teal-400 shadow-lg"
-              />
-            </div>
+                <img
+                  src={testimonialsData[currentIndex].image}
+                  alt={testimonialsData[currentIndex].name}
+                  className="w-full h-full object-contain rounded-full border-2 border-teal-400 shadow-lg"
+                />
+              </div>
             <div className="relative flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
+              
               {/* Отзыв */}
               <div className="max-w-lg text-center max-w-lg break-words tracking-wider leading-loose">
                 <p className="text-lg sm:text-xl italic text-gray-300 mb-4">

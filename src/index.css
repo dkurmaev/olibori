@@ -184,4 +184,21 @@ body {
   margin-top: -12rem;
 }
 
+/* Фиксированный фон на мобильных устройствах (и устройствах с маленькими экранами) */
+@media (max-width: 640px) {
+  .parallax .contact{
+    background-attachment: initial; /* Отключаем параллакс */
+    background-size: cover; /* Адаптация картинки под размер экрана */
+    background-position: center; /* Центрируем картинку */
+  }
+}
+
+/* Параллакс для больших экранах */
+@media (min-width: 640px) {
+  .parallax {
+    background-attachment: fixed; /* Включаем параллакс */
+    background-size: cover; /* Картинка будет покрывать экран */
+    background-position: center; /* Центрируем картинку */
+  }
+}
 

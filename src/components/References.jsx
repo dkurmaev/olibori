@@ -16,6 +16,7 @@ const References = () => {
   
     return (
       <section
+      id="parallax"
         className="relative bg-fixed bg-center bg-cover"
         style={{
           backgroundImage: "url('/images/parallax.jpg')",
