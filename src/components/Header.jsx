@@ -129,11 +129,11 @@ const Header = () => {
               Home
             </a>
             <a
-              href="#services"
+              href="#cost-calculator"
               className="text-white hover:text-secondary border-b border-gray-200 py-2"
-              onClick={toggleMenu}
+              onClick={scrollToCostCalculator}
             >
-              Dienstleistungen
+              Kostenberechnung
             </a>
             <a
               href="#contact"

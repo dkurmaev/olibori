@@ -43,32 +43,33 @@ const Testimonials = () => {
   return (
     <section
       id="parallax"
-      className="relative bg-fixed bg-center bg-cover flex flex-col items-center justify-center"
+      className="relative bg-center bg-cover flex flex-col items-center justify-center
+             sm:bg-scroll sm:bg-contain
+             md:bg-fixed md:bg-cover
+             lg:py-32 py-16"
       style={{
-        backgroundImage: "url('/images/parallax.jpg')",
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundImage: "url('/images/parallax.jpg')",       
       }}
       {...swipeHandlers} // Добавляем обработчики свайпа
     >
-      <div className="bg-black bg-opacity-80 w-full py-16">
+      <div className="bg-black bg-opacity-80 w-full h-full">
         <div className="relative z-10 text-center text-white mx-auto px-6 lg:px-20">
           <h2 className="text-4xl sm:text-5xl font-extrabold uppercase tracking-wider text-teal-400 mb-12">
             Kundenstimmen
           </h2>
           <div className="flex flex-col items-center max-w-5xl mx-auto space-y-8 text-center">
-            <div className="relative flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
-              {/* Изображение клиента */}
-              <div className="w-48 h-48 relative mx-auto md:mx-0">
+            {/* Изображение клиента */}
+            <div className="w-24 h-24 relative mx-auto md:mx-0">
                 <img
                   src={testimonialsData[currentIndex].image}
                   alt={testimonialsData[currentIndex].name}
-                  className="w-full h-full object-contain rounded-full border-4 border-teal-400 shadow-lg"
+                  className="w-full h-full object-contain rounded-full border-2 border-teal-400 shadow-lg"
                 />
               </div>
+            <div className="relative flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
+              
               {/* Отзыв */}
-              <div className="max-w-lg text-justify max-w-lg break-words tracking-wider leading-loose">
+              <div className="max-w-lg text-center max-w-lg break-words tracking-wider leading-loose">
                 <p className="text-lg sm:text-xl italic text-gray-300 mb-4">
                   {testimonialsData[currentIndex].feedback}
                 </p>

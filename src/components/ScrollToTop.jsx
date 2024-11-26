@@ -25,12 +25,12 @@ const ScrollToTop = () => {
   };
 
   return (
-    <div className="fixed bottom-5 right-1">
+    <div className="fixed bottom-5 right-1 z-50 ">
       {isVisible && (
         <button
           onClick={scrollToTop}
           title="Nach oben scrollen"
-          className="bg-teal-900 text-white p-4 rounded-full shadow-lg h-16 w-24 transform transition-all duration-300 ease-in-out -translate-x-8 hover:scale-125"
+          className="bg-teal-900 text-white p-4 rounded-full shadow-lg h-16 w-20 transform transition-all duration-300 ease-in-out -translate-x-8 hover:scale-125 z-50"
           style={{ marginRight: '-70px' }} // Initially, only part of the button is visible
         >
           <FaArrowUp />
