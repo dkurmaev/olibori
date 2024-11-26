@@ -9,8 +9,7 @@ const ContactForm = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isError, setIsError] = useState(false);
-  23;
-  23;
+
   const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
   const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
   const userId = import.meta.env.VITE_EMAILJS_USER_ID;
@@ -23,7 +22,6 @@ const ContactForm = () => {
     e.preventDefault();
     setIsSubmitted(false);
     setIsError(false);
-    23;
 
     emailjs.send(serviceId, templateId, formData, userId).then(
       (response) => {
@@ -41,16 +39,17 @@ const ContactForm = () => {
   return (
     <section
       id="contact"
-      className="relative bg-fixed bg-center bg-cover"
+      className="relative bg-cover bg-center bg-fixed"
       style={{
-        backgroundImage: "url('/images/parallax.jpg')",
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundImage: "url('/images/parallax.jpg')", // Указываем картинку для фона
+        backgroundAttachment: "fixed", // Закрепляем картинку для параллакса
+        backgroundSize: "cover", // Картинка должна покрывать весь экран
+        backgroundPosition: "center", // Центрируем картинку на фоне
       }}
     >
       <div className="bg-black bg-opacity-80 w-full py-16">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Информация о компании */}
           <div className="p-6 bg-opacity-70 shadow-xl rounded-lg transition-transform hover:scale-105">
             <h3 className="text-3xl sm:text-5xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
               Unser Standort
@@ -58,8 +57,7 @@ const ContactForm = () => {
             <p className="text-gray-600 mb-4 leading-relaxed">
               <strong>Olidort Bedachungen GmbH</strong> <br />
               Sellwigsweg 1, <br />
-              56470 Bad Marienberg,
-              <br />
+              56470 Bad Marienberg, <br />
               Deutschland
             </p>
             <p className="text-gray-600 mb-4">
@@ -82,7 +80,8 @@ const ContactForm = () => {
             </div>
           </div>
 
-          <div className="p-6 bg-opacity-10 text-gray-400  shadow-xl rounded-lg transition-transform hover:scale-105">
+          {/* Форма контакта */}
+          <div className="p-6 bg-opacity-10 text-gray-400 shadow-xl rounded-lg transition-transform hover:scale-105">
             <h3 className="text-3xl sm:text-5xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
               Kontaktieren Sie uns
             </h3>

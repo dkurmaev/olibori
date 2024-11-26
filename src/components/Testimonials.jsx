@@ -45,7 +45,7 @@ const Testimonials = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      setOffset(scrollY * 2); // Скорость параллакса
+      setOffset(scrollY * 1); // Скорость параллакса
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -63,7 +63,7 @@ const Testimonials = () => {
         backgroundSize: "cover",
       }}
     >
-      <div className="bg-black bg-opacity-80 w-full py-16">
+      <div className="bg-black bg-opacity-60 w-full py-16">
         <div className="relative z-10 text-center text-white mx-auto px-6 lg:px-20">
           <h2 className="text-4xl sm:text-5xl font-extrabold uppercase tracking-wider text-teal-400 mb-12">
             Kundenstimmen
