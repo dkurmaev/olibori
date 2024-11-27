@@ -83,7 +83,7 @@ const ContactForm = () => {
           {/* Форма контакта */}
           <div className="p-6 bg-opacity-10 text-gray-400 shadow-xl rounded-lg transition-transform hover:scale-105">
             <h3 className="text-3xl sm:text-5xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
-              Kontaktieren Sie uns
+              Uns Kontaktieren
             </h3>
 
             {isSubmitted && (

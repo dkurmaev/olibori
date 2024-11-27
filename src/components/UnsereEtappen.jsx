@@ -15,7 +15,7 @@ const UnsereEtappen = () => {
     <div className="max-w-7xl mx-auto px-4 py-10">
       {/* Заголовок */}
       <div className="text-center mb-8">
-        <h2 className="text-2xl sm:text-3xl md:text-6xl lg:text-6xl my-8 font-heading font-bold text-gray-500 uppercase border-b-2 border-gray-300 pb-4">
+        <h2 className="text-2xl sm:text-3xl md:text-6xl lg:text-6xl my-8 font-heading font-bold text-gray-500 uppercase border-b-2 border-teal-400 inline-block text-center pb-1">
           Die Hauptphasen der Dacharbeiten:
         </h2>
         <p className="text-lg font-sans text-gray-600">

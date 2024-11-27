@@ -12,10 +12,16 @@ const ParallaxSection = () => {
     };
 
     // Добавляем обработчик прокрутки
-    window.addEventListener("scroll", handleScroll);
+    if (window.innerWidth > 768) { // Параллакс работает только на экранах больше 768px
+      window.addEventListener("scroll", handleScroll);
+    }
 
     // Удаляем обработчик при размонтировании компонента
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      if (window.innerWidth > 768) {
+        window.removeEventListener("scroll", handleScroll);
+      }
+    };
   }, []);
 
   return (
@@ -29,7 +35,8 @@ const ParallaxSection = () => {
         backgroundPosition: "center",
       }}
     >
-      <div className="absolute inset-0 bg-black opacity-50"></div>
+      {/* Наложение темного фона */}
+      <div className="absolute inset-0 bg-black opacity-80"></div>
       <div className="relative z-10 text-center text-white my-16">
         <h1 className="text-xl sm:text-xl md:text-2xl lg:text-7xl font-heading font-bold text-gray-200 uppercase animate__animated animate__fadeIn animate__delay-1s">
           Wir führen einzelne Arten von Dacharbeiten durch:
@@ -84,6 +91,8 @@ const ParallaxSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Стрелка вниз */}
       <div className="flex gap-32 justify-center space-x-24 mb-12 md:space-x-32 lg:space-x-48 text-gray-200 cursor-pointer">
         <svg
           className="w-6 h-6 md:w-8 md:h-8 lg:w-12 lg:h-12 animate-bounce"
