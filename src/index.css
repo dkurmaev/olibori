@@ -51,6 +51,25 @@ body {
   transform: skewX(-30deg);
   animation: shimmer 2s infinite; /* Настройте скорость, если нужно */
 }
+.phone {
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.phone::after {
+  content: "";
+  position: absolute;
+  top: 0; /* Начинаем анимацию за верхнюю границей кнопки */
+  left: 10%; /* Начинаем анимацию за левой границей кнопки */
+  width: 10%; /* Достаточно широкая полоса для покрытия кнопки */
+  height: 30%;
+  background: black;
+  transform: translateY(-100%);
+  /* transform: skewX(-10deg); */
+  animation: shimmer 5s infinite; /* Настройте скорость, если нужно */
+}
+
 .btn {
   background-color: #e6e600;
   color: rgb(255, 233, 33);
@@ -64,7 +83,6 @@ body {
   padding: 10px;
   margin: 5px;
   border-radius: 5px;
-
   border: 3px solid #26704d;
 }
 

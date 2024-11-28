@@ -1,279 +1,7 @@
 import { useState } from "react";
 import { FaClock } from "react-icons/fa";
 import ContactFormModal from "./ContactFormModal";
-
-export const neubauOptions = [
-  {
-    name: "Unterkonstruktion",
-    options: [
-      {
-        name: "Beton",
-        cost: 50,
-        description: "Robuste Grundlage für Dachaufbauten.",
-      },
-      {
-        name: "Trapezblech",
-        cost: 30,
-        description: "Leicht, stabil und wirtschaftlich.",
-      },
-    ],
-  },
-  {
-    name: "Dampfsperre",
-    options: [
-      {
-        name: "S4 + Alu",
-        cost: 10,
-        description:
-          "Aluminium-beschichtete Dampfsperre mit hoher Dichtigkeit.",
-      },
-      {
-        name: "RE-Folie",
-        cost: 5,
-        description:
-          "Wirtschaftliche Lösung, geeignet für einfache Anwendungen.",
-      },
-    ],
-  },
-  {
-    name: "Dämmung",
-    options: [
-      {
-        name: "EPS(Expandierter Polystyrol)",
-        cost: 30,
-        description: "Günstige und effektive Dämmung.",
-      },
-      {
-        name: "PIR/PIR(Polyurethan)",
-        cost: 40,
-        description: "Sehr gute Wärmedämmeigenschaften, leicht und langlebig.",
-      },
-    ],
-  },
-  {
-    name: "Kunststoffbahn",
-    options: [
-      {
-        name: "PVC (Polyvinylchlorid)",
-        cost: 30,
-        description: "Flexibel, langlebig und für viele Dacharten geeignet.",
-      },
-      {
-        name: "TPO (Thermoplastisches Polyolefin)",
-        cost: 40,
-        description: "Umweltfreundlicher und UV-beständiger als PVC.",
-      },
-    ],
-  },
-  {
-    name: "Abdichtung",
-    options: [
-      {
-        name: "Flüssigabdichtung",
-        cost: 30,
-        description: "Für präzise und dauerhafte Versiegelung.",
-      },
-      {
-        name: "Bitumenbahn",
-        cost: 10,
-        description: "Klassische Wahl für Flachdächer.",
-      },
-    ],
-  },
-];
-
-export const sanierungOptions = [
-  {
-    name: "Dachreparatur",
-    options: [
-      {
-        name: "Dachziegel",
-        cost: 5,
-        description: "Austausch einzelner beschädigter Ziegel.",
-      },
-      {
-        name: "Bitumenbahnen",
-        cost: 10,
-        description:
-          "Für die Abdichtung kleiner Schäden, vor allem bei Flachdächern.",
-      },
-      {
-        name: "Metallbleche (z. B. Zink oder Aluminium)",
-        cost: 30,
-        description: "Reparatur oder Ersatz von Metalldachelementen.",
-      },
-      {
-        name: "Schrauben, Nägel, Dichtmaterial",
-        cost: 20,
-        description: "Kleine Reparaturen, 20 € für Materialien pro Einsatz.",
-      },
-    ],
-  },
-
-  {
-    name: "Neudeckung",
-    description: "Komplette Neueindeckung mit Materialien Ihrer Wahl.",
-    options: [
-      {
-        name: "Tondachziegel",
-        cost: 50,
-        description: "Klassisch und langlebig.",
-      },
-      {
-        name: "Betondachsteine",
-        cost: 25,
-        description: "Günstiger als Ton, ähnliche Optik.",
-      },
-      {
-        name: "Metallpaneele (z. B. Aluminium, Zink, Kupfer)",
-        cost: 130,
-        description: "Moderne Optik, besonders langlebig.",
-      },
-      {
-        name: "Schieferplatten",
-        cost: 170,
-        description: "Hochwertig und elegant, für historische Gebäude beliebt.",
-      },
-      {
-        name: "Bitumenschindeln",
-        cost: 15,
-        description: "Leicht, günstig und vielseitig.",
-      },
-      {
-        name: "Reetdach (für traditionelle Gebäude)",
-        cost: 135,
-        description: "Selten, aber ästhetisch.",
-      },
-    ],
-  },
-  {
-    name: "Energetische Wärmedämmung (Dachdämmung)",
-    description:
-      "Aufbringung von Dämmmaterial unter, zwischen oder über der Dachkonstruktion. Reduktion von Wärmeverlusten und Einhaltung der EnEV (Energieeinsparverordnung)",
-    options: [
-      {
-        name: "Mineralwolle (Glaswolle, Steinwolle)",
-        cost: 20,
-        description: "Günstig und effektiv.",
-      },
-      {
-        name: "Polyurethanplatten (PU-Platten)",
-        cost: 40,
-        description: "Höhere Dämmwerte für weniger Platzbedarf.",
-      },
-      {
-        name: "Holzfaserplatten",
-        cost: 60,
-        description: "Ökologisch und nachhaltig.",
-      },
-      {
-        name: "Zellulose",
-        cost: 40,
-        description: "Für schwer zugängliche Bereiche.",
-      },
-    ],
-  },
-  {
-    name: "Komplettsanierung des Daches",
-    description:
-      "Komplettaustausch der Dachkonstruktion und der Eindeckung. Neuaufbau der Dämmung und Abdichtung",
-    options: [
-      {
-        name: "Kombiniert die Materialien aus den Bereichen Neueindeckung und Wärmedämmung",
-        cost: 300,
-        description: "Optionale Materialien.",
-      },
-      {
-        name: "Dachfenster",
-        cost: 700,
-        description: "pro Stück.",
-      },
-      {
-        name: "Unterspannbahnen",
-        cost: 5,
-        description: "pro m².",
-      },
-    ],
-  },
-  {
-    name: "Flachdach-Sanierung",
-    description:
-      "Abdichtung des Daches mit Bitumenbahnen, EPDM-Folie oder Flüssigkunststoff. Ergänzung oder Austausch der Wärmedämmung",
-    options: [
-      {
-        name: "Bitumenbahnen",
-        cost: 10,
-        description: "Für Abdichtung.",
-      },
-      {
-        name: "EPDM-Folie",
-        cost: 20,
-        description:
-          "Hochwertige Alternative zu Bitumen, langlebig und flexibel.",
-      },
-      {
-        name: "Flüssigkunststoff",
-        cost: 40,
-        description: "Für kleinere Reparaturen oder Details.",
-      },
-    ],
-  },
-  {
-    name: "Dachbegrünung (Gründach)",
-    description:
-      "Installation einer Substratschicht und Vegetation auf Flachdächern oder leicht geneigten Dächern.",
-    options: [
-      {
-        name: "Dachabdichtung (z. B. EPDM-Folie)",
-        cost: 20,
-        description: "Schutz vor Feuchtigkeit.",
-      },
-      {
-        name: "Drainageschicht",
-        cost: 10,
-        description: "Verhindert Staunässe.",
-      },
-      {
-        name: "Substratschicht",
-        cost: 15,
-        description: "Spezielle Erde für Pflanzen.",
-      },
-      {
-        name: "Pflanzen",
-        cost: 30,
-        description: "Sukkulenten, Moose oder Gräser.",
-      },
-    ],
-  },
-  {
-    name: "Installation von Solarsystemen (Photovoltaik oder Solarthermie)",
-    description:
-      "Montage von Solarmodulen auf dem Dach. Integration in bestehende oder neue Dachkonstruktion. ",
-    options: [
-      {
-        name: "Photovoltaikmodule",
-        cost: 1000,
-        description:
-          "Umwandlung von Sonnenlicht in Strom pro kWp (Kilowatt Peak).",
-      },
-      {
-        name: "Solarthermieanlagen",
-        cost: 1200,
-        description: "Erzeugung von Wärme. pro m² Kollektorfläche",
-      },
-      {
-        name: "Montagesysteme",
-        cost: 80,
-        description: "Befestigung der Module. pro Modul",
-      },
-      {
-        name: "Pflanzen",
-        cost: 30,
-        description: "Sukkulenten, Moose oder Gräser.",
-      },
-    ],
-  },
-];
+import { neubauOptions, sanierungOptions } from '../service/optionsData';
 
 const CostCalculator = () => {
   const [step, setStep] = useState(0);
@@ -285,8 +13,7 @@ const CostCalculator = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [currentDescription, setCurrentDescription] = useState("");
 
-  const handleContactModalToggle = () =>
-    setIsContactModalOpen(!isContactModalOpen);
+  const handleContactModalToggle = () => setIsContactModalOpen(!isContactModalOpen);
   const handleStart = () => setStep(1);
   const handleBack = () => setStep((prev) => Math.max(prev - 1, 0));
 
@@ -302,14 +29,10 @@ const CostCalculator = () => {
   const calculateCost = () => {
     let cost = 0;
     if (selectedType === "neubau") {
-      Object.values(neubauSelections).forEach(
-        (option) => (cost += option.cost)
-      );
+      Object.values(neubauSelections).forEach((option) => (cost += option.cost));
       cost *= area;
     } else if (selectedType === "sanierung") {
-      Object.values(sanierungSelections).forEach(
-        (option) => (cost += option.cost)
-      );
+      Object.values(sanierungSelections).forEach((option) => (cost += option.cost));
       cost *= area;
     }
     setTotalCost(cost);
@@ -319,13 +42,11 @@ const CostCalculator = () => {
   const isAllOptionsSelected = () => {
     if (selectedType === "neubau") {
       return neubauOptions.every(
-        (category) =>
-          category.options?.length > 0 && neubauSelections[category.name]
+        (category) => category.options?.length > 0 && neubauSelections[category.name]
       );
     } else if (selectedType === "sanierung") {
       return sanierungOptions.every(
-        (category) =>
-          category.options?.length > 0 && sanierungSelections[category.name]
+        (category) => category.options?.length > 0 && sanierungSelections[category.name]
       );
     }
     return false;
@@ -527,5 +248,3 @@ const CostCalculator = () => {
 };
 
 export default CostCalculator;
-
-

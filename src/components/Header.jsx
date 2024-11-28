@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { FaPhone } from "react-icons/fa";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -26,8 +27,10 @@ const Header = () => {
     const costCalculatorSection = document.getElementById("cost-calculator");
     if (costCalculatorSection) {
       const rect = costCalculatorSection.getBoundingClientRect(); // Позиция элемента
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop; // Текущее значение прокрутки
-      const targetY = rect.top + scrollTop - (window.innerHeight / 2) + (rect.height / 2); // Позиция на середине экрана
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop; // Текущее значение прокрутки
+      const targetY =
+        rect.top + scrollTop - window.innerHeight / 2 + rect.height / 2; // Позиция на середине экрана
       window.scrollTo({ top: targetY, behavior: "smooth" });
     }
   };
@@ -54,6 +57,17 @@ const Header = () => {
               &quot;Dicht ist unsere Pflicht&quot;
             </p>
           </div>
+        </div>
+        <div className="text-left hidden lg:block  ">
+          <p className="text-sm flex justify-between items-center font-light space-x-6 text-right text-gray-400">
+            <FaPhone className="my-auto mx-2" />
+            Rufen Sie uns an:
+            <span className="text-yellow-400 ">+49 157 300 505 70</span>
+          </p>
+          {/* <p className="text-sm font-light text-right text-gray-400">
+            Mailen uns an:{" "}
+            <span className="text-yellow-400 phone">olidort.b@gmail.com</span>
+          </p> */}
         </div>
 
         {/* Меню для десктопа */}
@@ -84,14 +98,6 @@ const Header = () => {
             >
               Anruf
             </a>
-            <div className="text-left hidden lg:block">
-              <p className="text-sm font-light text-right text-gray-400">
-                Rufen Sie uns an:
-              </p>
-              <p className="text-sm font-bold text-gray-900">
-                +49 157 300 505 70
-              </p>
-            </div>
           </div>
         </nav>
 
