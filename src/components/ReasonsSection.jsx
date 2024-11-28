@@ -99,7 +99,7 @@ const ReasonsSection = () => {
               Zuverlässigkeit
             </h3>
             <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10">
-              Ihr vertrauenswürdiger Partner
+            Zuverlässiger Partner
             </p>
             {/* Description */}
             <p className="ag-courses-item_date-box_middle text-center mt-2 hover:text-teal-900">
