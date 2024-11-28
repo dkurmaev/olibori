@@ -25,7 +25,7 @@ const HomeSlider = () => {
   return (
     <section
       id="home"
-      className="relative w-full h-[90vh] md:h-[90vh] lg:h-[80vh] bg-cover bg-center pt-30 md:pt-10 lg:pt-10 flex items-center justify-center"
+      className="relative flex items-center justify-center"
       style={{
         backgroundImage: "url('/images/main_page.jpg')",
         backgroundAttachment: "fixed",
@@ -35,14 +35,14 @@ const HomeSlider = () => {
       }}
     >
       {/* Затемнение фона */}
-      <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-80"></div>
 
       {/* Основной контент */}
-      <div className="relative z-10 text-center  md:my-24 lg:my-28 bg-black bg-opacity-60 h-full ">
-        <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-7xl my-24 font-heading font-bold text-gray-300 uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
+      <div className="relative z-10 text-center md:my-24 lg:my-28 sm:my-20 py-5 ">
+        <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-7xl mt-24 font-heading font-bold text-gray-300 uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
           Dachdeckerarbeiten jeder Komplexität schlüsselfertig.
         </h1>
-        <p className="text-sm sm:text-md md:text-xl lg:text-2xl font-sans text-yellow-400 italic mt-6 animate__animated animate__fadeIn animate__delay-3s">
+        <p className="text-sm sm:text-md md:text-xl lg:text-2xl font-sans text-yellow-400 italic mt-2 sm:mt-2 animate__animated animate__fadeIn animate__delay-3s">
           Wir bieten die besten Lösungen für Ihr Dach!
         </p>
         <p

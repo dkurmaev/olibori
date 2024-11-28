@@ -8,7 +8,7 @@ const Header = () => {
   // Обработчик прокрутки для изменения стиля при скролле
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      if (window.scrollY > 10) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -37,8 +37,8 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full p-4 z-20 py-4 shadow-lg backdrop-blur-md transition-all duration-500 ${
-        scrolled ? "bg-opacity-100" : "bg-opacity-10"
+      className={`fixed top-0 left-0 w-full p-4 z-20 py-4 shadow-lg backdrop-blur-sm transition-all duration-500 ${
+        scrolled ? "bg-opacity-20" : "bg-opacity-100"
       }`}
     >
       <div className="container mx-auto flex justify-between items-center">
@@ -58,18 +58,20 @@ const Header = () => {
             </p>
           </div>
         </div>
-        <div className="text-left hidden lg:block  ">
-          <p className="text-sm flex justify-between items-center font-light space-x-6 text-right text-gray-400">
-            <FaPhone className="my-auto mx-2" />
-            Rufen Sie uns an:
-            <span className="text-yellow-400 ">+49 157 300 505 70</span>
+        <div className="responsive-container hidden lg-custom:hidden md-custom:hidden lg:block xl:block sm:hidden flex-wrap">
+          <p className="text-md lg:flex justify-between items-center font-light space-x-3 text-right text-yellow-400 animate-pulse">
+            <FaPhone className="my-auto mx-2 animate-bounce" />
+            <span className="group relative">              
+              <span className="absolute inset-0 bg-yellow-400 opacity-10 rounded-full blur group-hover:opacity-30 transition-opacity"></span>
+            </span>
+            <span 
+            href= "tel:+4915730050570"
+            className="text-teal-600 font-bold group relative"
+            >            
+              +4915730050570
+            </span>
           </p>
-          {/* <p className="text-sm font-light text-right text-gray-400">
-            Mailen uns an:{" "}
-            <span className="text-yellow-400 phone">olidort.b@gmail.com</span>
-          </p> */}
         </div>
-
         {/* Меню для десктопа */}
         <nav className="hidden md:flex items-center space-x-6">
           <a
@@ -93,7 +95,7 @@ const Header = () => {
 
           <div className="flex items-center space-x-4">
             <a
-              href="tel:+49123456789"
+              href="tel:+4915730050570"
               className="bg-yellow-400 text-dark px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition hidden lg:flex shimmer-button"
             >
               Anruf
@@ -149,7 +151,7 @@ const Header = () => {
               Kontakt
             </a>
             <a
-              href="tel:+49123456789"
+              href="tel:+4915730050570"
               className="bg-yellow-400 text-gray-900 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition"
             >
               Anruf: +49 157 300 505 70

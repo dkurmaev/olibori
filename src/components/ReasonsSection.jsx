@@ -28,9 +28,9 @@ const ReasonsSection = () => {
   return (
     <section
       ref={sectionRef}
-      className=" my-section relative bg-gray-100 py-24"
+      className="relative bg-gray-100 py-2 my-2"
     >
-      <div className="relative grid grid-cols-1 gap-6 mx-auto lg:grid-cols-3 lg:px-80 text-gray-300 -mt-16 z-10">
+      <div className="relative grid gap-6 px-2 lg:grid-cols-3 md:px-80 lg:px-20 sm:px-80 text-gray-300  md:-mt-16 sm:mt-2 z-10">
         {/* Card 1 */}
         <div
           className={`relative ag-courses_item transition-all duration-1000 transform ${
@@ -39,7 +39,7 @@ const ReasonsSection = () => {
               : "-translate-y-10 opacity-0"
           } hover:transform hover:translate-y-[-10px] hover:shadow-6xl`}
         >
-          <div className="ag-courses-item_link shadow-3xl  rounded-lg bg-white ">
+          <div className="ag-courses-item_link shadow-3xl  rounded-lg  ">
             <div className="relative flex flex-col items-center justify-center ">
               {/* Background */}
               <div className="ag-courses-item_bg bg-teal-900"></div>
@@ -47,7 +47,7 @@ const ReasonsSection = () => {
               <FaTools className="w-14 h-14 text-gray-700 z-10" />
             </div>
             {/* Title with underlined effect */}
-            <h2 className="ag-courses-item_title text-center flex gap-3 text-4xl font-bold items-center justify-center mt-6 hover:text-teal-900 border-b-2 border-gray-300 pb-1">
+            <h2 className="relative z-10 text-gray-400 font-semibold text-2xl text-center items-center justify-center my-9 hover:text-teal-900 border-b-2 border-gray-400 pb-1">
               Erfahrung
             </h2>
             <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10">
@@ -79,7 +79,8 @@ const ReasonsSection = () => {
         </div>
 
         {/* Card 2 */}
-        <div        
+        <div
+        
           className={`relative ag-courses_item transition-all duration-1000 transform ${
             isVisible
               ? "translate-y-0 opacity-100"
@@ -94,7 +95,7 @@ const ReasonsSection = () => {
               <FaHandshake className="w-14 h-14 text-gray-700 z-10" />
             </div>
             {/* Title with underlined effect */}
-            <h3 className="ag-courses-item_title_middle text-center flex gap-3 text-4xl font-bold items-center justify-center mt-6 hover:text-teal-900 border-b-2 border-gray-300 pb-1 text-teal-900">
+            <h3 className="relative z-10 text-teal-400 font-semibold text-2xl text-center items-center justify-center my-9 hover:text-teal-900 border-b-2 border-gray-400 pb-1">
               Zuverlässigkeit
             </h3>
             <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10">
@@ -142,7 +143,7 @@ const ReasonsSection = () => {
               <FaShieldAlt className="w-14 h-14 text-gray-700 z-10" />
             </div>
             {/* Title with underlined effect */}
-            <h3 className="ag-courses-item_title text-center flex gap-3 text-4xl font-bold items-center justify-center mt-6 hover:text-teal-800 border-b-2 border-gray-300 pb-1">
+            <h3 className="relative z-10 text-gray-400 font-semibold text-2xl text-center items-center justify-center my-9 hover:text-teal-900 border-b-2 border-gray-400 pb-1">
               Garantie
             </h3>
             <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10">

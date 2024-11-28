@@ -70,6 +70,7 @@ body {
   animation: shimmer 5s infinite; /* Настройте скорость, если нужно */
 }
 
+
 .btn {
   background-color: #e6e600;
   color: rgb(255, 233, 33);
@@ -108,7 +109,7 @@ body {
   }
 }
 .ag-courses_item {
-  flex-basis: calc(33.33333% - 30px);
+  flex-basis: calc(20% - 10px);
   margin: 0 15px 30px;
   overflow: hidden;
   border-radius: 10px;
@@ -138,7 +139,7 @@ body {
 .ag-courses-item_title {
   margin: 35px 0 15px;
   font-weight: bold;
-  font-size: 30px;  
+  font-size: 10px;  
   color: #b6bbbb;
   z-index: 2;
   position: relative;
@@ -155,16 +156,15 @@ body {
 }
 
 .ag-courses-item_date-box {
-  font-size: 16px;
+  font-size: 14px;
   color: white;
-  box-shadow: #319795;
-  
+  box-shadow: #319795;  
   z-index: 2;
   position: relative;
   transition: color 0.3s ease;
 }
 .ag-courses-item_date-box_middle {
-  font-size: 16px;
+  font-size: 14px;
   color: #0f7169;
   z-index: 2;
   position: relative;
@@ -201,10 +201,13 @@ body {
 .my-section .grid {
   margin-top: -12rem;
 }
+.my-section-mobile .grid {
+  margin-top: -10rem;
+}
 
 /* Фиксированный фон на мобильных устройствах (и устройствах с маленькими экранами) */
 @media (max-width: 768px) {
-  #parallax {
+  .parallax {
     background-attachment: scroll;
     background-size: cover;
   }
@@ -231,4 +234,9 @@ body {
   animation: fadeIn 1s ease-out;
 }
 
+@media (min-width: 1163px), (min-height: 771px) {
+  .responsive-container {
+    display: none;
+  }
+}
 

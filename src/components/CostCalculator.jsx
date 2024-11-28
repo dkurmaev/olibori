@@ -53,7 +53,9 @@ const CostCalculator = () => {
   };
 
   return (
-    <div className="container mx-auto p-8 rounded-xl bg-white shadow-2xl grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div 
+    id="cost-calculator"
+    className="container mx-auto p-8 rounded-xl bg-white shadow-2xl grid grid-cols-1 lg:grid-cols-2 gap-8">
       {/* Left Side */}
       <div className="bg-gradient-to-tl from-teal-200 to-teal-300 p-8 rounded-xl shadow-xl flex flex-col">
         <h2 className="text-2xl font-bold text-center text-teal-800 mb-6">

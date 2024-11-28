@@ -2,6 +2,11 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      screens: {
+       'lg-custom': '1191px', 
+       'md-custom': '1100px',
+
+      },
       fontFamily: {
         sans: ["Poppins", "sans-serif"],
         heading: ["Montserrat", "sans-serif"],
