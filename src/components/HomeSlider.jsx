@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "animate.css";
 import { Swiper, SwiperSlide } from "swiper/react";
+// import { Navigation, Pagination } from "swiper";
 import "swiper/swiper-bundle.css";
 
 const HomeSlider = () => {
@@ -18,7 +19,14 @@ const HomeSlider = () => {
   const scrollToCostCalculator = () => {
     const costCalculatorSection = document.getElementById("cost-calculator");
     if (costCalculatorSection) {
-      costCalculatorSection.scrollIntoView({ behavior: "smooth" });
+      const offset = -200; // Установите отрицательный отступ (например, -100px)
+      const elementPosition = costCalculatorSection.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition + offset;
+  
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -31,7 +39,6 @@ const HomeSlider = () => {
         backgroundAttachment: "fixed",
         backgroundSize: "cover",
         backgroundPosition: "center top",
-
       }}
     >
       {/* Затемнение фона */}
@@ -81,12 +88,12 @@ const HomeSlider = () => {
               className="absolute top-2 right-2 text-gray-700 hover:text-gray-400"
               onClick={toggleCertificateModal}
             >
-               {/* Используем GIF как иконку закрытия */}
-               <img
-                        src="/images/close-icon.gif" // Путь к вашему GIF-файлу
-                        alt="close"
-                        className="w-8 h-8" // Размеры GIF, можно изменить
-                    />
+              {/* Используем GIF как иконку закрытия */}
+              <img
+                src="/images/close-icon.gif" // Путь к вашему GIF-файлу
+                alt="close"
+                className="w-8 h-8" // Размеры GIF, можно изменить
+              />
             </button>
             <h2 className="text-2xl font-bold text-center mb-4">
               Unsere Zertifikate
@@ -96,28 +103,23 @@ const HomeSlider = () => {
               slidesPerView={1}
               navigation
               pagination={{ clickable: true }}
+              // modules={[Navigation, Pagination]} 
               className="w-full h-64"
             >
               <SwiperSlide>
-                <img
-                  src="/images/certificate1.jpg"
-                  alt="Certificate 1"
-                  className="w-full h-full object-contain"
-                />
+                <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500 text-lg font-semibold">
+                  In bearbeitung
+                </div>
               </SwiperSlide>
               <SwiperSlide>
-                <img
-                  src="/images/certificate2.jpg"
-                  alt="Certificate 2"
-                  className="w-full h-full object-contain"
-                />
+                <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500 text-lg font-semibold">
+                  Größe: 1024x768
+                </div>
               </SwiperSlide>
               <SwiperSlide>
-                <img
-                  src="/images/certificate3.jpg"
-                  alt="Certificate 3"
-                  className="w-full h-full object-contain"
-                />
+                <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500 text-lg font-semibold">
+                  Bald!
+                </div>
               </SwiperSlide>
             </Swiper>
           </div>
@@ -136,12 +138,12 @@ const HomeSlider = () => {
               className="absolute top-2 right-2 text-gray-700 hover:text-gray-400"
               onClick={toggleContactModal}
             >
-               {/* Используем GIF как иконку закрытия */}
-               <img
-                        src="/images/close-icon.gif" // Путь к вашему GIF-файлу
-                        alt="close"
-                        className="w-8 h-8" // Размеры GIF, можно изменить
-                    />
+              {/* Используем GIF как иконку закрытия */}
+              <img
+                src="/images/close-icon.gif" // Путь к вашему GIF-файлу
+                alt="close"
+                className="w-8 h-8" // Размеры GIF, можно изменить
+              />
             </button>
             <h2 className="text-3xl font-bold mb-6 text-center">
               Kontaktformular
