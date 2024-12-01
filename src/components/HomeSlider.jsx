@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "animate.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-// import { Navigation, Pagination } from "swiper";
 import "swiper/swiper-bundle.css";
+import ContactFormModal from "./ContactFormModal";
 
 const HomeSlider = () => {
   const [isContactModalOpen, setContactModalOpen] = useState(false);
@@ -127,70 +127,11 @@ const HomeSlider = () => {
       )}
 
       {/* Модальное окно контактов */}
-      {isContactModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div
-            className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md"
-            onClick={toggleContactModal}
-          ></div>
-          <div className="relative bg-white bg-opacity-90 p-6 rounded-lg w-11/12 max-w-lg z-50">
-            <button
-              className="absolute top-2 right-2 text-gray-700 hover:text-gray-400"
-              onClick={toggleContactModal}
-            >
-              {/* Используем GIF как иконку закрытия */}
-              <img
-                src="/images/close-icon.gif" // Путь к вашему GIF-файлу
-                alt="close"
-                className="w-8 h-8" // Размеры GIF, можно изменить
-              />
-            </button>
-            <h2 className="text-3xl font-bold mb-6 text-center">
-              Kontaktformular
-            </h2>
-            <form>
-              <div className="mb-4">
-                <label htmlFor="name" className="block text-gray-700">
-                  Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-teal-500"
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700">
-                  E-Mail <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-teal-500"
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="phone" className="block text-gray-700">
-                  Telefon (optional)
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-teal-500"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-teal-900 text-white font-bold py-2 rounded-md hover:bg-teal-700 transition"
-              >
-                Absenden
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+{isContactModalOpen && (
+  <ContactFormModal closeModal={toggleContactModal} />
+)}
+
+      
     </section>
   );
 };
