@@ -61,13 +61,13 @@ const Header = () => {
         <div className="responsive-container hidden lg-custom:hidden md-custom:hidden lg:block xl:block sm:hidden flex-wrap">
           <p className="text-md lg:flex justify-between items-center font-light space-x-3 text-right text-yellow-400 animate-pulse">
             <FaPhone className="my-auto mx-2 animate-bounce" />
-            <span className="group relative">              
+            <span className="group relative">
               <span className="absolute inset-0 bg-yellow-400 opacity-10 rounded-full blur group-hover:opacity-30 transition-opacity"></span>
             </span>
-            <span 
-            href= "tel:+4915730050570"
-            className="text-teal-600 font-bold group relative"
-            >            
+            <span
+              href="tel:+4915730050570"
+              className="text-teal-600 font-bold group relative"
+            >
               +4915730050570
             </span>
           </p>
@@ -132,27 +132,31 @@ const Header = () => {
             <a
               href="#home"
               className="text-white hover:text-secondary border-b border-gray-200 py-2"
-              onClick={toggleMenu}
+              onClick={toggleMenu} // Закрытие меню при нажатии
             >
               Home
             </a>
             <a
               href="#cost-calculator"
               className="text-white hover:text-secondary border-b border-gray-200 py-2"
-              onClick={scrollToCostCalculator}
+              onClick={() => {
+                toggleMenu(); // Закрытие меню
+                scrollToCostCalculator(); // Прокрутка к секции
+              }}
             >
               Kostenberechnung
             </a>
             <a
               href="#contact"
               className="text-white hover:text-secondary py-2"
-              onClick={toggleMenu}
+              onClick={toggleMenu} // Закрытие меню
             >
               Kontakt
             </a>
             <a
               href="tel:+4915730050570"
               className="bg-yellow-400 text-gray-900 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition"
+              onClick={toggleMenu} // Закрытие меню
             >
               Anruf: +49 157 300 505 70
             </a>
