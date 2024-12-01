@@ -16,8 +16,8 @@ const Footer = () => {
                     <button onClick={() => setIsImpressumOpen(true)} className="hover:text-secondary">Impressum</button>
                     <button onClick={() => setIsAGBOpen(true)} className="hover:text-secondary">AGB</button>
                     <button onClick={() => setIsDatenschutzOpen(true)} className="hover:text-secondary">Datenschutz</button>
-                    <a href="https://facebook.com" className="hover:text-secondary">Facebook</a>
-                    <a href="https://instagram.com" className="hover:text-secondary">Instagram</a>
+                    {/* <a href="https://facebook.com" className="hover:text-secondary">Facebook</a>
+                    <a href="https://instagram.com" className="hover:text-secondary">Instagram</a> */}
                 </div>
             </div>
 
