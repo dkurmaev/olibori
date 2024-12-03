@@ -9,9 +9,9 @@ const ContactForm = () => {
   });
   const [formErrors, setFormErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [showMessage, setShowMessage] = useState(false); // Управляет видимостью сообщения
-  const [messageContent, setMessageContent] = useState(""); // Хранит текст сообщения
-  const [messageType, setMessageType] = useState(""); // Указывает тип сообщения ('success' или 'error')
+  const [showMessage, setShowMessage] = useState(false); 
+  const [messageContent, setMessageContent] = useState("");
+  const [messageType, setMessageType] = useState("");
 
   const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
   const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -91,15 +91,14 @@ const ContactForm = () => {
     id="contact"
     className="relative bg-cover bg-center bg-fixed sm:bg-fixed sm:bg-none"
     style={{
-      backgroundImage: "url('/images/parallax.jpg')", // Указываем картинку для фона
-      backgroundAttachment: "fixed", // Закрепляем картинку для параллакса
-      backgroundSize: "cover", // Картинка должна покрывать весь экран
-      backgroundPosition: "center", // Центрируем картинку на фоне
+      backgroundImage: "url('/images/parallax.jpg')", 
+      backgroundAttachment: "fixed", 
+      backgroundSize: "cover",
+      backgroundPosition: "center", 
     }}
   >
     <div className="bg-black bg-opacity-80 w-full py-16">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Информация о компании */}
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">      
         <div className="p-6 bg-opacity-70 shadow-xl rounded-lg transition-transform hover:scale-105">
           <h3 className="text-3xl sm:text-5xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
             Unser Standort

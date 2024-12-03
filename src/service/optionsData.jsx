@@ -1,6 +1,6 @@
 export const neubauOptions = [
     {
-      name: "Unterkonstruktion",
+      name: "Unterkonstruktion:",
       options: [
         {
           name: "Beton",
@@ -32,37 +32,37 @@ export const neubauOptions = [
       ],
     },
     {
-      name: "Dämmung",
+      name: "Dämmung:",
       options: [
         {
-          name: "EPS(Expandierter Polystyrol)",
+          name: "EPS",
           cost: 30,
           description: "Günstige und effektive Dämmung.",
         },
         {
-          name: "PIR/PIR(Polyurethan)",
+          name: "PIR/PIR",
           cost: 40,
           description: "Sehr gute Wärmedämmeigenschaften, leicht und langlebig.",
         },
       ],
     },
     {
-      name: "Kunststoffbahn",
+      name: "Kunststoffbahn:",
       options: [
         {
-          name: "PVC (Polyvinylchlorid)",
+          name: "PVC",
           cost: 30,
           description: "Flexibel, langlebig und für viele Dacharten geeignet.",
         },
         {
-          name: "TPO (Thermoplastisches Polyolefin)",
+          name: "TPO",
           cost: 40,
           description: "Umweltfreundlicher und UV-beständiger als PVC.",
         },
       ],
     },
     {
-      name: "Abdichtung",
+      name: "Abdichtung:",
       options: [
         { name: "Flüssigabdichtung", 
           cost: 30, 
@@ -78,7 +78,7 @@ export const neubauOptions = [
   
   export const sanierungOptions = [
     {
-      name: "Dachreparatur",
+      name: "Dachreparatur:",
       options: [
         {
           name: "Dachziegel",
@@ -96,17 +96,12 @@ export const neubauOptions = [
           cost: 30,
           description: "Reparatur oder Ersatz von Metalldachelementen.",
         },
-        {
-          name: "Schrauben, Nägel, Dichtmaterial",
-          cost: 20,
-          description:
-            "Kleine Reparaturen, 20 € für Materialien pro Einsatz.",
-        },
+        
       ],
     },
   
     {
-      name: "Neudeckung",
+      name: "Neudeckung:",
       description: "Komplette Neueindeckung mit Materialien Ihrer Wahl.",
       options: [
         {
@@ -142,7 +137,7 @@ export const neubauOptions = [
       ],
     },
     {
-      name: "Energetische Wärmedämmung (Dachdämmung)",
+      name: "Energetische Wärmedämmung:",
       description: "Aufbringung von Dämmmaterial unter, zwischen oder über der Dachkonstruktion. Reduktion von Wärmeverlusten und Einhaltung der EnEV (Energieeinsparverordnung)",
       options: [
         {
@@ -168,7 +163,7 @@ export const neubauOptions = [
       ],
     },
     {
-      name: "Komplettsanierung des Daches",
+      name: "Komplettsanierung des Daches:",
       description: "Komplettaustausch der Dachkonstruktion und der Eindeckung. Neuaufbau der Dämmung und Abdichtung",
       options: [
         {
@@ -189,7 +184,7 @@ export const neubauOptions = [
       ],
     },
     {
-      name: "Flachdach-Sanierung",
+      name: "Flachdach-Sanierung:",
       description: "Abdichtung des Daches mit Bitumenbahnen, EPDM-Folie oder Flüssigkunststoff. Ergänzung oder Austausch der Wärmedämmung",
       options: [
         {
@@ -210,7 +205,7 @@ export const neubauOptions = [
       ],
     },
     {
-      name: "Dachbegrünung (Gründach)",
+      name: "Dachbegrünung (Gründach):",
       description: "Installation einer Substratschicht und Vegetation auf Flachdächern oder leicht geneigten Dächern.",
       options: [
         {
@@ -235,32 +230,6 @@ export const neubauOptions = [
           },    
       ],
     },
-    {
-      name: "Installation von Solarsystemen (Photovoltaik oder Solarthermie)",
-      description: "Montage von Solarmodulen auf dem Dach. Integration in bestehende oder neue Dachkonstruktion. ",
-      options: [
-        {
-          name: "Photovoltaikmodule",
-          cost: 1000,
-          description: "Umwandlung von Sonnenlicht in Strom pro kWp (Kilowatt Peak).",
-        },
-        {
-          name: "Solarthermieanlagen",
-          cost: 1200,
-          description: "Erzeugung von Wärme. pro m² Kollektorfläche",
-        },
-        {
-          name: "Montagesysteme",
-          cost: 80,
-          description: "Befestigung der Module. pro Modul",
-        },
-        {
-            name: "Pflanzen",
-            cost: 30,
-            description: "Sukkulenten, Moose oder Gräser.",
-          },    
-      ],
-    },  
-
+     
   ];
   

@@ -23,7 +23,6 @@ const ContactFormModal = ({ closeModal }) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Валидация поля
     const fieldErrors = validateField(name, value);
     setFormErrors((prevErrors) => ({
       ...prevErrors,
@@ -34,7 +33,6 @@ const ContactFormModal = ({ closeModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Проверка полей
     const errors = {
       ...validateField("name", formData.name),
       ...validateField("email", formData.email),
@@ -70,17 +68,15 @@ const ContactFormModal = ({ closeModal }) => {
     if (name === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
       errors.email = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
     }
-    if (
-      name === "phone" &&
-      value &&
-      !/^\+49\(0\)\d{3}(\s\d{2}){4}$/.test(value)
-    ) {
-      errors.phone =
-        "Bitte geben Sie eine gültige Telefonnummer im Format +49(0)xxx xx xx xx xx ein.";
+    if (name === "phone") {
+      console.log("Проверка телефона:", value); // Отладка
+      if (!/^\+49\s?\d{3}(\s?\d{2}){4}$/.test(value)) {
+        errors.phone =
+          "Bitte geben Sie eine gültige Telefonnummer im Format +49 XXX XX XX XX XX ein.";
+      }
     }
     return errors;
   };
-
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md"></div>
@@ -162,7 +158,7 @@ const ContactFormModal = ({ closeModal }) => {
               Telefonnummer (optional)
             </label>
             <InputMask
-              mask="+49(0)999 99 99 99 99"
+              mask="+49 999 99 99 99 99"
               id="phone"
               name="phone"
               value={formData.phone}
@@ -172,7 +168,7 @@ const ContactFormModal = ({ closeModal }) => {
                   ? "border-red-500 focus:ring-red-500"
                   : "focus:ring-teal-500"
               }`}
-              placeholder="+49(0)XXX XX XX XX XX"
+              placeholder="+49 XXX XX XX XX XX"
             />
             {formErrors.phone && (
               <p className="text-red-500 text-sm mt-1">{formErrors.phone}</p>

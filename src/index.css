@@ -5,6 +5,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height); ;
 }
 .home {
   background-size: cover;
@@ -32,7 +33,7 @@ html {
 html,
 body {
   overflow-x: hidden;
-  /* Отключает горизонтальную прокрутку */
+  
 }
 
 .shimmer-button {
