@@ -40,14 +40,21 @@ export const neubauOptions = [
           description: "Günstige und effektive Dämmung.",
         },
         {
-          name: "PIR/PIR",
+          name: "PIR",
           cost: 40,
           description: "Sehr gute Wärmedämmeigenschaften, leicht und langlebig.",
         },
+        {
+          name: "Steinwolle",
+          cost: 20,
+          description: "Günstig und effektiv.",
+        },
+        
       ],
     },
+   
     {
-      name: "Kunststoffbahn:",
+      name: "Abdichtung:",
       options: [
         {
           name: "PVC",
@@ -59,19 +66,15 @@ export const neubauOptions = [
           cost: 40,
           description: "Umweltfreundlicher und UV-beständiger als PVC.",
         },
-      ],
-    },
-    {
-      name: "Abdichtung:",
-      options: [
         { name: "Flüssigabdichtung", 
           cost: 30, 
           description: "Für präzise und dauerhafte Versiegelung." 
         },     
-        { name: "Bitumenbahn",
+        { name: "Bitumenbahn (2 lägig)",
           cost: 10,
           description: "Klassische Wahl für Flachdächer.",
         },
+        
       ],
     },
   ];
