@@ -15,7 +15,7 @@ export const neubauOptions = [
       ],
     },
     {
-      name: "Dampfsperre",
+      name: "Dampfsperre:",
       options: [
         {
           name: "S4 + Alu",
