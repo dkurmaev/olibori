@@ -8,12 +8,13 @@ const CostCalculator = () => {
   const [sanierungSelections, setSanierungSelections] = useState({});
   const [area, setArea] = useState(1);
   const [totalCost, setTotalCost] = useState(0);
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isContactModalOpen, setContactModalOpen] = useState(false);
   const [selectedOptionsList, setSelectedOptionsList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(""); // For inline error message
 
-  const handleContactModalToggle = () =>
-    setIsContactModalOpen(!isContactModalOpen);
+  const toggleContactModal = () => {
+    setContactModalOpen(!isContactModalOpen);
+  };
 
   const handleOptionSelect = (category, option) => {
     if (selectedType === "neubau") {
@@ -104,8 +105,8 @@ const CostCalculator = () => {
       className="relative z-10 text-center text-white mx-auto"
     >
      
-      <div className="container mx-auto mb-4 py-8 rounded-xl bg-gray-200 shadow-xl">
-      <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-5xl font-heading font-bold text-gray-500 uppercase border-b-2 border-teal-400 inline-block pb-1 text-center my-8">
+      <div className="container mx-auto mb-4 py-8 rounded-xl bg-gray-200 shadow-xl ">
+      <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-5xl font-heading font-bold text-teal-900 uppercase border-b-2 border-teal-400 inline-block pb-1 text-center my-8">
         Kostenberechnung für Dacharbeiten
       </h1>
         <div className="flex justify-evenly gap-12 mb-6 mt-12">
@@ -138,8 +139,8 @@ const CostCalculator = () => {
             Sanierung
           </button>
           <button
-            onClick={handleContactModalToggle}
-            className="px-6 py-2 rounded-lg text-lg font-semibold bg-white text-teal-800 border border-teal-800 hover:bg-teal-800 hover:text-white"
+            onClick={toggleContactModal}
+            className="px-6 py-3 bg-white text-teal-800 border border-teal-800  text-xl font-bold uppercase rounded-lg hover:bg-teal-700 hover:text-whitetransition"
           >
             Frage stellen
           </button>
@@ -180,7 +181,7 @@ const CostCalculator = () => {
             {totalCost > 0 && (
               <div className="grid grid-col-2 mt-4">
                 <button
-                  onClick={handleContactModalToggle}
+                  onClick={toggleContactModal}
                   className="bg-teal-600 text-white  py-2 rounded-lg hover:bg-teal-700 shimmer-button"
                 >
                   Kontakt aufnehmen
@@ -212,7 +213,7 @@ const CostCalculator = () => {
                         )
                       )
                     }
-                    className="w-full border border-teal-400 rounded-lg p-2 text-gray-400 focus:outline-none"
+                    className="w-full border border-teal-400 rounded-lg p-2 text-teal-900 focus:outline-none"
                   >
                     <option value="">Bitte wählen</option>
                     {category.options?.map((option) => (
@@ -246,9 +247,10 @@ const CostCalculator = () => {
           </div>
         </div>
 
-        {isContactModalOpen && (
-          <ContactFormModal closeModal={handleContactModalToggle} />
-        )}
+         {/* Модальное окно контактов */}
+{isContactModalOpen && (
+  <ContactFormModal closeModal={toggleContactModal} />
+)}
       </div>
     </div>
   );

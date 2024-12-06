@@ -87,7 +87,7 @@ const ContactFormModal = ({ closeModal }) => {
         >
           <img src="/images/close-icon.gif" alt="close" className="w-16 h-16" />
         </button>
-        <h2 className="text-3xl font-bold mb-6 text-center">Kontaktformular</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-teal-900">Kontaktformular</h2>
 
         {isSubmitted && (
           <div className="mb-6 p-4 bg-green-100 text-green-800 rounded-lg text-center">
@@ -110,7 +110,7 @@ const ContactFormModal = ({ closeModal }) => {
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700">
+            <label htmlFor="name" className="block text-gray-700 text-left">
               Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -119,7 +119,7 @@ const ContactFormModal = ({ closeModal }) => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded-md focus:ring ${
+              className={`w-full px-4 py-2 border rounded-md text-teal-800 focus:ring ${
                 formErrors.name
                   ? "border-red-500 focus:ring-red-500"
                   : "focus:ring-teal-500"
@@ -132,7 +132,7 @@ const ContactFormModal = ({ closeModal }) => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700">
+            <label htmlFor="email" className="block text-gray-700  text-left">
               E-Mail <span className="text-red-500">*</span>
             </label>
             <input
@@ -141,7 +141,7 @@ const ContactFormModal = ({ closeModal }) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded-md focus:ring ${
+              className={`w-full px-4 py-2 border rounded-md text-teal-800 focus:ring ${
                 formErrors.email
                   ? "border-red-500 focus:ring-red-500"
                   : "focus:ring-teal-500"
@@ -154,7 +154,7 @@ const ContactFormModal = ({ closeModal }) => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="phone" className="block text-gray-700">
+            <label htmlFor="phone" className="block text-gray-700  text-left">
               Telefonnummer (optional)
             </label>
             <InputMask
@@ -163,7 +163,7 @@ const ContactFormModal = ({ closeModal }) => {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded-md focus:ring ${
+              className={`w-full px-4 py-2 border rounded-md text-teal-800 focus:ring ${
                 formErrors.phone
                   ? "border-red-500 focus:ring-red-500"
                   : "focus:ring-teal-500"
@@ -176,7 +176,7 @@ const ContactFormModal = ({ closeModal }) => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="message" className="block text-gray-700">
+            <label htmlFor="message" className="block text-gray-700 text-left">
               Nachricht
             </label>
             <textarea
@@ -184,7 +184,7 @@ const ContactFormModal = ({ closeModal }) => {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded-md focus:ring ${
+              className={`w-full px-4 py-2 border rounded-md text-teal-800 focus:ring ${
                 formErrors.message
                   ? "border-red-500 focus:ring-red-500"
                   : "focus:ring-teal-500"
