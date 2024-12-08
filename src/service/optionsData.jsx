@@ -1,27 +1,29 @@
 export const neubauOptions = [
     {
-      name: "Unterkonstruktion:",
+      name: "Unterkonstruktion",
+      description: "Dient als Basis für alle nachfolgenden Schichten des Daches. Gewährleistet Stabilität und gleichmäßige Lastverteilung.",
       options: [
         {
           name: "Beton",
           cost: 50,
-          description: "Robuste Grundlage für Dachaufbauten.",
+          description: "Robuste und stabile Grundlage für schwere Konstruktionen.",
         },
         {
           name: "Trapezblech",
           cost: 30,
-          description: "Leicht, stabil und wirtschaftlich.",
+          description: "Leicht und wirtschaftlich, ideal für moderne Bauten.",
         },
       ],
     },
     {
-      name: "Dampfsperre:",
+      name: "Dampfsperre",
+      description: "Wird installiert, um das Eindringen von Feuchtigkeit aus Innenräumen in die Dämmschichten zu verhindern.",
       options: [
         {
           name: "S4 + Alu",
           cost: 10,
           description:
-            "Aluminium-beschichtete Dampfsperre mit hoher Dichtigkeit.",
+            "Effektive Dampfsperre mit Aluminium-Beschichtung, die hohe Dichtigkeit gewährleistet.",
         },
         {
           name: "RE-Folie",
@@ -32,29 +34,31 @@ export const neubauOptions = [
       ],
     },
     {
-      name: "Dämmung:",
+      name: "Dämmung",
+      description: "Schicht von Dämmmaterial, die Wärmeverluste verhindert und die Energieeffizienz des Gebäudes sicherstellt.",
       options: [
         {
           name: "EPS",
           cost: 30,
-          description: "Günstige und effektive Dämmung.",
+          description: "Günstige und effektive Dämmung mit guten Wärmedämmeigenschaften.",
         },
         {
           name: "PIR",
           cost: 40,
-          description: "Sehr gute Wärmedämmeigenschaften, leicht und langlebig.",
+          description: "Hohe Dämmwerte bei geringem Platzbedarf.",
         },
         {
           name: "Steinwolle",
           cost: 20,
-          description: "Günstig und effektiv.",
+          description: "Robustes und nicht brennbares Material, kostengünstig.",
         },
         
       ],
     },
    
     {
-      name: "Abdichtung:",
+      name: "Abdichtung",
+      description: "Verantwortlich für die Abdichtung des Daches und verhindert das Eindringen von Feuchtigkeit und Wasser in die Konstruktion.",
       options: [
         {
           name: "PVC",
@@ -68,7 +72,7 @@ export const neubauOptions = [
         },
         { name: "Flüssigabdichtung", 
           cost: 30, 
-          description: "Für präzise und dauerhafte Versiegelung." 
+          description: "Ideal für die präzise Abdichtung schwer zugänglicher Stellen." 
         },     
         { name: "Bitumenbahn (2 lägig)",
           cost: 10,
@@ -81,18 +85,18 @@ export const neubauOptions = [
   
   export const sanierungOptions = [
     {
-      name: "Dachreparatur:",
+      name: "Dachreparatur",
+      description: "Beinhaltet den Austausch oder die Reparatur beschädigter Dachelemente.",
       options: [
         {
           name: "Dachziegel",
           cost: 5,
-          description: "Austausch einzelner beschädigter Ziegel.",
+          description: "Schneller Austausch von gebrochenen oder beschädigten Ziegeln.",
         },
         {
           name: "Bitumenbahnen",
           cost: 10,
-          description:
-            "Für die Abdichtung kleiner Schäden, vor allem bei Flachdächern.",
+          description: "Eignen sich zur Abdichtung kleiner Schäden, insbesondere bei Flachdächern.",
         },
         {
           name: "Metallbleche (z. B. Zink oder Aluminium)",
@@ -104,13 +108,13 @@ export const neubauOptions = [
     },
   
     {
-      name: "Neudeckung:",
+      name: "Neudeckung",
       description: "Komplette Neueindeckung mit Materialien Ihrer Wahl.",
       options: [
         {
           name: "Tondachziegel",
           cost: 50,
-          description: "Klassisch und langlebig.",
+          description: "Klassischer und langlebiger Werkstoff.",
         },
         {
           name: "Betondachsteine",
@@ -120,7 +124,7 @@ export const neubauOptions = [
         {
           name: "Metallpaneele (z. B. Aluminium, Zink, Kupfer)",
           cost: 130,
-          description: "Moderne Optik, besonders langlebig.",
+          description: "Modernes Material mit Langlebigkeit und Ästhetik.",
         },
         {
           name: "Schieferplatten",
@@ -130,7 +134,7 @@ export const neubauOptions = [
         {
           name: "Bitumenschindeln",
           cost: 15,
-          description: "Leicht, günstig und vielseitig.",
+          description: "Leichtes, günstiges und vielseitiges Dachmaterial.",
         },
         {
           name: "Reetdach (für traditionelle Gebäude)",
@@ -140,7 +144,7 @@ export const neubauOptions = [
       ],
     },
     {
-      name: "Energetische Wärmedämmung:",
+      name: "Energetische Wärmedämmung",
       description: "Aufbringung von Dämmmaterial unter, zwischen oder über der Dachkonstruktion. Reduktion von Wärmeverlusten und Einhaltung der EnEV (Energieeinsparverordnung)",
       options: [
         {
@@ -166,7 +170,7 @@ export const neubauOptions = [
       ],
     },
     {
-      name: "Komplettsanierung des Daches:",
+      name: "Komplettsanierung des Daches",
       description: "Komplettaustausch der Dachkonstruktion und der Eindeckung. Neuaufbau der Dämmung und Abdichtung",
       options: [
         {
@@ -187,7 +191,7 @@ export const neubauOptions = [
       ],
     },
     {
-      name: "Flachdach-Sanierung:",
+      name: "Flachdach-Sanierung",
       description: "Abdichtung des Daches mit Bitumenbahnen, EPDM-Folie oder Flüssigkunststoff. Ergänzung oder Austausch der Wärmedämmung",
       options: [
         {
@@ -208,7 +212,7 @@ export const neubauOptions = [
       ],
     },
     {
-      name: "Dachbegrünung (Gründach):",
+      name: "Dachbegrünung (Gründach)",
       description: "Installation einer Substratschicht und Vegetation auf Flachdächern oder leicht geneigten Dächern.",
       options: [
         {
