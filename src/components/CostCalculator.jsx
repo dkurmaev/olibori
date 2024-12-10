@@ -56,7 +56,6 @@ const CostCalculator = () => {
       }
     }
   };
-  
 
   const handleOptionSelect = (category, option) => {
     if (selectedType === "neubau") {
@@ -149,190 +148,214 @@ const CostCalculator = () => {
   };
 
   return (
-    <div id="cost-calculator" className="relative z-10 text-center text-white mx-auto">
-  <div className="container mx-auto mb-4 py-8 rounded-xl bg-gray-200 shadow-xl">
-    <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-5xl font-heading font-bold text-teal-900 uppercase border-b-2 border-teal-400 inline-block pb-1 text-center my-8">
-      Kostenberechnung für Dacharbeiten
-    </h1>
-    {/* Верхние кнопки */}
-    <div className="flex flex-col sm:flex-row justify-center items-center gap-4 px-4 py-4">
-      <button
-        onClick={() => handleTypeSelection("neubau")}
-        className={`px-4 py-2 w-full sm:w-auto rounded-lg text-lg font-semibold hover:bg-teal-800 hover:text-white transition ${
-          selectedType === "neubau"
-            ? "bg-teal-600 text-white"
-            : "bg-white text-teal-800 border border-teal-800"
-        }`}
-      >
-        Neubau
-      </button>
-      <button
-        onClick={() => handleTypeSelection("sanierung")}
-        className={`px-4 py-2 w-full sm:w-auto rounded-lg text-lg font-semibold hover:bg-teal-800 hover:text-white transition ${
-          selectedType === "sanierung"
-            ? "bg-teal-600 text-white"
-            : "bg-white text-teal-800 border border-teal-800"
-        }`}
-      >
-        Sanierung
-      </button>
-      <button
-        onClick={toggleContactModal}
-        className="px-4 py-2 w-full sm:w-auto bg-white text-teal-800 border border-teal-800 text-lg font-semibold rounded-lg hover:bg-teal-700 hover:text-white transition"
-      >
-        Frage stellen
-      </button>
-    </div>
-
-    {/* Основная сетка */}
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
-      {/* Левая сторона */}
-      <div className="p-6">
-        <h2 className="text-xl font-semibold mb-4 text-teal-700 border-b-2 border-teal-400 pb-1">
-          Information:
-        </h2>
-        <p className="text-teal-900 text-lg mx-auto text-left">{getDefaultInfo()}</p>
-        
-        {selectedOptionsList.length > 0 && (
-          <ul className="list-disc list-inside text-teal-700 text-left mx-5 my-5 px-5 py-5">
-            {selectedOptionsList.map((item, index) => (
-              <li key={index}>
-                {item.category} {item.option} - {item.description}
-              </li>
-            ))}
-          </ul>
-        )}
-        <div className="mt-4 text-left">
-          <p className="text-lg text-teal-700 font-semibold">Berechnete Fläche:</p>
-          <p className="text-2xl font-bold text-teal-900">{area.toFixed(2)} m²</p>
+    <div
+      id="cost-calculator"
+      className="relative z-10 text-center text-white mx-auto"
+    >
+      <div className="container mx-auto mb-4 py-8 rounded-xl bg-gray-200 shadow-xl">
+        <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-5xl font-heading font-bold text-teal-900 uppercase border-b-2 border-teal-400 inline-block pb-1 text-center my-8">
+          Kostenberechnung für Dacharbeiten
+        </h1>
+        {/* Верхние кнопки */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 px-4 py-4">
+          <button
+            onClick={() => handleTypeSelection("neubau")}
+            className={`px-4 py-2 w-full sm:w-auto rounded-lg text-lg font-semibold hover:bg-teal-800 hover:text-white transition ${
+              selectedType === "neubau"
+                ? "bg-teal-600 text-white"
+                : "bg-white text-teal-800 border border-teal-800"
+            }`}
+          >
+            Neubau
+          </button>
+          <button
+            onClick={() => handleTypeSelection("sanierung")}
+            className={`px-4 py-2 w-full sm:w-auto rounded-lg text-lg font-semibold hover:bg-teal-800 hover:text-white transition ${
+              selectedType === "sanierung"
+                ? "bg-teal-600 text-white"
+                : "bg-white text-teal-800 border border-teal-800"
+            }`}
+          >
+            Sanierung
+          </button>
+          <button
+            onClick={toggleContactModal}
+            className="px-4 py-2 w-full sm:w-auto bg-white text-teal-800 border border-teal-800 text-lg font-semibold rounded-lg hover:bg-teal-700 hover:text-white transition"
+          >
+            Frage stellen
+          </button>
         </div>
-        {totalCost > 0 && (
-          <div className="mt-4">
-            <p className="text-2xl text-teal-700 text-left italic mx-5 my-5 px-5 py-5">
-              Ihre geschätzten Kosten für die ausgewählten Optionen betragen:{" "}
-              <span className="text-yellow-600">{totalCost.toFixed(2)} €</span>
-            </p>
-            <p className="text-teal-600 mx-5 my-5 px-5 text-left">
-              Wir freuen uns darauf, mit Ihnen zusammenzuarbeiten!
-            </p>
-            <button
-              onClick={toggleContactModal}
-              className="bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 shimmer-button"
-            >
-              Kontakt aufnehmen
-            </button>
-          </div>
-        )}
-      </div>
 
-      {/* Правая сторона */}
-      <div ref={optionsSectionRef}>
-        <div className="p-6">
-          <h2 className="text-xl font-semibold mb-4 text-teal-700 border-b-2 border-teal-400 pb-1">
-            {selectedType === "neubau"
-              ? "Wählen Sie die Optionen für den Neubau:"
-              : "Wählen Sie die Optionen für die Sanierung:"}
-          </h2>
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            {(selectedType === "neubau" ? neubauOptions : sanierungOptions).map(
-              (category) => (
-                <div key={category.name}>
-                  <label className="flex flex-row justify-between text-teal-700 mb-2 font-medium text-left">
-                    {category.name}
-                    <span className="ml-2 relative group cursor-pointer">
-                      <FaInfoCircle className="hidden md:block h-5 w-5 text-teal-700 mr-5 shimmer-button" />
-                      <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-96 z-50 p-2 text-xl text-white bg-teal-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto">
-                        {category.description}
-                      </div>
-                    </span>
-                  </label>
-                  <select
-                    onChange={(e) =>
-                      handleOptionSelect(
-                        category.name,
-                        category.options.find(
-                          (opt) => opt.name === e.target.value
-                        )
-                      )
-                    }
-                    className="w-full border border-teal-400 rounded-lg p-2 text-teal-800 focus:outline-none hover:bg-teal-600 hover:text-white"
-                  >
-                    <option>Bitte wählen</option>
-                    {category.options?.map((option) => (
-                      <option key={option.name} value={option.name}>
-                        {option.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )
+        {/* Основная сетка */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
+          {/* Левая сторона */}
+          <div className="p-6">
+            <h2 className="text-xl font-semibold mb-4 text-teal-700 border-b-2 border-teal-400 pb-1">
+              Information:
+            </h2>
+            <p className="text-teal-900 text-lg mx-auto text-left">
+              {getDefaultInfo()}
+            </p>
+
+            {selectedOptionsList.length > 0 && (
+              <ul className="list-disc list-inside text-teal-700 text-left mx-5 my-5 px-5 py-5">
+                {selectedOptionsList.map((item, index) => (
+                  <li key={index}>
+                    {item.category} {item.option} - {item.description}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div className="mt-4 text-left">
+              <p className="text-lg text-teal-700 font-semibold">
+                Berechnete Fläche:
+              </p>
+              <p className="text-2xl font-bold text-teal-900">
+                {area.toFixed(2)} m²
+              </p>
+            </div>
+            {totalCost > 0 && (
+              <div className="mt-4">
+                <p className="text-2xl text-teal-700 text-left italic mx-5 my-5 px-5 py-5">
+                  Ihre geschätzten Kosten für die ausgewählten Optionen
+                  betragen:{" "}
+                  <span className="text-yellow-600">
+                    {totalCost.toFixed(2)} €
+                  </span>
+                </p>
+                <p className="text-teal-600 mx-5 my-5 px-5 text-left">
+                  Wir freuen uns darauf, mit Ihnen zusammenzuarbeiten!
+                </p>
+                <button
+                  onClick={toggleContactModal}
+                  className="bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 shimmer-button"
+                >
+                  Kontakt aufnehmen
+                </button>
+              </div>
             )}
           </div>
 
-          {/* Поля длины и ширины */}
-          <div className="grid grid-cols-2 gap-4 text-left">
-          <div className="mb-4 ">
-            <label
-              className="block text-teal-700 font-medium mb-2"
-              htmlFor="length"
-            >
-              Länge (in m):
-            </label>
-            <input
-              type="number"
-              id="length"
-              min="0"
-              value={length}
-              onChange={(e) => handleDimensionChange("length", e.target.value)}
-              className="px-4 py-2 border w-full text-teal-800 border-teal-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-            />
+          {/* Правая сторона */}
+          <div ref={optionsSectionRef}>
+            <div className="p-6">
+              <h2 className="text-xl font-semibold mb-4 text-teal-700 border-b-2 border-teal-400 pb-1">
+                {selectedType === "neubau"
+                  ? "Wählen Sie die Optionen für den Neubau:"
+                  : "Wählen Sie die Optionen für die Sanierung:"}
+              </h2>
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                {(selectedType === "neubau"
+                  ? neubauOptions
+                  : sanierungOptions
+                ).map((category) => (
+                  <div key={category.name}>
+                    <label className="flex flex-row justify-between text-teal-700 mb-2 font-medium text-left">
+                      {category.name}
+                      <span className="ml-2 relative group cursor-pointer">
+                        <FaInfoCircle className="hidden md:block h-5 w-5 text-teal-700 mr-5 shimmer-button" />
+                        <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-96 z-50 p-2 text-xl text-white bg-teal-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto">
+                          {category.description}
+                        </div>
+                      </span>
+                    </label>
+                    <select
+                      onChange={(e) =>
+                        handleOptionSelect(
+                          category.name,
+                          category.options.find(
+                            (opt) => opt.name === e.target.value
+                          )
+                        )
+                      }
+                      className="w-full border border-teal-900 rounded-lg p-2 text-yellow-800 focus:outline-none hover:bg-teal-600 hover:text-white"
+                    >
+                      <option                      
+                        value=""
+                        disabled
+                        selected
+                        
+                      >
+                        Bitte wählen
+                      </option>
+                      {category.options?.map((option) => (
+                        <option key={option.name} value={option.name}>
+                          {option.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ))}
+              </div>
+
+              {/* Поля длины и ширины */}
+              <div className="grid grid-cols-2 gap-4 text-left">
+                <div className="mb-4 ">
+                  <label
+                    className="block text-teal-700 font-medium mb-2"
+                    htmlFor="length"
+                  >
+                    Länge (in m):
+                  </label>
+                  <input
+                    type="number"
+                    id="length"
+                    min="0"
+                    value={length}
+                    onChange={(e) =>
+                      handleDimensionChange("length", e.target.value)
+                    }
+                    className="px-4 py-2 border w-full text-teal-800 border-teal-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    className="block text-teal-700 font-medium mb-2"
+                    htmlFor="width"
+                  >
+                    Breite (in m):
+                  </label>
+                  <input
+                    type="number"
+                    id="width"
+                    min="0"
+                    value={width}
+                    onChange={(e) =>
+                      handleDimensionChange("width", e.target.value)
+                    }
+                    className="px-4 py-2 border w-full text-teal-800 border-teal-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  />
+                </div>
+              </div>
+            </div>
+            {/* Нижние кнопки */}
+            <div className="grid grid-cols-2 gap-4 mb-4 mx-6">
+              <button
+                onClick={handleBackClick}
+                className="bg-gray-400 text-white  py-2 rounded-lg hover:bg-gray-500"
+              >
+                Zurück
+              </button>
+              <button
+                onClick={calculateCost}
+                className="bg-teal-600 text-white  py-2 rounded-lg hover:bg-teal-700"
+              >
+                Berechnen
+              </button>
+            </div>
+            {/* Ошибки */}
+        {errorMessage && (
+          <p className="text-red-600 font-medium mt-6 text-center">{errorMessage}</p>
+        )}
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-teal-700 font-medium mb-2"
-              htmlFor="width"
-            >
-              Breite (in m):
-            </label>
-            <input
-              type="number"
-              id="width"
-              min="0"
-              value={width}
-              onChange={(e) => handleDimensionChange("width", e.target.value)}
-              className="px-4 py-2 border w-full text-teal-800 border-teal-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-            />
-          </div>
-          </div>
-        </div>
+        </div>        
+
+        {/* Модальное окно */}
+        {isContactModalOpen && (
+          <ContactFormModal closeModal={toggleContactModal} />
+        )}
       </div>
     </div>
-
-    {/* Ошибки */}
-    {errorMessage && (
-      <p className="text-red-600 font-medium text-left">{errorMessage}</p>
-    )}
-
-    {/* Нижние кнопки */}
-    <div className="grid grid-cols-2 gap-4 items-baseline mt-4">
-      <button
-        onClick={handleBackClick}
-        className="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500"
-      >
-        Zurück
-      </button>
-      <button
-        onClick={calculateCost}
-        className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-700"
-      >
-        Berechnen
-      </button>
-    </div>
-
-    {/* Модальное окно */}
-    {isContactModalOpen && <ContactFormModal closeModal={toggleContactModal} />}
-  </div>
-</div>    
   );
 };
 
