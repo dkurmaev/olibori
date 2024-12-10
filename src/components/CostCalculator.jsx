@@ -15,6 +15,8 @@ const CostCalculator = () => {
   const [selectedOptionsList, setSelectedOptionsList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(""); // For inline error message
 
+  const [selectedOptions, setSelectedOptions] = useState({});
+
   const toggleContactModal = () => {
     setContactModalOpen(!isContactModalOpen);
   };
@@ -58,26 +60,58 @@ const CostCalculator = () => {
   };
 
   const handleOptionSelect = (category, option) => {
-    if (selectedType === "neubau") {
-      setNeubauSelections((prev) => ({ ...prev, [category]: option }));
-      setSelectedOptionsList((prev) => {
-        const newSelections = prev.filter((item) => item.category !== category);
-        return [
-          ...newSelections,
-          { category, option: option.name, description: option.description },
-        ];
-      });
-    } else if (selectedType === "sanierung") {
-      setSanierungSelections((prev) => ({ ...prev, [category]: option }));
-      setSelectedOptionsList((prev) => {
-        const newSelections = prev.filter((item) => item.category !== category);
-        return [
-          ...newSelections,
-          { category, option: option.name, description: option.description },
-        ];
-      });
+    const categoryOptions =
+      selectedType === "neubau" ? neubauOptions : sanierungOptions;
+
+    const foundCategory = categoryOptions.find((cat) => cat.name === category);
+
+    if (!foundCategory) {
+      setErrorMessage(`Категория "${category}" не найдена.`);
+      return;
     }
-    setErrorMessage(""); // Clear error when a valid selection is made
+
+    const selectedOption = foundCategory.options.find(
+      (opt) => opt.name === option.name
+    );
+
+    if (!selectedOption) {
+      setErrorMessage(
+        `Опция "${option.name}" не найдена в категории "${category}".`
+      );
+      return;
+    }
+
+    // Обновляем состояние
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [category]: selectedOption,
+    }));
+
+    if (selectedType === "neubau") {
+      setNeubauSelections((prev) => ({
+        ...prev,
+        [category]: selectedOption,
+      }));
+    } else if (selectedType === "sanierung") {
+      setSanierungSelections((prev) => ({
+        ...prev,
+        [category]: selectedOption,
+      }));
+    }
+
+    setSelectedOptionsList((prev) => {
+      const updatedList = prev.filter((item) => item.category !== category);
+      return [
+        ...updatedList,
+        {
+          category,
+          option: selectedOption.name,
+          description: selectedOption.description || "Keine Beschreibung",
+        },
+      ];
+    });
+
+    setErrorMessage("");
   };
 
   const calculateCost = () => {
@@ -206,7 +240,7 @@ const CostCalculator = () => {
                 ))}
               </ul>
             )}
-            <div className="mt-4 text-left">
+            <div className="mt-4 text-right">
               <p className="text-lg text-teal-700 font-semibold">
                 Berechnete Fläche:
               </p>
@@ -228,7 +262,7 @@ const CostCalculator = () => {
                 </p>
                 <button
                   onClick={toggleContactModal}
-                  className="bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 shimmer-button"
+                  className="bg-teal-600 text-white py-2 w-full rounded-lg hover:bg-teal-700 shimmer-button"
                 >
                   Kontakt aufnehmen
                 </button>
@@ -268,14 +302,13 @@ const CostCalculator = () => {
                           )
                         )
                       }
-                      className="w-full border border-teal-900 rounded-lg p-2 text-yellow-800 focus:outline-none hover:bg-teal-600 hover:text-white"
+                      className={`w-full border rounded-lg p-2 focus:outline-none transition ${
+                        selectedOptions[category.name]
+                          ? "bg-teal-600 text-white border-teal-800"
+                          : "bg-gray-200 text-gray-800 border-gray-400"
+                      } hover:bg-gray-400 hover:text-white`}
                     >
-                      <option                      
-                        value=""
-                        disabled
-                        selected
-                        
-                      >
+                      <option value="" disabled selected>
                         Bitte wählen
                       </option>
                       {category.options?.map((option) => (
@@ -344,11 +377,13 @@ const CostCalculator = () => {
               </button>
             </div>
             {/* Ошибки */}
-        {errorMessage && (
-          <p className="text-red-600 font-medium mt-6 text-center">{errorMessage}</p>
-        )}
+            {errorMessage && (
+              <p className="text-red-600 font-medium mt-6 text-center">
+                {errorMessage}
+              </p>
+            )}
           </div>
-        </div>        
+        </div>
 
         {/* Модальное окно */}
         {isContactModalOpen && (
@@ -360,3 +395,5 @@ const CostCalculator = () => {
 };
 
 export default CostCalculator;
+
+
