@@ -91,25 +91,25 @@ export const neubauOptions = [
 ];
 
 export const sanierungOptions = [
-  {
-    name: "Abriss",
-    description:
-      "Beinhaltet den Austausch oder die Reparatur beschädigter Dachelemente.",
-    options: [
-      {
-        name: "Ohne Abriss ",
-        cost: 5,
-        description:
-          "Schneller Austausch von gebrochenen oder beschädigten Ziegeln.",
-      },
-      {
-        name: "Mit Abriss ",
-        cost: 15,
-        description:
-          "Eignen sich zur Abdichtung kleiner Schäden, insbesondere bei Flachdächern.",
-      },
-    ],
-  },
+  // {
+  //   name: "Abriss",
+  //   description:
+  //     "Beinhaltet den Austausch oder die Reparatur beschädigter Dachelemente.",
+  //   options: [
+  //     {
+  //       name: "Ohne Abriss ",
+  //       cost: 5,
+  //       description:
+  //         "Schneller Austausch von gebrochenen oder beschädigten Ziegeln.",
+  //     },
+  //     {
+  //       name: "Mit Abriss ",
+  //       cost: 15,
+  //       description:
+  //         "Eignen sich zur Abdichtung kleiner Schäden, insbesondere bei Flachdächern.",
+  //     },
+  //   ],
+  // },
 
   {
     name: "Trennlage",

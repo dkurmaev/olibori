@@ -62,21 +62,60 @@ const ContactFormModal = ({ closeModal }) => {
 
   const validateField = (name, value) => {
     const errors = {};
-    if (name === "name" && !/^[a-zA-ZäöüÄÖÜß\s]+$/.test(value)) {
-      errors.name = "Der Name darf nur Buchstaben enthalten.";
+
+    if (name === "name") {
+      if (!/^[a-zA-ZäöüÄÖÜß\s]+$/.test(value)) {
+        errors.name = "Der Name darf nur Buchstaben enthalten.";
+      }
     }
-    if (name === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      errors.email = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+
+    if (name === "email") {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        errors.email = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+      } else {
+        const [localPart, domain] = value.split("@");
+
+        if (localPart.startsWith(".")) {
+          errors.email = "Der lokale Teil darf nicht mit einem Punkt beginnen.";
+        }
+
+        if (/[^a-zA-Z0-9.-]/.test(domain)) {
+          errors.email = "Der Domain-Teil enthält ungültige Zeichen.";
+        }
+
+        if (domain.endsWith(".")) {
+          errors.email = "Der Domain-Teil darf nicht mit einem Punkt enden.";
+        }
+
+        if (domain.startsWith(".")) {
+          errors.email = "Der Domain-Teil darf nicht mit einem Punkt beginnen.";
+        }
+
+        const domainParts = domain.split(".");
+        if (domainParts.some((part) => part.length === 1)) {
+          errors.email = "Jede Domain-Stufe muss mehr als einen Buchstaben enthalten.";
+        }
+      }
     }
+
     if (name === "phone") {
-      console.log("Проверка телефона:", value); // Отладка
-      if (!/^\+49\s?\d{3}(\s?\d{2}){4}$/.test(value)) {
+      if (value && !/^\+49\s?\d{3}(\s?\d{2}){4}$/.test(value)) {
         errors.phone =
           "Bitte geben Sie eine gültige Telefonnummer im Format +49 XXX XX XX XX XX ein.";
       }
     }
+
     return errors;
   };
+
+  const isFormValid = () => {
+    return (
+      formData.name.trim() !== "" &&
+      formData.email.trim() !== "" &&
+      !Object.values(formErrors).some((error) => error !== undefined)
+    );
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md"></div>
@@ -198,8 +237,12 @@ const ContactFormModal = ({ closeModal }) => {
 
           <button
             type="submit"
-            className="w-full bg-teal-900 text-white py-2 font-bold rounded-md hover:bg-teal-700 transition"
-            disabled={isLoading}
+            className={`w-full py-2 font-bold rounded-md transition ${
+              isLoading || !isFormValid()
+                ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                : "bg-teal-900 text-white hover:bg-teal-700"
+            }`}
+            disabled={isLoading || !isFormValid()}
           >
             Absenden
           </button>
@@ -208,6 +251,7 @@ const ContactFormModal = ({ closeModal }) => {
     </div>
   );
 };
+
 ContactFormModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
 };
