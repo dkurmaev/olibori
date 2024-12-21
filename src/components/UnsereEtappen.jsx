@@ -2,12 +2,12 @@
 
 const steps = [
   { number: "01", title: "Vorbereitung der Basis", description: "Dazu gehört die Überprüfung des Zustands der Dachkonstruktion und der Unterkonstruktion. Falls erforderlich, werden beschädigte Elemente ersetzt oder die Struktur verstärkt." },
-  { number: "02", title: "Verlegung der Abdichtung", description: "Eine Schicht, die das Dach vor Feuchtigkeit schützt. Abdichtungsmaterialien wie Membranen oder Folien werden unter dem Hauptdachmaterial angebracht." },
-  { number: "03", title: "Installation der Dämmung", description: "Hilft, den Wärmeverlust zu verringern, was besonders für Wohnräume wichtig ist. Materialien wie Mineralwolle oder Polystyrol werden zwischen den Dachsparren oder über der Unterkonstruktion installiert." },
-  { number: "04", title: "Verlegung der Dachdeckung", description: "Dieser Schritt hängt vom gewählten Material ab. Metallziegel, Profilbleche, Schiefer oder Ziegel werden unterschiedlich verlegt und erfordern entsprechende Werkzeuge und Fachkenntnisse." },
+  { number: "02", title: "Dampfsperre", description: "Eine Dampfsperre wird installiert, um das Eindringen von Feuchtigkeit und Wasserdampf aus dem Inneren des Gebäudes in die Dachkonstruktion zu verhindern. " },
+  { number: "03", title: "Wärmedämmung", description: "In diesem Schritt wird die Wärmedämmung eingebracht, um den Energieverlust des Gebäudes zu minimieren. " },
+  { number: "04", title: "Dachabdichtung", description: "Die Dachabdichtung sorgt dafür, dass das Dach wasserdicht ist und vor Regen, Schnee und anderen Umwelteinflüssen geschützt wird." },
   { number: "05", title: "Installation des Entwässerungssystems", description: "Zur Ableitung des Wassers vom Dach werden Rinnen, Rohre und Trichter installiert, um die Ansammlung von Feuchtigkeit und die Beschädigung der Fassade zu verhindern." },
-  { number: "06", title: "Abschließende Verkleidung", description: "Dazu gehört die Installation von Firstziegeln, Kehlen, Traufblechen und anderen Elementen, die dem Dach ein fertiges Aussehen verleihen und es vor Witterungseinflüssen schützen." },
-  { number: "07", title: "Abnahme und Abschluss", description: "Nach Abschluss überprüfen wir gemeinsam das Ergebnis." },
+  { number: "06", title: "Abschließende Mauerabdeckung", description: "Hier werden die abschließenden Arbeiten an den Mauerabdeckungen durchgeführt. Diese schützen die Dachkanten und Mauern vor Feuchtigkeit und Witterungseinflüssen. " },
+  { number: "07", title: "Abnahme und Abschluss", description: "Im letzten Schritt erfolgt die Endkontrolle der gesamten Dacharbeiten. Alle ausgeführten Arbeiten werden auf Qualität, Funktionalität und Vollständigkeit geprüft. Mängel werden behoben, falls vorhanden." },
 ];
 
 const UnsereEtappen = () => {

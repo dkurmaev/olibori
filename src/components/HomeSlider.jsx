@@ -1,12 +1,22 @@
 import { useState } from "react";
 import "animate.css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.css";
 import ContactFormModal from "./ContactFormModal";
+
+const certificates = [
+  {
+    src: "/images/meisterbrief.webp",
+    alt: "Meisterbrief",
+  },
+  {
+    src: "/images/zertifikat.webp",
+    alt: "Zertifikat",
+  },
+];
 
 const HomeSlider = () => {
   const [isContactModalOpen, setContactModalOpen] = useState(false);
   const [isCertificateModalOpen, setCertificateModalOpen] = useState(false);
+  const [currentCertificateIndex, setCurrentCertificateIndex] = useState(0);
 
   const toggleContactModal = () => {
     setContactModalOpen(!isContactModalOpen);
@@ -19,15 +29,25 @@ const HomeSlider = () => {
   const scrollToCostCalculator = () => {
     const costCalculatorSection = document.getElementById("cost-calculator");
     if (costCalculatorSection) {
-      const offset = -200; // Установите отрицательный отступ (например, -100px)
+      const offset = -200;
       const elementPosition = costCalculatorSection.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition + offset;
-  
+
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth",
       });
     }
+  };
+
+  const handleNext = () => {
+    setCurrentCertificateIndex((prevIndex) => (prevIndex + 1) % certificates.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentCertificateIndex((prevIndex) =>
+      (prevIndex - 1 + certificates.length) % certificates.length
+    );
   };
 
   return (
@@ -41,11 +61,9 @@ const HomeSlider = () => {
         backgroundPosition: "center top",
       }}
     >
-      {/* Затемнение фона */}
       <div className="absolute inset-0 bg-black bg-opacity-80"></div>
 
-      {/* Основной контент */}
-      <div className="relative z-10 text-center md:my-24 lg:my-28 sm:my-20 py-5 ">
+      <div className="relative z-10 text-center md:my-24 lg:my-28 sm:my-20 py-5">
         <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-7xl mt-24 font-heading font-bold text-gray-300 uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
           Dachdeckerarbeiten jeder Komplexität schlüsselfertig.
         </h1>
@@ -76,62 +94,49 @@ const HomeSlider = () => {
         </div>
       </div>
 
-      {/* Модальное окно с сертификатами */}
       {isCertificateModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div
             className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md"
             onClick={toggleCertificateModal}
           ></div>
-          <div className="relative bg-white p-6 rounded-lg w-11/12 max-w-2xl z-50">
-            <button
-              className="absolute top-2 right-2 text-gray-700 hover:text-gray-400"
-              onClick={toggleCertificateModal}
-            >
-              {/* Используем GIF как иконку закрытия */}
+          <div className="relative p-0 rounded-lg w-full max-w-5xl max-h-[90vh] z-50"> {/* Ограничиваем ширину и высоту контейнера */}
+          <div className="relative w-full h-screen flex items-center justify-center">
               <img
-                src="/images/close-icon.gif" // Путь к вашему GIF-файлу
-                alt="close"
-                className="w-8 h-8" // Размеры GIF, можно изменить
+                src={certificates[currentCertificateIndex].src}
+                alt={certificates[currentCertificateIndex].alt}
+                className="max-w-full max-h-full object-contain"
               />
-            </button>
-            <h2 className="text-2xl font-bold text-center mb-4">
-              Unsere Zertifikate
-            </h2>
-            <Swiper
-              spaceBetween={30}
-              slidesPerView={1}
-              navigation
-              pagination={{ clickable: true }}
-              // modules={[Navigation, Pagination]} 
-              className="w-full h-64"
-            >
-              <SwiperSlide>
-                <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500 text-lg font-semibold">
-                  In bearbeitung
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500 text-lg font-semibold">
-                  Größe: 1024x768
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500 text-lg font-semibold">
-                  Bald!
-                </div>
-              </SwiperSlide>
-            </Swiper>
+              <button
+                className="absolute top-2 right-2 text-gray-700 hover:text-gray-400"
+                onClick={toggleCertificateModal}
+              >
+                <img
+                  src="/images/close-icon.gif"
+                  alt="close"
+                  className="w-24 h-24 "
+                />
+              </button>
+              <button
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-teal-900 hover:bg-teal-600 text-white p-2 rounded-full"
+                onClick={handlePrev}
+              >
+                &lt;
+              </button>
+              <button
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-teal-900 hover:bg-teal-600 text-white p-2 rounded-full"
+                onClick={handleNext}
+              >
+                &gt;
+              </button>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Модальное окно контактов */}
-{isContactModalOpen && (
-  <ContactFormModal closeModal={toggleContactModal} />
-)}
-
-      
+      {isContactModalOpen && (
+        <ContactFormModal closeModal={toggleContactModal} />
+      )}
     </section>
   );
 };

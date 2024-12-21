@@ -1,13 +1,15 @@
+// spell-checker: disable
 import { useState, useRef } from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import ContactFormModal from "./ContactFormModal";
-import { neubauOptions, sanierungOptions } from "../service/optionsData";
+import { neubauOptions, mitAbrissOptions, ohneAbrissOptions } from "../service/optionsData";
+// spell-checker: enable
 
 const CostCalculator = () => {
   const [selectedType, setSelectedType] = useState("neubau");
   const [neubauSelections, setNeubauSelections] = useState({});
   const [sanierungSelections, setSanierungSelections] = useState({});
-  const [abrissType, setAbrissType] = useState(""); // New state for Abriss selection  
+  const [abrissType, setAbrissType] = useState("ohne"); // New state for Abriss selection
   const [length, setLength] = useState(1); // Length
   const [width, setWidth] = useState(1); // Width
   const [area, setArea] = useState(1); // Area
@@ -15,7 +17,8 @@ const CostCalculator = () => {
   const [isContactModalOpen, setContactModalOpen] = useState(false);
   const [selectedOptionsList, setSelectedOptionsList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(""); // For inline error message
-  const [selectedOptions, setSelectedOptions] = useState("neubau");
+  const [selectedOptions, setSelectedOptions] = useState("");
+  
 
   const toggleContactModal = () => {
     setContactModalOpen(!isContactModalOpen);
@@ -38,51 +41,48 @@ const CostCalculator = () => {
   };
   const handleTypeSelection = (type) => {
     setSelectedType(type);
-    setSanierungSelections({});
     setNeubauSelections({});
+    setSanierungSelections({});
     setSelectedOptionsList([]);
-    setLength(1); // Reset length
-    setWidth(1); // Reset width
-    setAbrissType([]); // Reset Abriss type on type change    
-    setArea(1); // Reset area
-    scrollToOptions(); // Scroll to section
+    setLength(1);
+    setWidth(1);
+    setArea(1);
+    setAbrissType(type === "sanierung" ? "ohne" : "ohne");
   };
+
+  
 
   const handleDimensionChange = (type, value) => {
     if (value === "" || Number(value) > 0) {
       if (type === "length") {
         setLength(Number(value) || 0);
-        setArea((Number(value) || 0) * width); // Considering the current width value
+        setArea((Number(value) || 0) * width);
       } else if (type === "width") {
         setWidth(Number(value) || 0);
-        setArea(length * (Number(value) || 0)); // Considering the current length value
+        setArea(length * (Number(value) || 0));
       }
     }
   };
 
+
   const handleOptionSelect = (category, option) => {
-    const categoryOptions =
-      selectedType === "neubau" ? neubauOptions : sanierungOptions;
-
-    const foundCategory = categoryOptions.find((cat) => cat.name === category);
-
-    if (!foundCategory) {
-      setErrorMessage(`Category "${category}" not found.`);
-      return;
-    }
-
-    const selectedOption = foundCategory.options.find(
-      (opt) => opt.name === option.name
-    );
+    const selectedOption = selectedType === "neubau"
+      ? neubauOptions.find(cat => cat.name === category)?.options.find(opt => opt.name === option.name)
+      : (abrissType === "ohne" ? ohneAbrissOptions : mitAbrissOptions).find(cat => cat.name === category)?.options.find(opt => opt.name === option.name);
 
     if (!selectedOption) {
-      setErrorMessage(
-        `Option "${option.name}" not found in category "${category}".`
-      );
+      setErrorMessage(`Опция "${option.name}" не найдена в категории "${category}".`);
       return;
     }
 
-    // Обновляем состояние
+    if (selectedType === "neubau") {
+      setNeubauSelections(prev => ({ ...prev, [category]: selectedOption }));
+    } else {
+      setSanierungSelections(prev => ({ ...prev, [category]: selectedOption }));
+    }
+
+
+    
     setSelectedOptions((prev) => ({
       ...prev,
       [category]: selectedOption,
@@ -115,13 +115,6 @@ const CostCalculator = () => {
     setErrorMessage("");
   };
 
-  const handleAbrissSelection = (type) => {
-    setAbrissType(type);
-    setSanierungSelections({}); // Reset selections when changing Abriss type
-    setSelectedOptionsList([]); // Reset selected options list
-    
-  };
-
   const calculateCost = () => {
     if (selectedType === "") {
       setErrorMessage("Bitte wählen Sie Neubau oder Sanierung.");
@@ -139,7 +132,7 @@ const CostCalculator = () => {
 
     let missingOptions = [];
     const categories =
-      selectedType === "neubau" ? neubauOptions : sanierungOptions;
+      selectedType === "neubau" ? neubauOptions : ohneAbrissOptions;
 
     categories.forEach((category) => {
       if (!selectedOptions[category.name]) {
@@ -166,22 +159,27 @@ const CostCalculator = () => {
     let cost = 0;
     Object.values(selectedOptions).forEach((option) => (cost += option.cost));
 
+    if (selectedType === "sanierung" && abrissType === "mit") {
+      cost += area * 15; // 15€ за квадратный метр
+    }
     setTotalCost(cost * area);
     setErrorMessage("");
   };
 
   const handleBackClick = () => {
-    setSelectedType("");
-    setNeubauSelections("");
-    setSanierungSelections("");
-    setSelectedOptionsList("");
-    setTotalCost(0);
-    setLength(1);
-    setWidth(1);
-    setArea(1);
-    setAbrissType(""); // Reset Abriss type on back
-    setErrorMessage("");
+    setSelectedType(""); 
+    setNeubauSelections({}); 
+    setSanierungSelections({}); 
+    setSelectedOptionsList([]); 
+    setTotalCost(0); 
+    setLength(1); 
+    setWidth(1); 
+    setArea(1); 
+    setAbrissType(""); 
+    setErrorMessage(""); 
+    setSelectedOptions({}); // Сбрасываем выбранные опции
   };
+  
 
   const getDefaultInfo = () => {
     if (selectedType === "neubau") {
@@ -214,7 +212,7 @@ const CostCalculator = () => {
             Neubau
           </button>
           <button
-            onClick={() => handleTypeSelection("sanierung")}
+            onClick={() => handleTypeSelection("mit")}
             className={`px-4 py-2 w-full sm:w-auto rounded-lg text-lg font-semibold hover:bg-teal-800 hover:text-white transition ${
               selectedType === "sanierung"
                 ? "bg-teal-600 text-white"
@@ -241,37 +239,35 @@ const CostCalculator = () => {
                   ? "Wählen Sie die Optionen für den Neubau:"
                   : "Wählen Sie die Optionen für die Sanierung:"}
               </h2>
-
-              {/* Render different options based on the selected type */}
-              {selectedType === "sanierung" && (
-                <div className="flex flex-col gap-4 mb-12">
-                  <div className="flex flex-col md:flex-row gap-2">
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-4 px-4 py-4">
+                {selectedType === "mit" && (
+                  <div className="flex  gap-4 mb-6">
                     <button
-                      onClick={() => handleAbrissSelection("ohne")}
-                      className={`flex-1 px-4 py-2 rounded-lg text-lg font-semibold transition-all duration-300 ${
+                      onClick={() => setAbrissType("ohne")}
+                      className={`px-4 py-2 w-full sm:w-auto rounded-lg text-lg font-semibold hover:bg-teal-800 hover:text-white transition ${
                         abrissType === "ohne"
-                          ? "bg-teal-600 text-white shadow-lg hover:shadow-xl hover:bg-teal-800"
-                          : "bg-gray-200 text-teal-800 shadow-md hover:shadow-lg hover:bg-teal-600"
+                          ? "bg-teal-600 text-white"
+                          : "bg-white text-teal-800 border border-teal-800"
                       }`}
                     >
                       Ohne Abriss
                     </button>
                     <button
-                      onClick={() => handleAbrissSelection("mit")}
-                      className={`flex-1 px-4 py-2 rounded-lg text-lg font-semibold transition-all duration-300 ${
+                      onClick={() => setAbrissType("mit")}
+                      className={`px-4 py-2 w-full sm:w-auto rounded-lg text-lg font-semibold hover:bg-teal-800 hover:text-white transition ${
                         abrissType === "mit"
-                          ? "bg-teal-600 text-white shadow-lg hover:shadow-xl hover:bg-teal-800"
-                          : "bg-gray-200 text-teal-800 shadow-md hover:shadow-lg hover:bg-teal-600"
+                          ? "bg-teal-600 text-white"
+                          : "bg-white text-teal-800 border border-teal-800"
                       }`}
                     >
                       Mit Abriss
                     </button>
                   </div>
-                </div>
-              )}
-              {abrissType === "mit" && (
+                )}
+              </div>
+              {abrissType === "ohne" && (
                 <div className="grid grid-cols-2 gap-4 mb-4">
-                  {neubauOptions.map((category) => (
+                  {ohneAbrissOptions.map((category) => (
                     <div key={category.name}>
                       <label className="flex flex-row justify-between text-teal-700 mb-2 font-medium text-left">
                         {category.name}
@@ -310,10 +306,53 @@ const CostCalculator = () => {
                   ))}
                 </div>
               )}
+
+              {abrissType === "mit" && (
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  {mitAbrissOptions.map((category) => (
+                    <div key={category.name}>
+                      <label className="flex flex-row justify-between text-teal-700 mb-2 font-medium text-left">
+                        {category.name}
+                        <span className="ml-2 relative group cursor-pointer">
+                          <FaInfoCircle className="hidden md:block h-5 w-5 text-teal-700 mr-5 shimmer-button" />
+                          <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-96 z-50 p-2 text-xl text-white bg-teal-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto">
+                            {category.description}
+                          </div>
+                        </span>
+                      </label>
+                      <select
+                        onChange={(e) =>
+                          handleOptionSelect(
+                            category.name,
+                            category.options.find(
+                              (opt) => opt.name === e.target.value
+                            )
+                          )
+                        }
+                        className={`w-full border rounded-lg p-2 focus:outline-none transition ${
+                          selectedOptions[category.name]
+                            ? "bg-teal-600 text-white border-teal-800"
+                            : "bg-gray-200 text-gray-800 border-gray-400"
+                        } hover:bg-gray-400 hover:text-white`}
+                      >
+                        <option value="" disabled selected>
+                          Bitte wählen
+                        </option>
+                        {category.options?.map((option) => (
+                          <option key={option.name} value={option.name}>
+                            {option.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               <div className="grid grid-cols-2 gap-4 mb-4">
                 {(selectedType === "neubau"
                   ? neubauOptions
-                  : sanierungOptions
+                  : ohneAbrissOptions
                 ).map((category) => (
                   <div key={category.name}>
                     <label className="flex flex-row justify-between text-teal-700 mb-2 font-medium text-left">

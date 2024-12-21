@@ -11,7 +11,7 @@ const Lieferanten = () => {
     return (
         <section id="works" className="py-8 bg-white">
             <div className="container mx-auto text-center px-6">
-                <h2 className="text-2xl sm:text-3xl md:text-6xl lg:text-6xl my-8 font-heading font-bold text-gray-500 uppercase border-b-2 border-teal-400  pb-1">Uns vertrauen</h2>
+                <h2 className="text-2xl sm:text-3xl md:text-6xl lg:text-6xl my-8 font-heading font-bold text-gray-500 uppercase border-b-2 border-teal-400  pb-1">Unser Partner</h2>
                 <div className="flex justify-center my-20 gap-6">
                     {sliderImages.map((image) => (
                         <div key={image.id} className="flex-shrink-0 w-[16.66%] p-2 flex items-center justify-center">

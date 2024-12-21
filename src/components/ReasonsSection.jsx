@@ -51,10 +51,10 @@ const ReasonsSection = () => {
               Erfahrung
             </h2>
             <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10">
-              über 10 Jahre
+             
             </p>
             {/* Description */}
-            <p className="ag-courses-item_date-box text-center mt-2 hover:text-white">
+            <p className="ag-courses-item_date-box text-center mt-2 mx-auto hover:text-white">
               Wir verfügen über ein Verständnis für moderne Dachtechnologien.
             </p>
             <ul className="ag-courses-item_date-box text-m space-y-2 text-gray-300 mt-4 ml-10 hover:text-black">
@@ -99,10 +99,10 @@ const ReasonsSection = () => {
               Zuverlässigkeit
             </h3>
             <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10">
-            Zuverlässiger Partner
+            
             </p>
             {/* Description */}
-            <p className="ag-courses-item_date-box_middle text-center mt-2 hover:text-teal-900">
+            <p className="ag-courses-item_date-box_middle text-center mt-2 mx-auto hover:text-teal-900">
               Wir garantieren termingerechte Fertigstellung jedes Projekts.
             </p>
             <ul className="ag-courses-item_date-box_middle text-m space-y-2 text-gray-900 mt-4 ml-10 hover:text-black">
@@ -147,10 +147,10 @@ const ReasonsSection = () => {
               Garantie
             </h3>
             <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10">
-              Sicher und zuverlässig
+              
             </p>
             {/* Description */}
-            <p className="ag-courses-item_date-box text-center mt-2 hover:text-teal-800">
+            <p className="ag-courses-item_date-box text-center mt-2 hover:text-teal-800 ">
               Wir bieten umfassende Garantien auf unsere Arbeiten.
             </p>
             <ul className="ag-courses-item_date-box text-m space-y-2 text-gray-300 mt-4 ml-10 hover:text-black">

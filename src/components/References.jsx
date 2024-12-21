@@ -3,13 +3,13 @@ const References = () => {
       {
         companyName: "NBB Bau- und Heimwerkermärkte GmbH",
         description:
-          "Unsere Zusammenarbeit mit Olidort Bedachungen war hervorragend. Die Arbeiten wurden termingerecht und professionell ausgeführt.",
+          "",
         logoUrl: "/images/bauspezilogo.png",
       },
       {
         companyName: "HOLZ-GROSS GmbH",
         description:
-          "Olidort Bedachungen hat unser Flachdach perfekt isoliert und die Qualität der Materialien ist erstklassig. Sehr empfehlenswert!",
+          "",
         logoUrl: "/images/holzgross.png",
       },
     ];
@@ -38,12 +38,12 @@ const References = () => {
               {references.map((ref, index) => (
                 <div
                   key={index}
-                  className="bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-lg p-8 flex flex-col items-center hover:scale-105 transform transition-all"
+                  className="bg-teal-900 bg-opacity-60 rounded-lg shadow-lg p-8 flex flex-col items-center hover:scale-105 transform transition-all"
                 >
                   <img
                     src={ref.logoUrl}
                     alt={`${ref.companyName} logo`}
-                    className="w-32 h-32 mb-6 object-contain"
+                    className="w-64 h-64 mb-6 object-contain"
                   />
                   <h3 className="text-2xl font-bold text-teal-400 mb-4 text-center">
                     {ref.companyName}

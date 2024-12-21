@@ -26,15 +26,13 @@ const Home = () => {
                 <CookieModal />                             
                 <ReasonsSection />
                 <UnsereEtappen />
-                
                 <CostCalculator />
                 <ParallaxSection />
                 <OurWorks />
                 <Testimonials />                                
                 <AboutUs />
                 <References />                                
-                <Lieferanten />
-                 
+                <Lieferanten />                 
                 <ContactForm />
             </main>
             <Footer />
