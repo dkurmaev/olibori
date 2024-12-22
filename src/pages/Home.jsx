@@ -14,6 +14,7 @@ import References from '../components/References';
 import AboutUs from '../components/AboutUs';
 import CostCalculator from '../components/CostCalculator';
 import UnsereEtappen from '../components/UnsereEtappen';
+import UnsereDienstleistungen from '../components/UnsereDienstleistungen';
 
 
 const Home = () => {
@@ -26,10 +27,12 @@ const Home = () => {
                 <CookieModal />                             
                 <ReasonsSection />
                 <UnsereEtappen />
-                <CostCalculator />
                 <ParallaxSection />
+                <UnsereDienstleistungen/>
+                <CostCalculator />   
                 <OurWorks />
-                <Testimonials />                                
+                <Testimonials /> 
+                                               
                 <AboutUs />
                 <References />                                
                 <Lieferanten />                 

@@ -12,7 +12,8 @@ const steps = [
 
 const UnsereEtappen = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
+    <div className="bg-gray-200">
+    <div className="max-w-7xl mx-auto px-4 py-10 ">
       {/* Заголовок */}
       <div className="text-center mb-8">
         <h2 className="text-2xl sm:text-3xl md:text-6xl lg:text-5xl my-8 font-heading font-bold text-gray-500 uppercase border-b-2 border-teal-400 inline-block text-center pb-1">
@@ -55,6 +56,7 @@ const UnsereEtappen = () => {
           </div>
         ))}
       </div> 
+    </div>
     </div>  
   );
 };

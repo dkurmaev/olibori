@@ -2,7 +2,11 @@
 import { useState, useRef } from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import ContactFormModal from "./ContactFormModal";
-import { neubauOptions, mitAbrissOptions, ohneAbrissOptions } from "../service/optionsData";
+import {
+  neubauOptions,
+  mitAbrissOptions,
+  ohneAbrissOptions,
+} from "../service/optionsData";
 // spell-checker: enable
 
 const CostCalculator = () => {
@@ -18,7 +22,6 @@ const CostCalculator = () => {
   const [selectedOptionsList, setSelectedOptionsList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(""); // For inline error message
   const [selectedOptions, setSelectedOptions] = useState("");
-  
 
   const toggleContactModal = () => {
     setContactModalOpen(!isContactModalOpen);
@@ -50,8 +53,6 @@ const CostCalculator = () => {
     setAbrissType(type === "sanierung" ? "ohne" : "ohne");
   };
 
-  
-
   const handleDimensionChange = (type, value) => {
     if (value === "" || Number(value) > 0) {
       if (type === "length") {
@@ -64,25 +65,32 @@ const CostCalculator = () => {
     }
   };
 
-
   const handleOptionSelect = (category, option) => {
-    const selectedOption = selectedType === "neubau"
-      ? neubauOptions.find(cat => cat.name === category)?.options.find(opt => opt.name === option.name)
-      : (abrissType === "ohne" ? ohneAbrissOptions : mitAbrissOptions).find(cat => cat.name === category)?.options.find(opt => opt.name === option.name);
+    const selectedOption =
+      selectedType === "neubau"
+        ? neubauOptions
+            .find((cat) => cat.name === category)
+            ?.options.find((opt) => opt.name === option.name)
+        : (abrissType === "ohne" ? ohneAbrissOptions : mitAbrissOptions)
+            .find((cat) => cat.name === category)
+            ?.options.find((opt) => opt.name === option.name);
 
     if (!selectedOption) {
-      setErrorMessage(`Опция "${option.name}" не найдена в категории "${category}".`);
+      setErrorMessage(
+        `Опция "${option.name}" не найдена в категории "${category}".`
+      );
       return;
     }
 
     if (selectedType === "neubau") {
-      setNeubauSelections(prev => ({ ...prev, [category]: selectedOption }));
+      setNeubauSelections((prev) => ({ ...prev, [category]: selectedOption }));
     } else {
-      setSanierungSelections(prev => ({ ...prev, [category]: selectedOption }));
+      setSanierungSelections((prev) => ({
+        ...prev,
+        [category]: selectedOption,
+      }));
     }
 
-
-    
     setSelectedOptions((prev) => ({
       ...prev,
       [category]: selectedOption,
@@ -167,19 +175,18 @@ const CostCalculator = () => {
   };
 
   const handleBackClick = () => {
-    setSelectedType(""); 
-    setNeubauSelections({}); 
-    setSanierungSelections({}); 
-    setSelectedOptionsList([]); 
-    setTotalCost(0); 
-    setLength(1); 
-    setWidth(1); 
-    setArea(1); 
-    setAbrissType(""); 
-    setErrorMessage(""); 
+    setSelectedType("");
+    setNeubauSelections({});
+    setSanierungSelections({});
+    setSelectedOptionsList([]);
+    setTotalCost(0);
+    setLength(1);
+    setWidth(1);
+    setArea(1);
+    setAbrissType("");
+    setErrorMessage("");
     setSelectedOptions({}); // Сбрасываем выбранные опции
   };
-  
 
   const getDefaultInfo = () => {
     if (selectedType === "neubau") {
@@ -193,10 +200,12 @@ const CostCalculator = () => {
   return (
     <div
       id="cost-calculator"
-      className="relative z-10 text-center text-white mx-auto"
+      className="relative z-10 text-center text-white mx-auto  my-8"
     >
-      <div className="container mx-auto mb-4 py-8 rounded-xl bg-gray-200 shadow-xl">
+      <div className="container  mx-auto py-8 bg-gray-200  rounded-lg">
+        
         <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-5xl font-heading font-bold text-teal-900 uppercase border-b-2 border-teal-400 inline-block pb-1 text-center my-8">
+         
           Kostenberechnung für Dacharbeiten
         </h1>
         {/* Top buttons */}
@@ -228,7 +237,6 @@ const CostCalculator = () => {
             Frage stellen
           </button>
         </div>
-
         {/* Main grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
           {/* Right side (теперь первая) */}
@@ -504,7 +512,6 @@ const CostCalculator = () => {
             )}
           </div>
         </div>
-
         {/* Modal window */}
         {isContactModalOpen && (
           <ContactFormModal closeModal={toggleContactModal} />

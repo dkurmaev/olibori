@@ -60,13 +60,10 @@ const Header = () => {
         </div>
         <div className="responsive-container hidden lg-custom:hidden md-custom:hidden lg:block xl:block sm:hidden flex-wrap">
           <p className="text-md lg:flex justify-between items-center font-light space-x-3 text-right text-yellow-400 animate-pulse">
-            <FaPhone className="my-auto mx-2 animate-bounce" />
-            <span className="group relative">
-              <span className="absolute inset-0 bg-yellow-400 opacity-10 rounded-full blur group-hover:opacity-30 transition-opacity"></span>
-            </span>
+            <FaPhone className="my-auto mx-2 ring" />            
             <span
               href="tel:+4915730050570"
-              className="text-teal-600 font-bold group relative"
+              className="text-teal-600 font-bold group relative glow"
             >
               +4915730050570
             </span>
@@ -80,12 +77,19 @@ const Header = () => {
           >
             Home
           </a>
+          <a
+            href="#services"
+            className="relative group bg-teal-800 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-all"
+          >
+            Dienstleistungen
+          </a>
           <button
             onClick={scrollToCostCalculator}
             className="relative group bg-teal-800 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-all"
           >
             Kostenberechnung
           </button>
+          
           <a
             href="#contact"
             className="relative group bg-teal-800 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-all"
@@ -132,10 +136,17 @@ const Header = () => {
             <a
               href="#home"
               className="text-white hover:text-secondary border-b border-gray-200 py-2"
-              onClick={toggleMenu} // Закрытие меню при нажатии
+              onClick={toggleMenu} 
             >
               Home
             </a>
+            <a
+            href="#services"
+            className="text-white hover:text-secondary border-b border-gray-200 py-2"
+            onClick={toggleMenu}
+          >
+            Dienstleistungen
+          </a>
             <a
               href="#cost-calculator"
               className="text-white hover:text-secondary border-b border-gray-200 py-2"

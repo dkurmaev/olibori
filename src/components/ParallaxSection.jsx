@@ -6,23 +6,28 @@ const ParallaxSection = () => {
       const parallaxElement = document.getElementById("parallax");
       if (parallaxElement) {
         const offset = window.pageYOffset;
-        // Обновляем backgroundPositionY для имитации параллакса
+
         parallaxElement.style.backgroundPositionY = `${offset * 0.5}px`;
       }
     };
 
-    // Добавляем обработчик прокрутки
-    if (window.innerWidth > 768) { // Параллакс работает только на экранах больше 768px
+    if (window.innerWidth > 768) {
       window.addEventListener("scroll", handleScroll);
     }
 
-    // Удаляем обработчик при размонтировании компонента
     return () => {
       if (window.innerWidth > 768) {
         window.removeEventListener("scroll", handleScroll);
       }
     };
   }, []);
+
+  const scrollToComponent = () => {
+    const element = document.getElementById("services");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <div
@@ -44,9 +49,6 @@ const ParallaxSection = () => {
         <div className="grid grid-cols-1 gap-2 my-10 mx-6 items-center lg:px-80 text-gray-300 lg:grid-cols-3">
           {/* Первый блок с 3 элементами */}
           <div className="flex flex-col">
-            <p className="text-md font-sans text-left mt-4 block lg:hidden">
-              &#9745; Montage des Entwässerungssystems
-            </p>
             <p className="text-md font-sans text-left mt-4 hidden lg:block">
               &#9745; Montage des Entwässerungssystems
             </p>
@@ -60,9 +62,6 @@ const ParallaxSection = () => {
 
           {/* Второй блок с 3 элементами */}
           <div className="flex flex-col text-gray-300">
-            <p className="text-md font-sans text-left mt-4 block lg:hidden">
-              &#9745; Verlegung von Dämmmaterial
-            </p>
             <p className="text-md font-sans text-left mt-4 hidden lg:block">
               &#9745; Verlegung von Dämmmaterial
             </p>
@@ -76,9 +75,6 @@ const ParallaxSection = () => {
 
           {/* Третий блок с 3 элементами */}
           <div className="flex flex-col text-gray-300">
-            <p className="text-md font-sans text-left mt-4 block lg:hidden">
-              &#9745; Balkoneabdichtung
-            </p>
             <p className="text-md font-sans text-left mt-4 hidden lg:block">
               &#9745; Balkoneabdichtung
             </p>
@@ -93,8 +89,9 @@ const ParallaxSection = () => {
       </div>
 
       {/* Стрелка вниз */}
-      <div className="flex gap-32 justify-center space-x-24 mb-12 md:space-x-32 lg:space-x-48 text-gray-200 cursor-pointer">
+      <div className="flex justify-items-stretch gap-32  space-x-24 mb-12 md:space-x-32 lg:space-x-48 text-gray-200 cursor-pointer">
         <svg
+          onClick={scrollToComponent}
           className="w-6 h-6 md:w-8 md:h-8 lg:w-12 lg:h-12 animate-bounce"
           fill="none"
           stroke="currentColor"
@@ -110,7 +107,8 @@ const ParallaxSection = () => {
           <path d="M23.149,1.644L13.06,11.561c-.565,.566-1.551,.569-2.124-.003L.851,1.644c-.198-.194-.514-.192-.707,.006-.194,.197-.191,.514,.006,.707L10.232,12.268c.472,.473,1.1,.732,1.768,.732s1.296-.26,1.765-.729L23.851,2.356c.197-.193,.2-.51,.006-.707-.193-.198-.51-.2-.707-.006Z"></path>
         </svg>
         <svg
-          className="w-6 h-6 md:w-8 md:h-8 lg:w-12 lg:h-12 animate-bounce"
+          onClick={scrollToComponent}
+          className="w-6 h-6 md:w-8 md:h-8 lg:w-12 lg:h-12 animate-bounce text-teal-800"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -125,6 +123,7 @@ const ParallaxSection = () => {
           <path d="M23.149,1.644L13.06,11.561c-.565,.566-1.551,.569-2.124-.003L.851,1.644c-.198-.194-.514-.192-.707,.006-.194,.197-.191,.514,.006,.707L10.232,12.268c.472,.473,1.1,.732,1.768,.732s1.296-.26,1.765-.729L23.851,2.356c.197-.193,.2-.51,.006-.707-.193-.198-.51-.2-.707-.006Z"></path>
         </svg>
         <svg
+          onClick={scrollToComponent}
           className="w-6 h-6 md:w-8 md:h-8 lg:w-12 lg:h-12 animate-bounce"
           fill="none"
           stroke="currentColor"
