@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { CogIcon } from '@heroicons/react/solid';
+import { useState, useEffect } from "react";
+import { CogIcon } from "@heroicons/react/solid";
 
 const CookieConsent = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -11,7 +11,9 @@ const CookieConsent = () => {
   });
 
   useEffect(() => {
-    const savedPreferences = JSON.parse(localStorage.getItem('cookiePreferences'));
+    const savedPreferences = JSON.parse(
+      localStorage.getItem("cookiePreferences")
+    );
     if (savedPreferences) {
       setPreferences(savedPreferences);
       setIsVisible(false); // Пользователь уже согласился, баннер не показываем
@@ -22,7 +24,7 @@ const CookieConsent = () => {
 
   const savePreferences = (newPreferences) => {
     setPreferences(newPreferences);
-    localStorage.setItem('cookiePreferences', JSON.stringify(newPreferences));
+    localStorage.setItem("cookiePreferences", JSON.stringify(newPreferences));
   };
 
   const handleAcceptAll = () => {
@@ -57,30 +59,31 @@ const CookieConsent = () => {
 
   return (
     <>
-      {/* Шестеренка в левом нижнем углу */}
-      <div className='fixed bottom-5 left-5 z-50'>
-      <button
-        onClick={toggleSettings}
-        title="Cookies Einstellungen"
-        className="bg-teal-900 text-white text-right p-4 rounded-full shadow-lg h-16 w-24 transform transition-all duration-300 ease-in-out hover:translate-x-8 hover:scale-125"
-        style={{ marginLeft: '-70px' }} 
-      >
-        <CogIcon className="h-6 w-6 ml-10" />
-      </button>
+      <div className="fixed bottom-5 left-5 z-50">
+        <button
+          onClick={toggleSettings}
+          title="Cookies Einstellungen"
+          className="bg-teal-900 text-white text-right p-4 rounded-full shadow-lg h-16 w-24 transform transition-all duration-300 ease-in-out hover:translate-x-8 hover:scale-125"
+          style={{ marginLeft: "-70px" }}
+        >
+          <CogIcon className="h-6 w-6 ml-10" />
+        </button>
       </div>
 
-      {/* Баннер согласия на куки с анимацией появления снизу */}
       {isVisible && (
-        <div className="fixed bottom-0 left-5 right-5 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50 transition-transform transform translate-y-full animate-slide-up">
-          <div className="bg-white p-6 rounded-t-lg shadow-lg max-w-lg w-full">
-            <h2 className="text-2xl font-semibold mb-4 text-center">Wir nutzen Cookies</h2>
+        <div className="fixed inset-0 flex items-center justify-center z-50 transition-transform transform animate-slide-up backdrop-blur-sm bg-black bg-opacity-30">
+          <div className="bg-gray-400 p-6 shadow-lg max-w-lg w-full mx-4 sm:mx-0">
+            <h2 className="text-2xl font-semibold mb-4 text-center">
+              Wir nutzen Cookies
+            </h2>
             <p className="text-gray-700 mb-6 text-center">
-              Diese Website nutzt Cookies zur Verbesserung des Service. Bitte wählen Sie Ihre Präferenzen.
+              Diese Website nutzt Cookies zur Verbesserung des Service. Bitte
+              wählen Sie Ihre Präferenzen.
             </p>
-            <div className="flex justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button
                 onClick={handleDeclineAll}
-                className="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded"
+                className="bg-gray-200 hover:bg-gray-500 text-teal-900 py-2 px-4 rounded"
               >
                 Ablehnen
               </button>
@@ -107,7 +110,10 @@ const CookieConsent = () => {
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Cookie-Einstellungen</h2>
-              <button onClick={toggleSettings} className="text-gray-500 hover:text-gray-700">
+              <button
+                onClick={toggleSettings}
+                className="text-gray-500 hover:text-gray-700"
+              >
                 <img
                   src="/images/close-icon.gif"
                   alt="close"
@@ -117,15 +123,27 @@ const CookieConsent = () => {
             </div>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <label className="text-gray-700">Technisch notwendige Cookies (immer aktiv)</label>
-                <input type="checkbox" checked={preferences.necessary} disabled className="cursor-not-allowed" />
+                <label className="text-gray-700">
+                  Technisch notwendige Cookies (immer aktiv)
+                </label>
+                <input
+                  type="checkbox"
+                  checked={preferences.necessary}
+                  disabled
+                  className="cursor-not-allowed"
+                />
               </div>
               <div className="flex items-center justify-between">
                 <label className="text-gray-700">Analytische Cookies</label>
                 <input
                   type="checkbox"
                   checked={preferences.analytics}
-                  onChange={(e) => setPreferences({ ...preferences, analytics: e.target.checked })}
+                  onChange={(e) =>
+                    setPreferences({
+                      ...preferences,
+                      analytics: e.target.checked,
+                    })
+                  }
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -133,7 +151,12 @@ const CookieConsent = () => {
                 <input
                   type="checkbox"
                   checked={preferences.marketing}
-                  onChange={(e) => setPreferences({ ...preferences, marketing: e.target.checked })}
+                  onChange={(e) =>
+                    setPreferences({
+                      ...preferences,
+                      marketing: e.target.checked,
+                    })
+                  }
                 />
               </div>
             </div>
