@@ -14,7 +14,7 @@ const AboutUs = () => {
           Über uns
         </h2>
         <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
-          Wir sind eine zertifizierte Dachdeckerfirma mit über fünf Jahren Erfahrung auf dem Markt.
+          Wir sind eine zertifizierte Dachdeckerfirma mit mehr Jahren Erfahrung auf dem Markt.
           Unser Unternehmen bietet Dacharbeiten jeder Komplexität und arbeitet mit einer Vielzahl
           von zuverlässigen Lieferanten zusammen. Wir garantieren höchste Qualität und
           Erschwinglichkeit unserer Leistungen.
@@ -24,9 +24,7 @@ const AboutUs = () => {
           jedes Projekts sorgen. Egal ob Neubau, Reparatur oder Instandhaltung – wir bieten Ihnen
           die besten Lösungen für Ihr Dach.
         </p>
-        <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
-          Vertrauen Sie auf unsere Kompetenz und unser Engagement für Qualität und Kundenzufriedenheit.
-        </p>
+        
       </div>
 
       {/* Правый блок с изображением */}
@@ -35,7 +33,7 @@ const AboutUs = () => {
         style={fadeInStyle}
       >
         <img
-          src="/images/output.jpg"
+          src="/images/Slide9.jpg"
           alt="Unsere Firma"
           className="w-full h-auto rounded-2xl shadow-2xl shadow-teal-900"
         />

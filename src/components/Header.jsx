@@ -5,7 +5,6 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Обработчик прокрутки для изменения стиля при скролле
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
@@ -26,23 +25,22 @@ const Header = () => {
   const scrollToCostCalculator = () => {
     const costCalculatorSection = document.getElementById("cost-calculator");
     if (costCalculatorSection) {
-      const rect = costCalculatorSection.getBoundingClientRect(); // Позиция элемента
+      const rect = costCalculatorSection.getBoundingClientRect();
       const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop; // Текущее значение прокрутки
+        window.pageYOffset || document.documentElement.scrollTop;
       const targetY =
-        rect.top + scrollTop - window.innerHeight / 2 + rect.height / 2; // Позиция на середине экрана
+        rect.top + scrollTop - window.innerHeight / 2 + rect.height / 2;
       window.scrollTo({ top: targetY, behavior: "smooth" });
     }
   };
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full p-4 z-20 py-4 shadow-lg backdrop-blur-sm transition-all duration-500 ${
-        scrolled ? "bg-opacity-20" : "bg-opacity-100"
+      className={`fixed top-0 left-0 w-full p-4 z-20 py-4 shadow-lg bg-white backdrop-blur-xl transition-all duration-500 ${
+        scrolled ? "bg-opacity-200" : "bg-opacity-10"
       }`}
     >
       <div className="container mx-auto flex justify-between items-center">
-        {/* Логотип */}
         <div className="flex  items-center">
           <img
             src="/images/Logo.png"
@@ -60,7 +58,7 @@ const Header = () => {
         </div>
         <div className="responsive-container hidden lg-custom:hidden md-custom:hidden lg:block xl:block sm:hidden flex-wrap">
           <p className="text-md lg:flex justify-between items-center font-light space-x-3 text-right text-yellow-400 animate-pulse">
-            <FaPhone className="my-auto mx-2 ring" />            
+            <FaPhone className="my-auto mx-2 ring" />
             <span
               href="tel:+4915730050570"
               className="text-teal-600 font-bold group relative glow"
@@ -69,7 +67,7 @@ const Header = () => {
             </span>
           </p>
         </div>
-        {/* Меню для десктопа */}
+
         <nav className="hidden md:flex items-center space-x-6">
           <a
             href="#home"
@@ -89,7 +87,7 @@ const Header = () => {
           >
             Kostenberechnung
           </button>
-          
+
           <a
             href="#contact"
             className="relative group bg-teal-800 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-all"
@@ -107,7 +105,6 @@ const Header = () => {
           </div>
         </nav>
 
-        {/* Бургер-меню для мобильной версии */}
         <div className="md:hidden">
           <button
             onClick={toggleMenu}
@@ -130,29 +127,28 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Мобильное меню */}
         {menuOpen && (
           <nav className="absolute top-16 left-0 w-full bg-teal-900 bg-opacity-90 p-6 flex flex-col space-y-4 md:hidden z-20">
             <a
               href="#home"
               className="text-white hover:text-secondary border-b border-gray-200 py-2"
-              onClick={toggleMenu} 
+              onClick={toggleMenu}
             >
               Home
             </a>
             <a
-            href="#services"
-            className="text-white hover:text-secondary border-b border-gray-200 py-2"
-            onClick={toggleMenu}
-          >
-            Dienstleistungen
-          </a>
+              href="#services"
+              className="text-white hover:text-secondary border-b border-gray-200 py-2"
+              onClick={toggleMenu}
+            >
+              Dienstleistungen
+            </a>
             <a
               href="#cost-calculator"
               className="text-white hover:text-secondary border-b border-gray-200 py-2"
               onClick={() => {
-                toggleMenu(); // Закрытие меню
-                scrollToCostCalculator(); // Прокрутка к секции
+                toggleMenu();
+                scrollToCostCalculator();
               }}
             >
               Kostenberechnung
@@ -160,14 +156,14 @@ const Header = () => {
             <a
               href="#contact"
               className="text-white hover:text-secondary py-2"
-              onClick={toggleMenu} // Закрытие меню
+              onClick={toggleMenu}
             >
               Kontakt
             </a>
             <a
               href="tel:+4915730050570"
               className="bg-yellow-400 text-gray-900 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition"
-              onClick={toggleMenu} // Закрытие меню
+              onClick={toggleMenu}
             >
               Anruf: +49 157 300 505 70
             </a>
