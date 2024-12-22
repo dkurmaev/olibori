@@ -17,16 +17,14 @@ const services = [
           <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile eines Flachdachs:</h4>
           <ul class="list-disc pl-5">
             <li>Minimalistische Ästhetik: Klare Linien und eine schlichte Formgebung.</li>
-            <li>Optimale Raumnutzung: Ermöglicht die Nutzung des Dachs als Terrasse oder Garten.</li>
-            <li>Umweltfreundlich: Ideal für Dachbegrünungen, die zur Artenvielfalt und zum Umweltschutz beitragen.</li>
+           
           </ul>
           
           <h4 class="text-lg font-semibold mt-4 mb-2">Materialien und Konstruktion:</h4>
           <p>Flachdächer werden in der Regel mit Bitumenbahnen oder EPDM-Folie abgedichtet, um eine lange Haltbarkeit zu gewährleisten.</p>
           <p>Die tragende Konstruktion besteht meist aus einer dicken Stahlbetonplatte, die für Stabilität sorgt.</p>
           
-          <h4 class="text-lg font-semibold mt-4 mb-2">Ein modernes Flachdach:</h4>
-          <p>Ein modernes Flachdach mit Dachgarten, das zusätzlichen Wohnraum schafft, und die verschiedenen Schichten eines Flachdachs anschaulich erklärt.</p>
+          
         `,
         images: ["/images/Neubau.jpg"],
       },
@@ -120,12 +118,7 @@ const services = [
         description: `
           <h3 class="text-xl font-bold mb-2">Dampfsperre – S4 + Alu</h3>
           <p>Die Dampfsperre S4 + Alu ist eine Bitumen-Dampfsperrbahn, die eine Kombination aus Aluminium-Polyester-Kombination und Glasvlies als Trägereinlage aufweist. Sie dient als effektive Dampfsperre, um warme oder feuchte Luft von der Dämmung abzusperren und dadurch die Dämmfähigkeit zu erhalten und Schimmelbildung zu verhindern.</p>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Eigenschaften:</h4>
-          <ul class="list-disc pl-5">
-            <li><strong>Trägereinlage:</strong>Aluminium-Polyester-Kombination + Glasvlies.</li>
-            <li><strong>Funktion:</strong>Dampfsperre.</li>
-            <li><strong>Verwendung:</strong>als Dämmungsschicht auf mineralischen Unterlagen oder Stahltrapezblechen.</li>
-          </ul>
+          
           <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile:</h4>
           <ul class="list-disc pl-5">
             <li>Hohe Diffusionsdichte und Wärmedämmung.</li>
@@ -139,14 +132,7 @@ const services = [
         description: `
           <h3 class="text-xl font-bold mb-2">Dampfsperre – RE-Folie</h3>
           <p>Die Dampfsperre RE-Folie ist eine spezielle Folie, die zur Feuchtigkeitssperre und -regulierung in Gebäuden eingesetzt wird. Sie besteht aus Polyethylen (PE) und ist mit einer Stärke von 0,2 mm ausgestattet.</p>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Anwendungsbereiche:</h4>
-          <p>Die Dampfsperre PE-Folie wird in verschiedenen Anwendungsbereichen eingesetzt, wie zum Beispiel:</p>
-          <ul class="list-disc pl-5">
-            <li>Unter Laminatboden oder Parkett.</li>
-            <li>Unter Estrichen und Spachtelmassen.</li>
-            <li>Als Zwischenlage zwischen Dämmunterlage und Estrich.</li>
-            <li>Als Feuchtigkeitsschutz bei Außenwänden und Dächern.</li>
-          </ul>
+          
           <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile:</h4>
           <ul class="list-disc pl-5">
             <li>Hohe Diffusionsdichte und Wärmedämmung.</li>
@@ -169,11 +155,7 @@ const services = [
         description: `
           <h3 class="text-xl font-bold mb-2">Dämmung – PUR/PIR</h3>
           <p>PUR (Polyurethan) und PIR (Polyisocyanurat) sind zwei synthetische Hartschaumplatten, die als Dämmstoffe eingesetzt werden. Beide Materialien basieren auf demselben Rohstoff, dem MDI (Methylendiisocyanat), aber unterscheiden sich in ihrer chemischen Struktur und Eigenschaften.</p>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Eigenschaften von PUR und PIR:</h4>
-          <ul class="list-disc pl-5">
-            <li><strong>Wärmeleitfähigkeit: </strong>Beide Materialien haben eine sehr geringe Wärmeleitfähigkeit (λ: 0,02 bis 0,025 W/mK), was sie für die Wärmedämmung von Gebäuden geeignet macht.</li>            
-            <li><strong>Temperaturbeständigkeit: </strong> Beide Materialien sind temperaturbeständig und bleiben zwischen -80°C und +130°C formstabil.</li>
-            <li><strong>Wasserabweisend:</strong>PUR und PIR sind wasserabweisend und bieten somit Schutz gegen Feuchtigkeit.</li>  
+          strong>Wasserabweisend:</strong>PUR und PIR sind wasserabweisend und bieten somit Schutz gegen Feuchtigkeit.</li>  
           </ul>
           <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile und Nachteile:</h4>
           <ul class="list-disc pl-5">
@@ -189,23 +171,21 @@ const services = [
           <h3 class="text-xl font-bold mb-2">Dämmung – EPS</h3>
           <p>EPS (Expandiertes Polystyrol) ist ein kostengünstiger und vielseitiger Dämmstoff, der in vielen Bereichen eingesetzt wird. Hier sind einige wichtige Aspekte zu beachten.</p>
           <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile:</h4>
-          <ul class="list-disc pl-5">
-            <li><strong>Kostengünstig:</strong>EPS ist eines der billigsten Dämmstoffe auf dem Markt.</li>
-            <li><strong>Leicht:</strong>EPS-Platten sind leicht zu verarbeiten und zu transportieren.</li>
-            <li><strong>Vielseitig einsetzbar:</strong>EPS kann für nahezu jede Anwendung im Baubereich verwendet werden, wie z.B. in der Fassaden-, Wand- und Dachdämmung, als Trittschalldämmung oder in der Kerndämmung von zweischaligen Wänden.</li>
-            <li><strong>Energieeinsparung:</strong>Durch die Verwendung von EPS kann in Häusern sehr viel Energie und damit auch Geld gespart werden.</li>
+          <ul class="list-disc pl-5">           
+            <li><strong>Leicht</strong></li>
+            <li><strong>Vielseitig einsetzbar</strong></li>
+            <li><strong>Energieeinsparung</strong></li>
           </ul>
           <h4 class="text-lg font-semibold mt-4 mb-2">Nachteile:</h4>
           <ul class="list-disc pl-5">
-            <li><strong>Feuchtigkeitsempfindlichkeit:</strong>EPS ist nicht wasserfest und sollte daher in feuchten Bereichen wie z.B. Keller oder Badezimmer nur bedingt verwendet werden.</li>
-            <li><strong>Druckempfindlichkeit: </strong> EPS hat eine geringere Druckfestigkeit als andere Dämmstoffe wie XPS und sollte daher in Anwendungen mit hoher Belastung (z.B. Bodendämmung) nicht verwendet werden.</li>
-            <li><strong>Verwitterung:</strong>EPS kann bei langem Einsatz und hoher Temperaturveränderung verwittern und seine Dämmwirkung verlieren.</li>
+            <li><strong>Feuchtigkeitsempfindlichkeit</strong></li>
+            <li><strong>Druckempfindlichkeit: </strong></li>
+            <li><strong>Verwitterung:</strong></li>
           <h4 class="text-lg font-semibold mt-4 mb-2">Einsatzorte:</h4>
           <ul class="list-disc pl-5">
             <li>Fassaden- und Wanddämmung</li>
             <li>Dachdämmung</li>
-            <li>Kerndämmung von zweischaligen Wänden</li>
-            <li>Bodendämmung (nur bei geringer Belastung)</li>
+            
         `,
         images: ["/images/EPS.jpg"],
       },
@@ -223,18 +203,13 @@ const services = [
           <p>Die Kunststoffbahn aus PVC (Polyvinylchlorid) ist eine beliebte Lösung für die Abdichtung von Flachdächern, insbesondere im Industrie- und Hallenbau. Sie zeichnet sich durch folgende Eigenschaften aus.</p>
           <br/>
           <ul class="list-disc pl-5">
-            <li><strong>Hohe Zugfestigkeit:</strong>Kunststoffbahnen aus PVC sind sehr widerstandsfähig gegen Zugspannungen und können hohe Lasten tragen.</li>
-            <li><strong>Flexibilität:</strong>Sie sind elastisch und können sich an die Oberfläche des Daches anpassen, ohne zu brechen oder zu reißen.</li>
-            <li><strong>Hohes Deckvermögen:</strong>Kunststoffbahnen können sich bei Temperaturenänderungen und Feuchtigkeitsschwankungen dehnen, ohne zu brechen.</li>
-            <li><strong>Widerstand gegen aggressive Medien:</strong>Sie sind widerstandsfähig gegen sauren Regen, Mineralöle, Fettsäuren und UV-Licht.</li>
-            <li><strong>Temperaturbeständigkeit:</strong> Kunststoffbahnen aus PVC sind temperaturbeständig, sowohl bei Kälte als auch bei großer Hitze.</li>
+            <li><strong>Hohe Zugfestigkeit</strong></li>
+            <li><strong>Flexibilität</strong></li>
+            <li><strong>Hohes Deckvermögen</strong></li>
+            <li><strong>Widerstand gegen aggressive Medien</strong></li>
+            <li><strong>Temperaturbeständigkeit</strong> </li>
           </ul>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile:</h4>
-          <ul class="list-disc pl-5">
-            <li>Hohe Diffusionsdichte und Wärmedämmung.</li>
-            <li>Schutz gegen Schimmelbildung und Feuchtigkeit.</li>
-            <li>Verwendung auf verschiedenen Unterlagen ermöglicht.</li>
-          </ul>
+          
         `,
         images: ["/images/PVC.jpg"],
       },
@@ -244,18 +219,13 @@ const services = [
           <p>Die Kunststoffbahn aus TPO (Teflon Polypropylen) ist eine beliebte Lösung für die Abdichtung von Flachdächern, insbesondere im Industrie- und Hallenbau. Sie zeichnet sich durch folgende Eigenschaften aus.</p>
           <br/>
           <ul class="list-disc pl-5">
-            <li><strong>Hohe Zugfestigkeit:</strong>Kunststoffbahnen aus PVC sind sehr widerstandsfähig gegen Zugspannungen und können hohe Lasten tragen.</li>
-            <li><strong>Flexibilität:</strong>Sie sind elastisch und können sich an die Oberfläche des Daches anpassen, ohne zu brechen oder zu reißen.</li>
-            <li><strong>Hohes Deckvermögen:</strong>Kunststoffbahnen können sich bei Temperaturenänderungen und Feuchtigkeitsschwankungen dehnen, ohne zu brechen.</li>
-            <li><strong>Widerstand gegen aggressive Medien:</strong>Sie sind widerstandsfähig gegen sauren Regen, Mineralöle, Fettsäuren und UV-Licht.</li>
-            <li><strong>Temperaturbeständigkeit:</strong> Kunststoffbahnen aus PVC sind temperaturbeständig, sowohl bei Kälte als auch bei großer Hitze.</li>
+            <li><strong>Hohe Zugfestigkeit</strong></li>
+            <li><strong>Flexibilität</strong></li>
+            <li><strong>Hohes Deckvermögen</strong></li>
+            <li><strong>Widerstand gegen aggressive Medien</strong></li>
+            <li><strong>Temperaturbeständigkeit</strong> </li>
           </ul>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile:</h4>
-          <ul class="list-disc pl-5">
-            <li>Hohe Diffusionsdichte und Wärmedämmung.</li>
-            <li>Schutz gegen Schimmelbildung und Feuchtigkeit.</li>
-            <li>Verwendung auf verschiedenen Unterlagen ermöglicht.</li>
-          </ul>
+          
         `,
         images: ["/images/FPO.jpg"],
       },
