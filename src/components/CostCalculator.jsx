@@ -31,7 +31,7 @@ const CostCalculator = () => {
 
   const scrollToOptions = () => {
     if (optionsSectionRef.current) {
-      const offset = 400; // Offset in pixels
+      const offset = 400; 
       const elementPosition =
         optionsSectionRef.current.getBoundingClientRect().top + window.scrollY;
       const offsetPosition = elementPosition - offset;

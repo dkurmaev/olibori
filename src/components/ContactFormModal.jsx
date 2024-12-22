@@ -150,7 +150,7 @@ const ContactFormModal = ({ closeModal }) => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 text-left">
-              Name <span className="text-red-500">*</span>
+              Name: <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -172,7 +172,7 @@ const ContactFormModal = ({ closeModal }) => {
 
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700  text-left">
-              E-Mail <span className="text-red-500">*</span>
+              E-Mail: <span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -194,7 +194,7 @@ const ContactFormModal = ({ closeModal }) => {
 
           <div className="mb-4">
             <label htmlFor="phone" className="block text-gray-700  text-left">
-              Telefonnummer (optional)
+              Telefonnummer:
             </label>
             <InputMask
               mask="+49 999 99 99 99 99"
@@ -216,7 +216,7 @@ const ContactFormModal = ({ closeModal }) => {
 
           <div className="mb-4">
             <label htmlFor="message" className="block text-gray-700 text-left">
-              Nachricht
+              Nachricht:
             </label>
             <textarea
               id="message"

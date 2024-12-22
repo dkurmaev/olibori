@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaPhone } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -36,7 +36,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full p-4 z-20 py-4 shadow-lg bg-white backdrop-blur-xl transition-all duration-500 ${
+      className={`fixed top-0 left-0 w-full p-4 z-20 py-4 shadow-2xl bg-gray-400 backdrop-blur-xl transition-all duration-500  ${
         scrolled ? "bg-opacity-200" : "bg-opacity-10"
       }`}
     >
@@ -58,7 +58,7 @@ const Header = () => {
         </div>
         <div className="responsive-container hidden lg-custom:hidden md-custom:hidden lg:block xl:block sm:hidden flex-wrap">
           <p className="text-md lg:flex justify-between items-center font-light space-x-3 text-right text-yellow-400 animate-pulse">
-            <FaPhone className="my-auto mx-2 ring" />
+            <FaPhoneAlt className="my-auto h-16 w-4 mx-2 vibrate" />
             <span
               href="tel:+4915730050570"
               className="text-teal-600 font-bold group relative glow"

@@ -267,7 +267,7 @@ body {
 
 }
 
-@keyframes ring {
+@keyframes vibrate {
   0% { transform: rotate(0deg); }
   1% { transform: rotate(30deg); }
   3% { transform: rotate(-28deg); }
@@ -293,19 +293,10 @@ body {
   43% { transform: rotate(0deg); }
 }
 
-.ring {
-  animation: ring 2s infinite;
+.vibrate {
+  animation: vibrate 0.5s infinite;
 }
 
-@keyframes pick-up {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
-}
-
-.pick-up {
-  animation: pick-up 0.5s forwards;
-}
 
 @keyframes glow {
   0% { text-shadow: 0 0 10px #ff9; }
