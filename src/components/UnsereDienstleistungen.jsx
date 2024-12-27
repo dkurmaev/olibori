@@ -78,138 +78,11 @@ const services = [
       images: ["/images/Reparatur.jpg"],
     },
   },
-  // {
-  //   title: "Montage des Entwässerungssystems",
-
-  //   imageUrl: "/images/Entwaesserungssystem.jpg",
-  //   description:
-  //     "Die Montage des Entwässerungssystems ist entscheidend für die Ableitung von Regenwasser und die Vermeidung von Wasserschäden.",
-  //   optionDetails: {
-  //     description: `
-        
-  //       <p>Ein effizientes Entwässerungssystem sorgt dafür, dass Regenwasser ordnungsgemäß abgeleitet wird.</p>
-  //     `,
-  //     images: ["/images/Entwaesserungssystem.jpg"],
-  //   },
-  // },
-  // {
-  //   title: "Errichtung der Dachkonstruktion",
-
-  //   imageUrl: "/images/Dachkonstruktion.jpg",
-  //   description:
-  //     "Die Errichtung der Dachkonstruktion umfasst die grundlegenden Arbeiten zur Stabilität und Form des Daches.",
-  //   optionDetails: {
-  //     description: `
-        
-  //       <p>Diese Phase ist entscheidend für die Stabilität und die langfristige Funktionsfähigkeit des Daches.</p>
-  //     `,
-  //     images: ["/images/Dachkonstruktion.jpg"],
-  //   },
-  // },
-  // {
-  //   title: "Abdichtungs- und Dampfsperrschichten",
-
-  //   imageUrl: "/images/Abdichtung.jpg",
-  //   description:
-  //     "Die Abdichtungs- und Dampfsperrschichten schützen das Dach vor Feuchtigkeit und anderen Umwelteinflüssen.",
-  //   optionDetails: {
-  //     description: `
-        
-  //       <p>Diese Schichten sind entscheidend, um das Dach vor Wasser- und Dampfschäden zu schützen.</p>
-  //     `,
-  //     images: ["/images/Abdichtung.jpg"],
-  //   },
-  // },
-  // {
-  //   title: "Verlegung von Dämmmaterial",
-
-  //   imageUrl: "/images/Daemmung.jpg",
-  //   description:
-  //     "Die Verlegung von Dämmmaterial verbessert die Energieeffizienz und den Wohnkomfort.",
-  //   optionDetails: {
-  //     description: `
-        
-  //       <p>Die richtige Dämmung ist wichtig für den Energieverbrauch und das Raumklima.</p>
-  //     `,
-  //     images: ["/images/Daemmung.jpg"],
-  //   },
-  // },
-  // {
-  //   title: "Installation von Belüftungselementen",
-
-  //   imageUrl: "/images/Belueftung.jpg",
-  //   description:
-  //     "Die Installation von Belüftungselementen sorgt für eine optimale Luftzirkulation im Dachraum.",
-  //   optionDetails: {
-  //     description: `
-        
-  //       <p>Belüftungselemente sind wichtig, um Feuchtigkeitsansammlungen und Schimmelbildung zu vermeiden.</p>
-  //     `,
-  //     images: ["/images/Belueftung.jpg"],
-  //   },
-  // },
-  // {
-  //   title: "Verlegung von Bahnenabdichtungen",
-
-  //   imageUrl: "/images/Bahnenabdichtung.jpg",
-  //   description:
-  //     "Die Verlegung von Bahnenabdichtungen schützt das Dach vor Wasser und anderen Witterungseinflüssen.",
-  //   optionDetails: {
-  //     description: `
-        
-  //       <p>Bahnenabdichtungen sind eine bewährte Methode, um Flachdächer effektiv abzudichten.</p>
-  //     `,
-  //     images: ["/images/Bahnenabdichtung.jpg"],
-  //   },
-  // },
-  // {
-  //   title: "Balkonabdichtung",
-
-  //   imageUrl: "/images/Balkonabdichtung.jpg",
-  //   description:
-  //     "Die Balkonabdichtung schützt den Balkon vor Wasser und erhöht die Lebensdauer der Konstruktion.",
-  //   optionDetails: {
-  //     description: `
-        
-  //       <p>Eine ordnungsgemäße Abdichtung ist entscheidend, um Wasserschäden auf Balkonen zu verhindern.</p>
-  //     `,
-  //     images: ["/images/Balkonabdichtung.jpg"],
-  //   },
-  // },
-  // {
-  //   title: "Garagen- und Terrassenabdichtung",
-
-  //   imageUrl: "/images/Garagenabdichtung.jpg",
-  //   description:
-  //     "Die Abdichtung von Garagen und Terrassen ist wichtig, um Wasseransammlungen und Schäden zu vermeiden.",
-  //   optionDetails: {
-  //     description: `
-        
-  //       <p>Die Abdichtung schützt vor Feuchtigkeit und verlängert die Lebensdauer der Konstruktion.</p>
-  //     `,
-  //     images: ["/images/Garagenabdichtung.jpg"],
-  //   },
-  // },
-  // {
-  //   title: "Demontage des Dachs",
-
-  //   imageUrl: "/images/Demontage.jpg",
-  //   description:
-  //     "Die Demontage des Dachs ist notwendig, wenn umfassende Reparaturen oder Sanierungen erforderlich sind.",
-  //   optionDetails: {
-  //     description: `
-        
-  //       <p>Diese Arbeiten sind essenziell, um das Dach gründlich zu überprüfen und zu reparieren.</p>
-  //     `,
-  //     images: ["/images/Demontage.jpg"],
-  //   },
-  // },
 ];
 
 const Services = () => {
   const [tooltip, setTooltip] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
 
   const sectionRef = useRef(null);
 
@@ -224,20 +97,6 @@ const Services = () => {
       window.scrollTo({ top: targetY, behavior: "smooth" });
     }
   };
-
-  // const handleOptionClick = (service, option) => {
-  //   console.log(`Нажата опция: ${option} для сервиса:`, service);
-  //   const selectedDetails = service.optionDetails[option];
-  //   if (selectedDetails) {
-  //     setSelectedOption({
-  //       title: option,
-  //       description: selectedDetails.description,
-  //       images: selectedDetails.images,
-  //     });
-  //   } else {
-  //     console.error(`Details für ${option} wurden nicht gefunden!`);
-  //   }
-  // };
 
   useEffect(() => {
     const currentSectionRef = sectionRef.current;
@@ -279,14 +138,9 @@ const Services = () => {
             <h3 className="text-4xl font-bold text-gray-900">
               Flachdachabdichtung
             </h3>
-            {/* <FaInfoCircle className="hidden md:block text-teal-700 ml-2 h-8 w-8 cursor-pointer" />
-            <div className="absolute left-0 top-full mt-4 hidden w-max bg-teal-700 text-white text-sm rounded-lg shadow-md px-3 py-2 group-hover:block">
-              Die Flachdachabdichtung bietet eine robuste Lösung zur Abdichtung
-              Ihres Flachdachs und schützt es vor Umwelteinflüssen.
-            </div> */}
           </div>
         </div>
-        <div className="space-y-12 mt-4">
+        <div className="space-y-24 mt-8 md:mt-16">
           {services.map((service, index) => (
             <div
               key={service.description}
@@ -306,7 +160,7 @@ const Services = () => {
                 <img
                   src={service.imageUrl}
                   alt={service.title}
-                  className="w-full h-64 object-cover rounded-lg shadow-lg transform transition-transform duration-200 hover:scale-105"
+                  className="w-full h-80 object-cover rounded-lg shadow-2xl transform transition-transform duration-200 hover:scale-105"
                 />
               </div>
 
@@ -332,7 +186,9 @@ const Services = () => {
                 <ul className="mb-4 space-y-2">
                   <li className="text-lg">
                     <div
-                      dangerouslySetInnerHTML={{ __html: service.optionDetails.description }}
+                      dangerouslySetInnerHTML={{
+                        __html: service.optionDetails.description,
+                      }}
                     />
                   </li>
                 </ul>
@@ -347,45 +203,6 @@ const Services = () => {
           ))}
         </div>
       </div>
-
-      {selectedOption && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50 overflow-visible">
-          <div className="bg-white p-6 rounded-lg max-w-6xl relative">
-            <button
-              onClick={() => setSelectedOption(null)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-            >
-              <img
-                src="/images/close-icon.gif"
-                alt="close"
-                className="w-16 h-16 relative"
-              />
-            </button>
-
-            <div
-              className="mb-4 text-gray-700"
-              dangerouslySetInnerHTML={{ __html: selectedOption.description }}
-            />
-            <div className="grid grid-cols-1 gap-4 ">
-              {selectedOption.images.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt={selectedOption.title}
-                  className="w-full h-48 object-cover rounded-lg shadow-custom "
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={() => setSelectedOption(null)}
-              className="mt-4 w-full bg-teal-900 text-white py-2 rounded-lg hover:bg-teal-700 transition"
-            >
-              Schließen
-            </button>
-          </div>
-        </div>
-      )}
     </section>
   );
 };

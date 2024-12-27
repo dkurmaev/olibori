@@ -6,9 +6,10 @@ import {
 } from "../service/optionsData";
 import ContactFormModal from "./ContactFormModal";
 
+
 const Kostenberechnung = () => {
-  const [category, setCategory] = useState("Neubau"); // Neubau или Sanierung
-  const [abrissType, setAbrissType] = useState("Ohne Abriss"); // Только для Sanierung
+  const [category, setCategory] = useState("Neubau"); 
+  const [abrissType, setAbrissType] = useState("Ohne Abriss"); 
   const [selectedOptions, setSelectedOptions] = useState({});
   const [length, setLength] = useState(1);
   const [width, setWidth] = useState(1);
@@ -125,47 +126,50 @@ const Kostenberechnung = () => {
           </button>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-2 gap-4 mt-12">
-          
-          
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
+
           <div ref={optionsSectionRef}>
+          <h2 className="text-xl font-semibold mb-4 text-teal-700 border-b-2 border-gray-400 pb-1">
+                {category === "Neubau"
+                  ? "Wählen Sie die Optionen für den Neubau:"
+                  : "Wählen Sie die Optionen für die Sanierung:"}
+              </h2>
+
             <div className="p-6">
               {category === "Sanierung" && (
-                <div className="flex justify-center mb-6 gap-28">
-                  <button
-                    className={`px-4 py-2 rounded-lg text-lg font-semibold  ${
-                      abrissType === "Ohne Abriss"
-                        ? "bg-teal-600 text-white"
-                        : "bg-white text-teal-800 border border-teal-800"
-                    }`}
-                    onClick={() => setAbrissType("Ohne Abriss")}
-                  >
-                    Ohne Abriss
-                  </button>
-                  <button
-                    className={`px-4 py-2 rounded-lg text-lg font-semibold${
-                      abrissType === "Mit Abriss"
-                        ? "bg-teal-600 text-white"
-                        : "bg-white text-teal-800 border border-teal-800"
-                    }`}
-                    onClick={() => setAbrissType("Mit Abriss")}
-                  >
-                    Mit Abriss
-                  </button>
-                </div>
+                <div className="flex gap-4 justify-center items-center text-xl font-semibold mb-4 text-teal-700">
+                <button
+                  className={`px-6 py-3 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform ${
+                    abrissType === "Ohne Abriss"
+                      ? "bg-teal-600 text-white"
+                      : "bg-white text-gray-400  hover:bg-teal-900"
+                  } cursor-pointer`}
+                  onClick={() => setAbrissType("Ohne Abriss")}
+                >
+                  Ohne Abriss
+                </button>
+                <button
+                  className={`px-6 py-3 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform ${
+                    abrissType === "Mit Abriss"
+                      ? "bg-teal-600 text-white"
+                      : "bg-white text-gray-400  hover:bg-teal-900"
+                  } cursor-pointer`}
+                  onClick={() => setAbrissType("Mit Abriss")}
+                >
+                  Mit Abriss
+                </button>
+              </div>
               )}
-              
-              
-
+              <div className="grid grid-cols-2 gap-2 text-left">
               {optionsData.map((section) => (
-                <div key={section.name} className="grid grid-cols-2 gap-4 mb-4">
-                  <h3 className="font-bold mb-2 text-teal-900">
-                    {section.name}
-                  </h3>
-                  <p className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-96 z-50 p-2 text-xl text-white bg-teal-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto">
+                <div key={section.name} className="grid grid-cols gap-1 mb-4">
+                  <div className="flex   text-teal-700 mb-2 font-medium text-left">                    
+                    {section.name}   
+                  </div>
+                  <div className="absolute left-1/2 transform -translate-x-1/2  w-96 z-50 p-2 text-xl text-white bg-teal-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto">
                     {section.description}
-                  </p>
-                  <div className=" md:grid-cols-2 gap-4">
+                    </div>
+                  <div className=" md:grid-cols gap-4">
                     <select
                       className="w-full border rounded-lg p-2 focus:outline-none bg-gray-200 text-gray-800 border-gray-400"
                       value={selectedOptions[section.name]?.name || ""}
@@ -190,8 +194,7 @@ const Kostenberechnung = () => {
                   </div>
                 </div>
               ))}
-
-             
+              </div>
               <div className="grid grid-cols-2 gap-4 text-left">
                 <div className="mb-4">
                   <label
@@ -261,8 +264,8 @@ const Kostenberechnung = () => {
           
 
           
-          <div className="p-6">
-            <h2 className="text-xl font-semibold mb-4 text-teal-700 border-b-2 border-teal-400 pb-1">
+          <div className="">
+            <h2 className="text-xl font-semibold mb-4 text-teal-700 border-b-2 border-gray-400 pb-1">
               Information:
             </h2>
             <p className="text-teal-900 text-lg mx-auto text-left">
