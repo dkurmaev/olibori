@@ -276,14 +276,14 @@ const Services = () => {
             Unsere Dienstleistungen
           </h2>
           <div className="flex justify-center items-center relative group">
-            <h3 className="text-2xl font-bold text-gray-900">
+            <h3 className="text-4xl font-bold text-gray-900">
               Flachdachabdichtung
             </h3>
-            <FaInfoCircle className="hidden md:block text-teal-700 ml-2 h-8 w-8 cursor-pointer" />
+            {/* <FaInfoCircle className="hidden md:block text-teal-700 ml-2 h-8 w-8 cursor-pointer" />
             <div className="absolute left-0 top-full mt-4 hidden w-max bg-teal-700 text-white text-sm rounded-lg shadow-md px-3 py-2 group-hover:block">
               Die Flachdachabdichtung bietet eine robuste Lösung zur Abdichtung
               Ihres Flachdachs und schützt es vor Umwelteinflüssen.
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="space-y-12 mt-4">
