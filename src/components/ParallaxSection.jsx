@@ -76,7 +76,7 @@ const ParallaxSection = () => {
           {/* Третий блок с 3 элементами */}
           <div className="flex flex-col text-gray-300">
             <p className="text-md font-sans text-left mt-4 hidden lg:block">
-              &#9745; Balkoneabdichtung
+              &#9745; Balkonabdichtung
             </p>
             <p className="text-md font-sans text-left mt-4 hidden lg:block">
               &#9745; Garagen- und Terassenabdichtung

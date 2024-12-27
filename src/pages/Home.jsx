@@ -31,8 +31,7 @@ const Home = () => {
                 <UnsereDienstleistungen/>
                 <CostCalculator />   
                 <OurWorks />
-                <Testimonials /> 
-                                               
+                <Testimonials />                                                
                 <AboutUs />
                 <References />                                
                 <Lieferanten />                 

@@ -104,9 +104,9 @@ const ContactForm = () => {
             Unser Standort
           </h3>
           <p className=" mb-4 leading-relaxed text-teal-200">
-            <strong>Olidort Bedachungen GmbH</strong> <br />
-            Sellwigsweg 1, <br />
-            56470 Bad Marienberg, <br />
+            <strong>Olidort Bedachungen</strong> <br />
+            Sellwigsweg 1 <br />
+            56470 Bad Marienberg <br />
             Deutschland
           </p>
           <p className=" mb-4 text-teal-200">

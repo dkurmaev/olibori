@@ -14,8 +14,8 @@ const AboutUs = () => {
           Über uns
         </h2>
         <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
-          Wir sind eine zertifizierte Dachdeckerfirma mit mehr Jahren Erfahrung auf dem Markt.
-          Unser Unternehmen bietet Dacharbeiten jeder Komplexität und arbeitet mit einer Vielzahl
+          
+          Unser Unternehmen bietet Flachdachabdichtung jeder Komplexität und arbeitet mit einer Vielzahl
           von zuverlässigen Lieferanten zusammen. Wir garantieren höchste Qualität und
           Erschwinglichkeit unserer Leistungen.
         </p>

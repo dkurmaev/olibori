@@ -6,13 +6,13 @@ export const neubauOptions = [
     options: [
       {
         name: "Beton",
-        cost: 50,
+        cost: 4,
         description:
           "Robuste und stabile Grundlage für schwere Konstruktionen.",
       },
       {
         name: "Trapezblech",
-        cost: 30,
+        cost: 2,
         description: "Leicht und wirtschaftlich, ideal für moderne Bauten.",
       },
     ],
@@ -24,13 +24,13 @@ export const neubauOptions = [
     options: [
       {
         name: "S4 + Alu",
-        cost: 10,
+        cost: 18,
         description:
           "Effektive Dampfsperre mit Aluminium-Beschichtung, die hohe Dichtigkeit gewährleistet.",
       },
       {
-        name: "RE-Folie",
-        cost: 5,
+        name: "PE-Folie",
+        cost: 6,
         description:
           "Wirtschaftliche Lösung, geeignet für einfache Anwendungen.",
       },
@@ -43,7 +43,7 @@ export const neubauOptions = [
     options: [
       {
         name: "EPS",
-        cost: 30,
+        cost: 35,
         description:
           "Günstige und effektive Dämmung mit guten Wärmedämmeigenschaften.",
       },
@@ -54,7 +54,7 @@ export const neubauOptions = [
       },
       {
         name: "Steinwolle",
-        cost: 20,
+        cost: 35,
         description: "Robustes und nicht brennbares Material, kostengünstig.",
       },
     ],
@@ -67,31 +67,29 @@ export const neubauOptions = [
     options: [
       {
         name: "PVC",
-        cost: 30,
+        cost: 20,
         description: "Flexibel, langlebig und für viele Dacharten geeignet.",
       },
       {
-        name: "TPO",
-        cost: 40,
+        name: "FPO",
+        cost: 30,
         description: "Umweltfreundlicher und UV-beständiger als PVC.",
       },
       {
         name: "Flüssigabdichtung",
-        cost: 30,
+        cost: 80,
         description:
           "Ideal für die präzise Abdichtung schwer zugänglicher Stellen.",
       },
       {
         name: "Bitumenbahn (2 lägig)",
-        cost: 10,
+        cost: 40,
         description: "Klassische Wahl für Flachdächer.",
       },
     ],
   },
 ];
-export const sanierungOptions = [
- 
-];
+
 
 export const ohneAbrissOptions = [
   
@@ -174,7 +172,7 @@ export const mitAbrissOptions = [
           "Effektive Dampfsperre mit Aluminium-Beschichtung, die hohe Dichtigkeit gewährleistet.",
       },
       {
-        name: "RE-Folie",
+        name: "PE-Folie",
         cost: 5,
         description:
           "Wirtschaftliche Lösung, geeignet für einfache Anwendungen.",

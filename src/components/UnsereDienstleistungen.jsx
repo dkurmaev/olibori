@@ -3,263 +3,214 @@ import { FaInfoCircle } from "react-icons/fa";
 
 const services = [
   {
-    title: "Flachdachabdichtung",
-    options: ["Neubau", "Sanierung", "Wartung", "Reparatur"],
+    title: "Neubau",
+
+    imageUrl: "/images/Neubau.jpg",
+    description:
+      "Der Neubau bietet eine moderne und funktionale Bauweise, die sich ideal für zeitgemäße Architektur eignet.",
+    optionDetails: {
+      description: `
+        
+        <p>Der Neubau ist der erste Schritt beim Bau eines Daches und umfasst alle notwendigen Arbeiten zur Errichtung einer neuen Dachkonstruktion.</p>
+        <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile:</h4>
+        <ul class="list-disc pl-5">
+          <li>Moderne Gestaltungsmöglichkeiten.</li>
+          <li>Hohe Energieeffizienz durch neue Materialien.</li>
+        </ul>
+      `,
+      images: ["/images/Neubau.jpg"],
+    },
+  },
+  {
+    title: "Sanierung",
+
     imageUrl: "/images/Sanierung.jpg",
     description:
-      "Die Flachdachabdichtung bietet eine robuste Lösung zur Abdichtung Ihres Flachdachs und schützt es vor Umwelteinflüssen.",
+      "Die Sanierung verlängert die Lebensdauer und stellt die Funktionalität sowie Ästhetik des Daches wieder her.",
     optionDetails: {
-      Neubau: {
-        description: `
-          <h3 class="text-xl font-bold mb-2">Der Flachdach Neubau</h3>
-          <p>Der Flachdach Neubau bietet eine moderne und funktionale Bauweise, die sich ideal für zeitgemäße Architektur eignet.</p>
-          
-          <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile eines Flachdachs:</h4>
-          <ul class="list-disc pl-5">
-            <li>Minimalistische Ästhetik: Klare Linien und eine schlichte Formgebung.</li>
-           
-          </ul>
-          
-          <h4 class="text-lg font-semibold mt-4 mb-2">Materialien und Konstruktion:</h4>
-          <p>Flachdächer werden in der Regel mit Bitumenbahnen oder EPDM-Folie abgedichtet, um eine lange Haltbarkeit zu gewährleisten.</p>
-          <p>Die tragende Konstruktion besteht meist aus einer dicken Stahlbetonplatte, die für Stabilität sorgt.</p>
-          
-          
-        `,
-        images: ["/images/Neubau.jpg"],
-      },
-      Sanierung: {
-        description: `
-          <h3 class="text-xl font-bold mb-2">Flachdach Sanierung</h3>
-          <p>Die Flachdach Sanierung verlängert die Lebensdauer und stellt die Funktionalität sowie Ästhetik des Daches wieder her.</p>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Ursachen für Sanierung:</h4>
-          <ul class="list-disc pl-5">
-            <li>Undichtigkeiten, Rissbildungen, Blasenbildung oder Wärmedämmungsschwäche.</li>
-            <li>Erhöhte Energiekosten durch schlechte Isolation.</li>
-          </ul>
-        `,
-        images: ["/images/Sanierung.jpg"],
-      },
-      Wartung: {
-        description: `
-          <h3 class="text-xl font-bold mb-2">Flachdach Wartung</h3>
-          <p>Die regelmäßige Wartung sichert die Langlebigkeit Ihres Daches und beugt Schäden vor.</p>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Ziele der Wartung:</h4>
-          <ul class="list-disc pl-5">
-            <li>Früherkennung von Schäden.</li>
-            <li>Verlängerung der Lebensdauer und Senkung von Reparaturkosten.</li>
-          </ul>
-        `,
-        images: ["/images/wartung.jpg"],
-      },
-      Reparatur: {
-        description: `
-          <h3 class="text-xl font-bold mb-2">Flachdach Reparatur</h3>
-          <p>Die Flachdach Reparatur ist essenziell für die Wiederherstellung der Dichtheit und Funktionalität.</p>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Häufige Ursachen für Undichtigkeiten:</h4>
-          <ul class="list-disc pl-5">
-            <li>Risse und Blasen in der Abdichtung.</li>
-            <li>Verstopfte Entwässerung oder schadhafte Anschlüsse.</li>
-          </ul>
-        `,
-        images: ["/images/Reparatur.jpg"],
-      },
+      description: `
+        
+        <p>Die Sanierung umfasst die Wiederherstellung und Verbesserung der bestehenden Dachkonstruktion.</p>
+        <h4 class="text-lg font-semibold mt-4 mb-2">Ursachen für Sanierung:</h4>
+        <ul class="list-disc pl-5">
+          <li>Undichtigkeiten, Rissbildungen und Blasenbildung.</li>
+          <li>Erhöhte Energiekosten durch schlechte Isolation.</li>
+        </ul>
+      `,
+      images: ["/images/Sanierung.jpg"],
     },
   },
   {
-    title: "Unterkonstruktion",
-    options: ["Beton", "Trapezblech"],
-    imageUrl: "/images/Slide14.jpg",
+    title: "Wartung",
+
+    imageUrl: "/images/wartung.jpg",
     description:
-      "Dient als Basis für alle nachfolgenden Schichten des Daches. Gewährleistet Stabilität und gleichmäßige Lastverteilung.",
+      "Die regelmäßige Wartung sichert die Langlebigkeit Ihres Daches und beugt Schäden vor.",
     optionDetails: {
-      Beton: {
-        description: `
-          <h3 class="text-xl font-bold mb-2">Flachdach Unterkonstruktion – Beton</h3>
-          <p>Eine stabile und langlebige Basis, die häufig in industriellen Gebäuden verwendet wird.</p>   
-          <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile:</h4>
-          <ul class="list-disc pl-5">
-            <li>Sehr robust, langlebig und geeignet für schwere Dachkonstruktionen.</li>            
-          </ul>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Nachteile:</h4>
-          <ul class="list-disc pl-5">
-            <li>Höheres Gewicht erfordert eine solide Tragstruktur, kostspieliger als Alternativen.</li>            
-          </ul>
-        `,
-        images: ["/images/Neubau.jpg"],
-      },
-      Trapezblech: {
-        description: `
-          <h3 class="text-xl font-bold mb-2">Flachdach Unterkonstruktion – Trapezblech</h3>
-          <p>Trapezblech ist eine leichtere Alternative zu Beton, bietet aber dennoch hohe Stabilität und Flexibilität.</p>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile:</h4>
-          <ul class="list-disc pl-5">
-            <li>Leichte Handhabung und schnelle Installation.</li>
-            <li>Ideal für gewerbliche Gebäude.</li>
-          </ul>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Nachteile:</h4>
-          <ul class="list-disc pl-5">
-            <li>Geringere Stabilität bei starker Belastung, kann korrosionsanfällig sein, wenn nicht gut geschützt.</li>            
-          </ul>
-             
-        `,
-        images: ["/images/Trapezblech.jpg"],
-      },
+      description: `
+        
+        <p>Die Wartung umfasst die regelmäßige Inspektion und Pflege Ihres Daches, um langfristige Schäden zu vermeiden.</p>
+        <h4 class="text-lg font-semibold mt-4 mb-2">Ziele der Wartung:</h4>
+        <ul class="list-disc pl-5">
+          <li>Früherkennung von Schäden.</li>
+          <li>Verlängerung der Lebensdauer und Senkung von Reparaturkosten.</li>
+        </ul>
+      `,
+      images: ["/images/wartung.jpg"],
     },
   },
   {
-    title: "Dampfsperre ",
-    options: ["S4 + Alu", "RE-Folie"],
-    imageUrl: "/images/Dampfsperre.jpg",
+    title: "Reparatur",
+
+    imageUrl: "/images/Reparatur.jpg",
     description:
-      "Schützt Dachflächen vor Dampf und Wasser, kann auch Dachschutz sein.",
+      "Die Dachreparatur ist essenziell für die Wiederherstellung der Dichtheit und Funktionalität.",
     optionDetails: {
-      "S4 + Alu": {
-        description: `
-          <h3 class="text-xl font-bold mb-2">Dampfsperre – S4 + Alu</h3>
-          <p>Die Dampfsperre S4 + Alu ist eine Bitumen-Dampfsperrbahn, die eine Kombination aus Aluminium-Polyester-Kombination und Glasvlies als Trägereinlage aufweist. Sie dient als effektive Dampfsperre, um warme oder feuchte Luft von der Dämmung abzusperren und dadurch die Dämmfähigkeit zu erhalten und Schimmelbildung zu verhindern.</p>
-          
-          <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile:</h4>
-          <ul class="list-disc pl-5">
-            <li>Hohe Diffusionsdichte und Wärmedämmung.</li>
-            <li>Schutz gegen Schimmelbildung und Feuchtigkeit.</li>
-            <li>Verwendung auf verschiedenen Unterlagen ermöglicht.</li>
-          </ul>
-        `,
-        images: ["/images/Dampfsperre.jpg"],
-      },
-      "RE-Folie": {
-        description: `
-          <h3 class="text-xl font-bold mb-2">Dampfsperre – RE-Folie</h3>
-          <p>Die Dampfsperre RE-Folie ist eine spezielle Folie, die zur Feuchtigkeitssperre und -regulierung in Gebäuden eingesetzt wird. Sie besteht aus Polyethylen (PE) und ist mit einer Stärke von 0,2 mm ausgestattet.</p>
-          
-          <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile:</h4>
-          <ul class="list-disc pl-5">
-            <li>Hohe Diffusionsdichte und Wärmedämmung.</li>
-            <li>Schutz gegen Schimmelbildung und Feuchtigkeit.</li>
-            <li>Leicht zu verlegen und zu bearbeiten.</li>
-            <li>Günstiger Preis im Vergleich zu anderen Dampfsperren.</li>
-          </ul>
-        `,
-        images: ["/images/Pe Folie.jpg"],
-      },
+      description: `
+        
+        <p>Die Reparatur umfasst die Behebung von Schäden an der Dachkonstruktion.</p>
+        <h4 class="text-lg font-semibold mt-4 mb-2">Häufige Ursachen für Undichtigkeiten:</h4>
+        <ul class="list-disc pl-5">
+          <li>Risse und Blasen in der Abdichtung.</li>
+          <li>Verstopfte Entwässerung oder schadhafte Anschlüsse.</li>
+        </ul>
+      `,
+      images: ["/images/Reparatur.jpg"],
     },
   },
-  {
-    title: "Dämmung ",
-    options: ["PUR/PIR", "EPS"],
-    imageUrl: "/images/EPS.jpg",
-    description: "Schützt Dachflächen vor Dämmung, kann auch Dämmschutz sein.",
-    optionDetails: {
-      "PUR/PIR": {
-        description: `
-          <h3 class="text-xl font-bold mb-2">Dämmung – PUR/PIR</h3>
-          <p>PUR (Polyurethan) und PIR (Polyisocyanurat) sind zwei synthetische Hartschaumplatten, die als Dämmstoffe eingesetzt werden. Beide Materialien basieren auf demselben Rohstoff, dem MDI (Methylendiisocyanat), aber unterscheiden sich in ihrer chemischen Struktur und Eigenschaften.</p>
-          strong>Wasserabweisend:</strong>PUR und PIR sind wasserabweisend und bieten somit Schutz gegen Feuchtigkeit.</li>  
-          </ul>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile und Nachteile:</h4>
-          <ul class="list-disc pl-5">
-            <li><strong>Vorteile:</strong> Hohe Wärmedämmeigenschaften, druckbelastbar, temperaturbeständig, wasserabweisend, geringes Eigengewicht.</li>
-            <li><strong>Nachteile:</strong> Basieren auf Erdöl, können toxische Gase bei Brandfall freisetzen, hoher Energieaufwand bei Produktion.</li>
-           </ul>
-          
-        `,
-        images: ["/images/PIR.jpg"],
-      },
-      EPS: {
-        description: `
-          <h3 class="text-xl font-bold mb-2">Dämmung – EPS</h3>
-          <p>EPS (Expandiertes Polystyrol) ist ein kostengünstiger und vielseitiger Dämmstoff, der in vielen Bereichen eingesetzt wird. Hier sind einige wichtige Aspekte zu beachten.</p>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile:</h4>
-          <ul class="list-disc pl-5">           
-            <li><strong>Leicht</strong></li>
-            <li><strong>Vielseitig einsetzbar</strong></li>
-            <li><strong>Energieeinsparung</strong></li>
-          </ul>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Nachteile:</h4>
-          <ul class="list-disc pl-5">
-            <li><strong>Feuchtigkeitsempfindlichkeit</strong></li>
-            <li><strong>Druckempfindlichkeit: </strong></li>
-            <li><strong>Verwitterung:</strong></li>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Einsatzorte:</h4>
-          <ul class="list-disc pl-5">
-            <li>Fassaden- und Wanddämmung</li>
-            <li>Dachdämmung</li>
-            
-        `,
-        images: ["/images/EPS.jpg"],
-      },
-    },
-  },
-  {
-    title: "Kunststoffbahn",
-    options: ["PVC", "TPO"],
-    imageUrl: "/images/PVC.jpg",
-    description: "Schützt Dachflächen vor Dämmung, kann auch Dämmschutz sein.",
-    optionDetails: {
-      PVC: {
-        description: `          
-          <h3 class="text-xl font-bold mb-2">Kunststoffbahn – PVC</h3>
-          <p>Die Kunststoffbahn aus PVC (Polyvinylchlorid) ist eine beliebte Lösung für die Abdichtung von Flachdächern, insbesondere im Industrie- und Hallenbau. Sie zeichnet sich durch folgende Eigenschaften aus.</p>
-          <br/>
-          <ul class="list-disc pl-5">
-            <li><strong>Hohe Zugfestigkeit</strong></li>
-            <li><strong>Flexibilität</strong></li>
-            <li><strong>Hohes Deckvermögen</strong></li>
-            <li><strong>Widerstand gegen aggressive Medien</strong></li>
-            <li><strong>Temperaturbeständigkeit</strong> </li>
-          </ul>
-          
-        `,
-        images: ["/images/PVC.jpg"],
-      },
-      TPO: {
-        description: `
-          <h3 class="text-xl font-bold mb-2">Kunststoffbahn – TPO</h3>
-          <p>Die Kunststoffbahn aus TPO (Teflon Polypropylen) ist eine beliebte Lösung für die Abdichtung von Flachdächern, insbesondere im Industrie- und Hallenbau. Sie zeichnet sich durch folgende Eigenschaften aus.</p>
-          <br/>
-          <ul class="list-disc pl-5">
-            <li><strong>Hohe Zugfestigkeit</strong></li>
-            <li><strong>Flexibilität</strong></li>
-            <li><strong>Hohes Deckvermögen</strong></li>
-            <li><strong>Widerstand gegen aggressive Medien</strong></li>
-            <li><strong>Temperaturbeständigkeit</strong> </li>
-          </ul>
-          
-        `,
-        images: ["/images/FPO.jpg"],
-      },
-    },
-  },
-  {
-    title: "Abdichtung",
-    options: ["Flüssigabdichtung"],
-    imageUrl: "/images/Flussigkunstoff.jpg",
-    description: "Schützt Dachflächen vor Dämmung, kann auch Dämmschutz sein.",
-    optionDetails: {
-      Flüssigabdichtung: {
-        description: `
-          <h3 class="text-xl font-bold mb-2">Abdichtung – Flüssigabdichtung</h3>
-          <p>Flüssigabdichtung ist eine Lösung, die auf Flüssigkeiten basiert. Sie bietet eine hohe Flexibilität und eine hohe Wärmedämmung.</p>
-          <h4 class="text-lg font-semibold mt-4 mb-2">Vorteile:</h4>
-          <ul class="list-disc pl-5">
-            <li>Hohe Diffusionsdichte und Wärmedämmung.</li>
-            <li>Schutz gegen Schimmelbildung und Feuchtigkeit.</li>
-            <li>Verwendung auf verschiedenen Unterlagen ermöglicht.</li>
-          </ul>
-        `,
-        images: ["/images/Flussigkunstoff.jpg"],
-      },
-    },
-  },
+  // {
+  //   title: "Montage des Entwässerungssystems",
+
+  //   imageUrl: "/images/Entwaesserungssystem.jpg",
+  //   description:
+  //     "Die Montage des Entwässerungssystems ist entscheidend für die Ableitung von Regenwasser und die Vermeidung von Wasserschäden.",
+  //   optionDetails: {
+  //     description: `
+        
+  //       <p>Ein effizientes Entwässerungssystem sorgt dafür, dass Regenwasser ordnungsgemäß abgeleitet wird.</p>
+  //     `,
+  //     images: ["/images/Entwaesserungssystem.jpg"],
+  //   },
+  // },
+  // {
+  //   title: "Errichtung der Dachkonstruktion",
+
+  //   imageUrl: "/images/Dachkonstruktion.jpg",
+  //   description:
+  //     "Die Errichtung der Dachkonstruktion umfasst die grundlegenden Arbeiten zur Stabilität und Form des Daches.",
+  //   optionDetails: {
+  //     description: `
+        
+  //       <p>Diese Phase ist entscheidend für die Stabilität und die langfristige Funktionsfähigkeit des Daches.</p>
+  //     `,
+  //     images: ["/images/Dachkonstruktion.jpg"],
+  //   },
+  // },
+  // {
+  //   title: "Abdichtungs- und Dampfsperrschichten",
+
+  //   imageUrl: "/images/Abdichtung.jpg",
+  //   description:
+  //     "Die Abdichtungs- und Dampfsperrschichten schützen das Dach vor Feuchtigkeit und anderen Umwelteinflüssen.",
+  //   optionDetails: {
+  //     description: `
+        
+  //       <p>Diese Schichten sind entscheidend, um das Dach vor Wasser- und Dampfschäden zu schützen.</p>
+  //     `,
+  //     images: ["/images/Abdichtung.jpg"],
+  //   },
+  // },
+  // {
+  //   title: "Verlegung von Dämmmaterial",
+
+  //   imageUrl: "/images/Daemmung.jpg",
+  //   description:
+  //     "Die Verlegung von Dämmmaterial verbessert die Energieeffizienz und den Wohnkomfort.",
+  //   optionDetails: {
+  //     description: `
+        
+  //       <p>Die richtige Dämmung ist wichtig für den Energieverbrauch und das Raumklima.</p>
+  //     `,
+  //     images: ["/images/Daemmung.jpg"],
+  //   },
+  // },
+  // {
+  //   title: "Installation von Belüftungselementen",
+
+  //   imageUrl: "/images/Belueftung.jpg",
+  //   description:
+  //     "Die Installation von Belüftungselementen sorgt für eine optimale Luftzirkulation im Dachraum.",
+  //   optionDetails: {
+  //     description: `
+        
+  //       <p>Belüftungselemente sind wichtig, um Feuchtigkeitsansammlungen und Schimmelbildung zu vermeiden.</p>
+  //     `,
+  //     images: ["/images/Belueftung.jpg"],
+  //   },
+  // },
+  // {
+  //   title: "Verlegung von Bahnenabdichtungen",
+
+  //   imageUrl: "/images/Bahnenabdichtung.jpg",
+  //   description:
+  //     "Die Verlegung von Bahnenabdichtungen schützt das Dach vor Wasser und anderen Witterungseinflüssen.",
+  //   optionDetails: {
+  //     description: `
+        
+  //       <p>Bahnenabdichtungen sind eine bewährte Methode, um Flachdächer effektiv abzudichten.</p>
+  //     `,
+  //     images: ["/images/Bahnenabdichtung.jpg"],
+  //   },
+  // },
+  // {
+  //   title: "Balkonabdichtung",
+
+  //   imageUrl: "/images/Balkonabdichtung.jpg",
+  //   description:
+  //     "Die Balkonabdichtung schützt den Balkon vor Wasser und erhöht die Lebensdauer der Konstruktion.",
+  //   optionDetails: {
+  //     description: `
+        
+  //       <p>Eine ordnungsgemäße Abdichtung ist entscheidend, um Wasserschäden auf Balkonen zu verhindern.</p>
+  //     `,
+  //     images: ["/images/Balkonabdichtung.jpg"],
+  //   },
+  // },
+  // {
+  //   title: "Garagen- und Terrassenabdichtung",
+
+  //   imageUrl: "/images/Garagenabdichtung.jpg",
+  //   description:
+  //     "Die Abdichtung von Garagen und Terrassen ist wichtig, um Wasseransammlungen und Schäden zu vermeiden.",
+  //   optionDetails: {
+  //     description: `
+        
+  //       <p>Die Abdichtung schützt vor Feuchtigkeit und verlängert die Lebensdauer der Konstruktion.</p>
+  //     `,
+  //     images: ["/images/Garagenabdichtung.jpg"],
+  //   },
+  // },
+  // {
+  //   title: "Demontage des Dachs",
+
+  //   imageUrl: "/images/Demontage.jpg",
+  //   description:
+  //     "Die Demontage des Dachs ist notwendig, wenn umfassende Reparaturen oder Sanierungen erforderlich sind.",
+  //   optionDetails: {
+  //     description: `
+        
+  //       <p>Diese Arbeiten sind essenziell, um das Dach gründlich zu überprüfen und zu reparieren.</p>
+  //     `,
+  //     images: ["/images/Demontage.jpg"],
+  //   },
+  // },
 ];
 
 const Services = () => {
   const [tooltip, setTooltip] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
-  
-  
+
   const sectionRef = useRef(null);
 
   const scrollToCostCalculator = () => {
@@ -273,21 +224,20 @@ const Services = () => {
       window.scrollTo({ top: targetY, behavior: "smooth" });
     }
   };
-  
 
-  const handleOptionClick = (service, option) => {
-    console.log(`Нажата опция: ${option} для сервиса:`, service);
-    const selectedDetails = service.optionDetails[option];
-    if (selectedDetails) {
-      setSelectedOption({
-        title: option,
-        description: selectedDetails.description,
-        images: selectedDetails.images,
-      });
-    } else {
-      console.error(`Details für ${option} wurden nicht gefunden!`);
-    }
-  };
+  // const handleOptionClick = (service, option) => {
+  //   console.log(`Нажата опция: ${option} для сервиса:`, service);
+  //   const selectedDetails = service.optionDetails[option];
+  //   if (selectedDetails) {
+  //     setSelectedOption({
+  //       title: option,
+  //       description: selectedDetails.description,
+  //       images: selectedDetails.images,
+  //     });
+  //   } else {
+  //     console.error(`Details für ${option} wurden nicht gefunden!`);
+  //   }
+  // };
 
   useEffect(() => {
     const currentSectionRef = sectionRef.current;
@@ -299,7 +249,7 @@ const Services = () => {
       },
       {
         root: null,
-        threshold: 0.2,
+        threshold: 0.1,
       }
     );
 
@@ -325,11 +275,21 @@ const Services = () => {
           <h2 className="text-2xl sm:text-3xl md:text-6xl lg:text-5xl font-heading font-bold text-teal-900 uppercase border-b-2 border-teal-900 inline-block pb-1 text-center my-8">
             Unsere Dienstleistungen
           </h2>
+          <div className="flex justify-center items-center relative group">
+            <h3 className="text-2xl font-bold text-gray-900">
+              Flachdachabdichtung
+            </h3>
+            <FaInfoCircle className="hidden md:block text-teal-700 ml-2 h-8 w-8 cursor-pointer" />
+            <div className="absolute left-0 top-full mt-4 hidden w-max bg-teal-700 text-white text-sm rounded-lg shadow-md px-3 py-2 group-hover:block">
+              Die Flachdachabdichtung bietet eine robuste Lösung zur Abdichtung
+              Ihres Flachdachs und schützt es vor Umwelteinflüssen.
+            </div>
+          </div>
         </div>
         <div className="space-y-12 mt-4">
           {services.map((service, index) => (
             <div
-              key={service.title}
+              key={service.description}
               className={`flex flex-col md:flex-row ${
                 index % 2 === 0 ? "md:flex-row-reverse" : ""
               } items-center transition-all duration-1000 ${
@@ -347,9 +307,8 @@ const Services = () => {
                   src={service.imageUrl}
                   alt={service.title}
                   className="w-full h-64 object-cover rounded-lg shadow-lg transform transition-transform duration-200 hover:scale-105"
-                  
                 />
-              </div>              
+              </div>
 
               <div className="md:w-1/2 p-6">
                 <h3 className="text-2xl font-bold mb-4 flex items-center">
@@ -361,6 +320,7 @@ const Services = () => {
                     onMouseLeave={() => setTooltip(null)}
                   >
                     <FaInfoCircle className="hidden md:block  text-teal-700 mr-5 " />
+
                     {tooltip === service.title && (
                       <div className="absolute w-[500px] z-50 p-2 text-xl italic text-white bg-teal-800 rounded-lg ">
                         {service.description}
@@ -370,16 +330,11 @@ const Services = () => {
                 </h3>
 
                 <ul className="mb-4 space-y-2">
-                  {service.options.map((option, idx) => (
-                    <li key={idx} className="text-lg">
-                      <button
-                        onClick={() => handleOptionClick(service, option)}
-                        className="text-teal-900 underline hover:text-teal-700 transition-colors duration-300"
-                      >
-                        {option}
-                      </button>
-                    </li>
-                  ))}
+                  <li className="text-lg">
+                    <div
+                      dangerouslySetInnerHTML={{ __html: service.optionDetails.description }}
+                    />
+                  </li>
                 </ul>
                 <button
                   onClick={scrollToCostCalculator}
@@ -394,11 +349,11 @@ const Services = () => {
       </div>
 
       {selectedOption && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50 overflow-auto">
-          <div className="bg-white p-6 rounded-lg max-w-6xl relative ">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50 overflow-visible">
+          <div className="bg-white p-6 rounded-lg max-w-6xl relative">
             <button
               onClick={() => setSelectedOption(null)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
             >
               <img
                 src="/images/close-icon.gif"
@@ -407,7 +362,6 @@ const Services = () => {
               />
             </button>
 
-            <h3 className="text-xl font-bold mb-4">{selectedOption.title}</h3>
             <div
               className="mb-4 text-gray-700"
               dangerouslySetInnerHTML={{ __html: selectedOption.description }}
