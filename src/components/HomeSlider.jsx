@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "animate.css";
 import ContactFormModal from "./ContactFormModal";
-import { BadgeCheckIcon } from "@heroicons/react/solid";
+
 
 const certificates = [
   {
@@ -85,7 +85,10 @@ const HomeSlider = () => {
           >
             Zertifizierte Meisterbetrieb
           </span>
-          <BadgeCheckIcon
+
+          <img
+            src="/images/certification.gif" 
+            alt="close"
             className="h-12 w-12 text-teal-800 ml-2 cursor-pointer vibrateCertificate glowEffect"
             onClick={toggleCertificateModal}
           />

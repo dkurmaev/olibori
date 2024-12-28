@@ -291,7 +291,7 @@ body {
 }
 
 .glowEffect:hover {
-  filter: drop-shadow(0 0 20px rgb(189, 236, 19));
+  filter: drop-shadow(0 0 20px rgb(9, 211, 144));
 }
 
 
