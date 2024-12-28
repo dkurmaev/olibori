@@ -55,7 +55,7 @@ const Testimonials = () => {
       <div className="bg-black bg-opacity-80 w-full py-16">
         <div className="relative z-10 text-center text-white mx-auto px-6 lg:px-20">
           <h2 className="text-4xl sm:text-5xl font-extrabold uppercase tracking-wider text-teal-400 mb-12 border-b-2 border-teal-400 inline-block pb-1">
-            Kundenstimmen
+            Kundenfeedback
           </h2>
           <div className="flex flex-col items-center max-w-5xl mx-auto space-y-8 text-center">
             {/* Изображение клиента */}
@@ -69,7 +69,7 @@ const Testimonials = () => {
             <div className="relative flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
               
               {/* Отзыв */}
-              <div className="max-w-lg text-center max-w-lg break-words tracking-wider leading-loose">
+              <div className="max-w-lg text-center  break-words tracking-wider leading-loose">
                 <p className="text-lg sm:text-xl text-gray-300 mb-4">
                   {testimonialsData[currentIndex].feedback}
                 </p>

@@ -6,15 +6,16 @@ import {
 } from "../service/optionsData";
 import ContactFormModal from "./ContactFormModal";
 
-
 const Kostenberechnung = () => {
-  const [category, setCategory] = useState("Neubau"); 
-  const [abrissType, setAbrissType] = useState("Ohne Abriss"); 
+  const [category, setCategory] = useState("Neubau");
+  const [abrissType, setAbrissType] = useState("Ohne Abriss");
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [selectedOptionsList, setSelectedOptionsList] = useState([]);
   const [length, setLength] = useState(1);
   const [width, setWidth] = useState(1);
   const [area, setArea] = useState(1);
   const [totalCost, setTotalCost] = useState(0);
+  const [isCostCalculated, setIsCostCalculated] = useState(false);
   const [error, setError] = useState("");
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
@@ -30,16 +31,31 @@ const Kostenberechnung = () => {
       : mitAbrissOptions;
 
   const handleOptionSelect = (sectionName, option) => {
+    if (!option) return;
+
     setSelectedOptions((prev) => {
       const updatedOptions = { ...prev, [sectionName]: option };
 
+      // Обновляем общую стоимость
       const newTotalCost = Object.values(updatedOptions).reduce(
         (sum, opt) => sum + (opt?.cost || 0),
         0
       );
       setTotalCost(newTotalCost * area);
+
+      // Обновляем список выбранных опций
+      const updatedOptionsList = Object.entries(updatedOptions).map(
+        ([name, opt]) => ({
+          category: name,
+          option: opt.name,
+          description: opt.description || "Keine Beschreibung verfügbar",
+        })
+      );
+      setSelectedOptionsList(updatedOptionsList);
+
       return updatedOptions;
     });
+
     setError("");
   };
 
@@ -65,12 +81,15 @@ const Kostenberechnung = () => {
     setCategory("Neubau");
     setAbrissType("Ohne Abriss");
     setSelectedOptions({});
+    setSelectedOptionsList([]);
     setLength(1);
     setWidth(1);
     setArea(1);
     setTotalCost(0);
     setError("");
+    setIsCostCalculated(false); // Сбрасываем флаг расчёта стоимости
   };
+
   const optionsSectionRef = useRef(null);
 
   const handleSubmit = () => {
@@ -82,9 +101,8 @@ const Kostenberechnung = () => {
       return;
     }
 
-    alert(
-      "Ihre Bestellung wurde erfolgreich berechnet! Kosten: " + totalCost + " €"
-    );
+    setIsCostCalculated(true);
+    setError("");
   };
 
   return (
@@ -92,7 +110,7 @@ const Kostenberechnung = () => {
       id="cost-calculator"
       className="relative z-10 text-center my-6  text-white mx-auto"
     >
-      <div className="container mx-auto mb-4 py-8 rounded-xl shadow-xl bg-gray-200 shadow-xl">
+      <div className="container mx-auto mb-4 py-8 rounded-xl  bg-gray-200 shadow-xl">
         <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-5xl font-heading font-bold text-teal-900 uppercase border-b-2 border-teal-400 inline-block pb-1 text-center my-8">
           Kostenberechnung für Dacharbeiten
         </h1>
@@ -127,73 +145,83 @@ const Kostenberechnung = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
-
           <div ref={optionsSectionRef}>
-          <h2 className="text-xl font-semibold mb-4 text-teal-700 border-b-2 border-gray-400 pb-1">
-                {category === "Neubau"
-                  ? "Wählen Sie die Optionen für den Neubau:"
-                  : "Wählen Sie die Optionen für die Sanierung:"}
-              </h2>
+            <h2 className="text-xl font-semibold mb-4 text-teal-700 text-left mx-4 border-b-2 border-gray-400 pb-1">
+              {category === "Neubau"
+                ? "Wählen Sie die Optionen für den Neubau:"
+                : "Wählen Sie die Optionen für die Sanierung:"}
+            </h2>
 
             <div className="p-6">
               {category === "Sanierung" && (
                 <div className="flex gap-4 justify-center items-center text-xl font-semibold mb-4 text-teal-700">
-                <button
-                  className={`px-6 py-3 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform ${
-                    abrissType === "Ohne Abriss"
-                      ? "bg-teal-600 text-white"
-                      : "bg-white text-gray-400  hover:bg-teal-900"
-                  } cursor-pointer`}
-                  onClick={() => setAbrissType("Ohne Abriss")}
-                >
-                  Ohne Abriss
-                </button>
-                <button
-                  className={`px-6 py-3 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform ${
-                    abrissType === "Mit Abriss"
-                      ? "bg-teal-600 text-white"
-                      : "bg-white text-gray-400  hover:bg-teal-900"
-                  } cursor-pointer`}
-                  onClick={() => setAbrissType("Mit Abriss")}
-                >
-                  Mit Abriss
-                </button>
-              </div>
+                  <button
+                    className={`px-6 py-3 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform ${
+                      abrissType === "Ohne Abriss"
+                        ? "bg-teal-600 text-white"
+                        : "bg-white text-gray-400  hover:bg-teal-900"
+                    } cursor-pointer`}
+                    onClick={() => setAbrissType("Ohne Abriss")}
+                  >
+                    Ohne Abriss
+                  </button>
+                  <button
+                    className={`px-6 py-3 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform ${
+                      abrissType === "Mit Abriss"
+                        ? "bg-teal-600 text-white"
+                        : "bg-white text-gray-400  hover:bg-teal-900"
+                    } cursor-pointer`}
+                    onClick={() => {
+                      setAbrissType("Mit Abriss");
+                      setTotalCost((prevCost) => prevCost + area * 15);
+                    }}
+                  >
+                    Mit Abriss
+                  </button>
+                </div>
               )}
               <div className="grid grid-cols-2 gap-2 text-left">
-              {optionsData.map((section) => (
-                <div key={section.name} className="grid grid-cols gap-1 mb-4">
-                  <div className="flex   text-teal-700 mb-2 font-medium text-left">                    
-                    {section.name}   
-                  </div>
-                  <div className="absolute left-1/2 transform -translate-x-1/2  w-96 z-50 p-2 text-xl text-white bg-teal-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto">
-                    {section.description}
+                {optionsData.map((section) => (
+                  <div key={section.name} className="grid grid-cols gap-1 mb-4">
+                    <div className="flex   text-teal-700 mb-2 font-medium text-left">
+                      {section.name}
                     </div>
-                  <div className=" md:grid-cols gap-4">
-                    <select
-                      className="w-full border rounded-lg p-2 focus:outline-none bg-gray-200 text-gray-800 border-gray-400"
-                      value={selectedOptions[section.name]?.name || ""}
-                      onChange={(e) =>
-                        handleOptionSelect(
-                          section.name,
-                          section.options.find(
-                            (option) => option.name === e.target.value
+                    <div className="absolute left-1/2 transform -translate-x-1/2  w-96 z-50 p-2 text-xl text-white bg-teal-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto">
+                      {section.description}
+                    </div>
+                    <div className="md:grid-cols gap-4">
+                      <select
+                        className={`w-full border border-teal-800 rounded-lg p-2 hover:border-teal-400 focus:outline-none transition ${
+                          selectedOptions[section.name]?.name
+                            ? "bg-teal-600 text-white border-teal-600"
+                            : "bg-gray-100 text-gray-800 border-gray-400"
+                        }`}
+                        value={selectedOptions[section.name]?.name || ""}
+                        onChange={(e) =>
+                          handleOptionSelect(
+                            section.name,
+                            section.options.find(
+                              (option) => option.name === e.target.value
+                            )
                           )
-                        )
-                      }
-                    >
-                      <option value="" disabled>
-                        Bitte wählen
-                      </option>
-                      {section.options.map((option) => (
-                        <option key={option.name} value={option.name}>
-                          {option.name}
+                        }
+                      >
+                        <option
+                          className="bg-gray-400 text-gray-800 border-gray-400"
+                          value=""
+                          disabled
+                        >
+                          Bitte wählen
                         </option>
-                      ))}
-                    </select>
+                        {section.options.map((option) => (
+                          <option key={option.name} value={option.name}>
+                            {option.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
               </div>
               <div className="grid grid-cols-2 gap-4 text-left">
                 <div className="mb-4">
@@ -234,15 +262,15 @@ const Kostenberechnung = () => {
                 </div>
               </div>
             </div>
-            <div className="my-2 mx-6 text-right">
+            {/* <div className="my-2 mx-6 text-right">
               <p className="text-lg text-teal-700 font-semibold">
                 Berechnete Fläche:
               </p>
               <p className="text-2xl font-bold text-teal-900">
                 {area.toFixed(2)} m²
               </p>
-            </div>
-            
+            </div> */}
+
             <div className="grid grid-cols-2 gap-4 mb-4 mx-6">
               <button
                 onClick={handleBack}
@@ -255,53 +283,94 @@ const Kostenberechnung = () => {
                 onClick={handleSubmit}
                 className="bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700"
               >
-                Berechnen
+                Kosten berechnen
               </button>
             </div>
 
             {error && <p className="text-red-500">{error}</p>}
           </div>
-          
 
-          
-          <div className="">
-            <h2 className="text-xl font-semibold mb-4 text-teal-700 border-b-2 border-gray-400 pb-1">
+          <div className="text-left">
+            <h2 className="text-xl font-semibold mb-4 text-teal-700 border-b-2 border-teal-400 pb-1">
               Information:
             </h2>
-            <p className="text-teal-900 text-lg mx-auto text-left">
-              Bitte überprüfen Sie die ausgewählten Optionen und die berechneten
-              Kosten.
+            <p className="text-teal-900 text-lg mx-auto">
+              Bitte wählen Sie Optionen, um Details anzuzeigen.
+              {/* {category === "Neubau"
+                ? "Für Neubau empfehlen wir, die Energieeffizienz und Langlebigkeit der Materialien zu berücksichtigen."
+                : "Bei der Sanierung ist es wichtig, den Zustand des Daches zu überprüfen und mögliche Schäden zu bewerten."} */}
             </p>
-            {totalCost > 0 && (
+
+            {selectedOptionsList.length > 0 ? (
+              <ul className="list-disc list-inside text-teal-700 mx-5 my-5">
+                {selectedOptionsList.map((item, index) => (
+                  <li key={index} className="mb-2">
+                    <span className="font-bold">{item.category}:</span>{" "}
+                    {item.option} -{" "}
+                    <span className="italic">{item.description}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-600 my-4"></p>
+            )}
+
+            {isCostCalculated && (
               <div className="mt-4">
-                <p className="text-2xl text-teal-700 text-left italic">
-                  Ihre geschätzten Kosten betragen:{" "}
-                  <span className="text-yellow-600">
+                
+                <p className="text-2xl text-teal-700 text-right mx-2 my-8 ">
+                  Ihre geschätzten Kosten betragen:
+                  <span className="text-yellow-600 mx-2 text-bold">
                     {totalCost.toFixed(2)} €
                   </span>
                 </p>
                 <p className="text-teal-600 mt-4">
                   Wir freuen uns darauf, mit Ihnen zusammenzuarbeiten!
                 </p>
+                <div className="text-left mt-4">
+                  <p className="text-red-600 italic">
+                    Hinweis: Die berechneten Kosten sind nur eine ungefähre
+                    Schätzung. Für detaillierte Informationen kontaktieren Sie
+                    uns bitte.
+                  </p>
+                </div>
                 <button
                   onClick={toggleContactModal}
-                  className="bg-teal-600 text-white py-2 w-full rounded-lg hover:bg-teal-700 shimmer-button"
+                  className="bg-teal-600 text-white py-2 w-full rounded-lg hover:bg-teal-700 shimmer-button mt-4"
                 >
                   Kontakt aufnehmen
                 </button>
               </div>
             )}
           </div>
-          </div>
 
-
-          {/* Modal window */}
-          {isContactModalOpen && (
-            <ContactFormModal closeModal={toggleContactModal} />
-          )}
+          {/* {totalCost > 0 && (
+            <div className="mt-4">
+              <p className="text-2xl text-teal-700 text-left italic">
+                Ihre geschätzten Kosten betragen:{" "}
+                <span className="text-yellow-600">
+                  {totalCost.toFixed(2)} €
+                </span>
+              </p>
+              <p className="text-teal-600 mt-4">
+                Wir freuen uns darauf, mit Ihnen zusammenzuarbeiten!
+              </p>
+              <button
+                onClick={toggleContactModal}
+                className="bg-teal-600 text-white py-2 w-full rounded-lg hover:bg-teal-700 shimmer-button"
+              >
+                Kontakt aufnehmen
+              </button>
+            </div>
+          )} */}
         </div>
       </div>
-    
+
+      {/* Modal window */}
+      {isContactModalOpen && (
+        <ContactFormModal closeModal={toggleContactModal} />
+      )}
+    </div>
   );
 };
 
