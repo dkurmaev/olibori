@@ -68,7 +68,7 @@ const HomeSlider = () => {
       <div className="absolute inset-0 bg-gray-900 bg-opacity-90"></div>
 
       <div className="relative z-10 text-center md:my-24 lg:my-28 sm:my-20 py-5">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl mt-16 font-heading font-bold text-gray-300 uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
+        <h1 className="text-xl sm:text-xl md:text-6xl lg:text-7xl mt-16 font-heading font-bold text-gray-300 uppercase tracking-widest animate__animated animate__fadeIn animate__delay-1s">
           <span className="bg-gradient-to-r from-teal-500 to-yellow-500 bg-clip-text text-transparent">
             Dach
           </span>
