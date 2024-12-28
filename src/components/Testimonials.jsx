@@ -42,64 +42,67 @@ const Testimonials = () => {
 
   return (
     <section
-      id="parallax"
-      className="relative bg-fixed bg-center bg-cover flex flex-col items-center justify-center"
-      style={{
-        backgroundImage: "url('/images/parallax.jpg')",
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-      {...swipeHandlers} // Добавляем обработчики свайпа
-    >
-      <div className="bg-black bg-opacity-80 w-full py-16">
-        <div className="relative z-10 text-center text-white ">
-          <h2 className="text-3xl sm:text-5xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
-            Kundenfeedback
-          </h2>
-          <div className="flex flex-col items-center max-w-5xl mx-auto space-y-8 text-center">
-            {/* Изображение клиента */}
-            <div className="w-24 h-24 relative mx-auto md:mx-0">
-                <img
-                  src={testimonialsData[currentIndex].image}
-                  alt={testimonialsData[currentIndex].name}
-                  className="w-full h-full object-contain rounded-full border-2 border-teal-400 shadow-lg"
-                />
-              </div>
-            <div className="relative flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
-              
-              {/* Отзыв */}
-              <div className="max-w-lg text-center  break-words tracking-wider leading-loose">
-                <p className="text-lg sm:text-xl text-gray-300 mb-4">
-                  {testimonialsData[currentIndex].feedback}
-                </p>
-                <h3 className="text-2xl sm:text-3xl font-bold text-teal-400">
-                  {testimonialsData[currentIndex].name}
-                </h3>
-                <p className="text-yellow-400 text-lg sm:text-xl">
-                  {testimonialsData[currentIndex].title}
-                </p>
-              </div>
-            </div>
+  className="relative h-[100vh] flex items-center justify-center bg-fixed bg-cover bg-center "
+  style={{
+    backgroundImage: "url('/images/parallax.jpg')",
+  }}
+  {...swipeHandlers}
+>
+  {/* Добавляем дополнительный слой размытия */}
+  <div className="absolute inset-0 bg-black bg-opacity-80 filter blur-lg"></div>
 
-            {/* Индикаторы слайдов */}
-            <div className="flex space-x-2 mt-6">
-              {testimonialsData.map((_, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => setCurrentIndex(idx)}
-                  className={`cursor-pointer w-4 h-4 rounded-full transition ${
-                    idx === currentIndex
-                      ? "bg-teal-400 transform scale-125"
-                      : "bg-gray-600"
-                  }`}
-                ></div>
-              ))}
-            </div>
-          </div>
-        </div>
+  {/* Полупрозрачный блок отзывов */}
+  <div className="relative bg-teal-900 bg-opacity-70 backdrop-blur-lg p-8 sm:p-12 rounded-xl shadow-lg max-w-4xl mx-auto text-gray-400">
+    <h2 className="text-3xl sm:text-4xl font-bold text-center uppercase mb-8">
+      Rezensionen Über Uns
+    </h2>
+
+    {/* Слайд с отзывом */}
+    <div className="flex flex-col md:flex-row items-center gap-8">
+      {/* Изображение пользователя */}
+      <img
+        src={testimonialsData[currentIndex].image}
+        alt={testimonialsData[currentIndex].name}
+        className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover  "
+      />
+
+      {/* Текст отзыва */}
+      <div className="text-center md:text-left">
+        <p className="text-lg sm:text-xl italic text-gray-300 mb-4">
+          {testimonialsData[currentIndex].feedback}
+        </p>
+        <h3 className="text-2xl sm:text-3xl font-bold text-teal-400">
+          {testimonialsData[currentIndex].name}
+        </h3>
+        <p className="text-yellow-400 text-lg">{testimonialsData[currentIndex].title}</p>
       </div>
-    </section>
+    </div>
+
+    {/* Индикаторы */}
+    <div className="flex justify-center items-center gap-2 mt-6">
+      {testimonialsData.map((_, idx) => (
+        <div
+          key={idx}
+          onClick={() => setCurrentIndex(idx)}
+          className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full cursor-pointer transition ${
+            idx === currentIndex
+              ? "bg-teal-400 transform scale-125"
+              : "bg-gray-500"
+          }`}
+        ></div>
+      ))}
+    </div>
+
+    {/* Стрелки переключения */}
+    <div className="absolute top-1/2 left-4 transform -translate-y-1/2 cursor-pointer text-teal-400 hover:text-teal-300 text-2xl sm:text-4xl">
+      <button onClick={prevSlide}>&#8249;</button>
+    </div>
+    <div className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer text-teal-400 hover:text-teal-300 text-2xl sm:text-4xl">
+      <button onClick={nextSlide}>&#8250;</button>
+    </div>
+  </div>
+</section>
+
   );
 };
 
