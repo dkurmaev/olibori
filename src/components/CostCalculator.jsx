@@ -111,7 +111,7 @@ const Kostenberechnung = () => {
       className="relative z-10 text-center my-6  text-white mx-auto"
     >
       <div className="container mx-auto mb-4 py-8 rounded-xl  bg-gray-200 shadow-xl">
-        <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-5xl font-heading font-bold text-teal-900 uppercase border-b-2 border-teal-400 inline-block pb-1 text-center my-8">
+        <h1 className="text-3xl sm:text-5xl font-bold uppercase text-gray-500 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
           Kostenberechnung für Dacharbeiten
         </h1>
         {/* Top buttons */}
@@ -291,10 +291,10 @@ const Kostenberechnung = () => {
           </div>
 
           <div className="text-left">
-            <h2 className="text-xl font-semibold mb-4 text-teal-700 border-b-2 border-teal-400 pb-1">
+            <h2 className="text-xl font-semibold mb-4 text-teal-700 text-left mx-4 border-b-2 border-gray-400 pb-1">
               Information:
             </h2>
-            <p className="text-teal-900 text-lg mx-auto">
+            <p className="text-teal-900 text-lg mx-4">
               Bitte wählen Sie Optionen, um Details anzuzeigen.
               {/* {category === "Neubau"
                 ? "Für Neubau empfehlen wir, die Energieeffizienz und Langlebigkeit der Materialien zu berücksichtigen."

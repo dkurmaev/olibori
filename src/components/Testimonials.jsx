@@ -53,8 +53,8 @@ const Testimonials = () => {
       {...swipeHandlers} // Добавляем обработчики свайпа
     >
       <div className="bg-black bg-opacity-80 w-full py-16">
-        <div className="relative z-10 text-center text-white mx-auto px-6 lg:px-20">
-          <h2 className="text-4xl sm:text-5xl font-extrabold uppercase tracking-wider text-teal-400 mb-12 border-b-2 border-teal-400 inline-block pb-1">
+        <div className="relative z-10 text-center text-white ">
+          <h2 className="text-3xl sm:text-5xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
             Kundenfeedback
           </h2>
           <div className="flex flex-col items-center max-w-5xl mx-auto space-y-8 text-center">

@@ -135,7 +135,7 @@ const Services = () => {
             Unsere Dienstleistungen
           </h2>
           <div className="flex justify-center items-center relative group">
-            <h3 className="text-4xl font-bold text-gray-900">
+            <h3 className="text-xl sm:text-lg md:text-2xl lg:text-3xl font-heading font-bold text-gray-900 uppercase border-b-2  text-center my-8">
               Flachdachabdichtung
             </h3>
           </div>
@@ -156,11 +156,11 @@ const Services = () => {
                   : "translate-x-20 opacity-0"
               }`}
             >
-              <div className="md:w-1/2 shadow-custom w-{500px} z-10">
+              <div className="min-w-full snap-start md:min-w-[50%] p-2">
                 <img
                   src={service.imageUrl}
                   alt={service.title}
-                  className="w-full h-80 object-cover rounded-lg shadow-2xl transform transition-transform duration-200 hover:scale-105"
+                  className="w-full h-80 object-cover rounded-lg shadow-2xl  shadow-teal-900 transform transition-transform duration-200 hover:scale-105"
                 />
               </div>
 
