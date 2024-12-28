@@ -293,6 +293,7 @@ body {
   43% { transform: rotate(0deg); }
 }
 
+
 .vibrate {
   animation: vibrate 0.5s infinite;
 }
@@ -311,4 +312,19 @@ body {
   animation: pick-up 0.5s forwards;
   opacity: 1;
 }
+
+.custom-checkmark {
+  position: relative;
+  padding-left: 40px; /* Отступ для галочки */
+}
+
+.custom-checkmark::before {
+  content: '✔'; /* Замените на нужный символ */
+  color: yellow; /* Измените на нужный цвет */
+  font-size: 1.3em; /* Размер галочки */
+  position: absolute;
+  left: 0; /* Позиционируем галочку */
+  top: 0;
+}
+
 
