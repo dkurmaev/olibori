@@ -327,4 +327,14 @@ body {
   top: 0;
 }
 
+/* Добавьте в ваш CSS файл */
+.scrollbar-hide {
+  overflow: -moz-scrollbars-none; /* Firefox */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Safari и Chrome */
+}
+
+
 

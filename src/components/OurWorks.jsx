@@ -92,9 +92,9 @@ const OurWorks = () => {
   const slidesToShow = window.innerWidth < 768 ? 1 : 3;
 
   return (
-    <section id="works" className="py-20 bg-white">
+    <section id="works" className="py-16 bg-gray-400 inset-0  bg-opacity-100">
       <div className="container mx-auto mb-4 py-8 text-center">
-        <h2 className="text-3xl sm:text-5xl font-bold uppercase text-gray-500 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
+        <h2 className="text-3xl sm:text-5xl font-bold uppercase text-gray-800 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
           Unsere Flachdachlösungen:
         </h2>
         <div
