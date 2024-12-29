@@ -54,7 +54,7 @@ const Testimonials = () => {
     {/* Контент блока */}
     <div className="relative bg-teal-900 bg-opacity-30 backdrop-blur-lg p-4 sm:p-8 rounded-xl shadow-lg max-w-4xl w-full mx-auto text-white">
       {/* Заголовок */}
-      <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl text-center my-8 tracking-wider font-heading font-bold text-gray-500 uppercase border-b-2 border-teal-400 pb-1">
+      <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl text-center my-8 tracking-wider font-heading font-bold text-gray-200 uppercase border-b-2 border-teal-400 pb-1">
         Rezensionen 
       </h2>
   
