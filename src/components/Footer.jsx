@@ -28,7 +28,7 @@ const Footer = () => {
                     </a>{' '}
                     in collaboration with QA Engineer 
                     <a
-                        href="https://www.linkedin.com/in/olexandra-baranovska"
+                        href="https://www.linkedin.com/in/oleksandra-baranovska-95298a343/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-teal-800 hover:underline px-2"
