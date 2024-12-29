@@ -33,7 +33,7 @@ const Footer = () => {
                         rel="noopener noreferrer"
                         className="text-teal-800 hover:underline px-2"
                     >
-                        Baranovska Olexandra
+                        Baranovska Oleksandra
                     </a>
                 </p>
             </div>
