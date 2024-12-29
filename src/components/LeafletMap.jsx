@@ -16,12 +16,12 @@ const LeafletMap = () => {
   const position = [50.657457, 7.963847]; 
 
   return (
-    <div className="mt-6 overflow-hidden rounded-lg shadow-lg h-[300px] w-full">
+    <div className="mt-6 overflow-hidden rounded-lg shadow-lg h-[300px] w-full ">
       <MapContainer
         center={position}
         zoom={15}
         style={{ height: "300px", width: "100%" }}
-        className="rounded-lg"
+        className="rounded-lg z-50"
       >
         
         <TileLayer
