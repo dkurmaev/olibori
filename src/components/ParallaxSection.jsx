@@ -46,42 +46,42 @@ const ParallaxSection = () => {
         <h1 className="text-xl sm:text-xl md:text-2xl lg:text-7xl font-heading font-bold text-gray-200 uppercase animate__animated animate__fadeIn animate__delay-1s">
           Wir führen einzelne Arten von Dacharbeiten durch:
         </h1>
-        <div className="grid grid-cols-1 gap-14 my-14 mx-auto lg:px-16 items-center justify-center text-gray-300 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 max-w-screen-2xl">
+        <div className="grid grid-cols-1 gap-14 my-12  mx-auto lg:px-16 items-center justify-center text-gray-300 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 max-w-screen-2xl">
           {/* Первый блок с 3 элементами */}
-          <div className="flex flex-col">
-            <p className="text-md font-sans text-left mt-4 custom-checkmark">
+          <div className="flex flex-col ml-4">
+            <p className="text-md font-sans text-left mt-4 custom-checkmark truncate overflow-hidden whitespace-nowrap">
               Montage des Entwässerungssystems
             </p>
-            <p className="text-md font-sans text-left mt-4 custom-checkmark">
+            <p className="text-md font-sans text-left mt-4 custom-checkmark truncate overflow-hidden whitespace-nowrap">
               Errichtung der Dachkonstruktion
             </p>
-            <p className="text-md font-sans text-left mt-4 custom-checkmark">
+            <p className="text-md font-sans text-left mt-4 custom-checkmark truncate overflow-hidden whitespace-nowrap">
               Abdichtungs- und Dampfsperrschichten
             </p>
           </div>
 
           {/* Второй блок с 3 элементами */}
-          <div className="flex flex-col text-gray-300">
-            <p className="text-md font-sans text-left mt-4 custom-checkmark">
+          <div className="flex flex-col text-gray-300 ml-4">
+            <p className="text-md font-sans text-left mt-4 custom-checkmark truncate overflow-hidden whitespace-nowrap">
               Verlegung von Dämmmaterial
             </p>
-            <p className="text-md font-sans text-left mt-4 custom-checkmark">
+            <p className="text-md font-sans text-left mt-4 custom-checkmark truncate overflow-hidden whitespace-nowrap">
               Installation von Belüftungselementen
             </p>
-            <p className="text-md font-sans text-left mt-4 custom-checkmark">
+            <p className="text-md font-sans text-left mt-4 custom-checkmark truncate overflow-hidden whitespace-nowrap">
               Verlegung von Bahnenabdichtungen
             </p>
           </div>
 
           {/* Третий блок с 3 элементами */}
-          <div className="flex flex-col text-gray-300">
-            <p className="text-md font-sans text-left mt-4 custom-checkmark">
+          <div className="flex flex-col text-gray-300 ml-4">
+            <p className="text-md font-sans text-left mt-4 custom-checkmark truncate overflow-hidden whitespace-nowrap">
               Balkonabdichtung
             </p>
-            <p className="text-md font-sans text-left mt-4 custom-checkmark">
+            <p className="text-md font-sans text-left mt-4 custom-checkmark truncate overflow-hidden whitespace-nowrap">
               Garagen- und Terassenabdichtung
             </p>
-            <p className="text-md font-sans text-left mt-4 custom-checkmark">
+            <p className="text-md font-sans text-left mt-4 custom-checkmark truncate overflow-hidden whitespace-nowrap">
               Demontage des Dachs
             </p>
           </div>
