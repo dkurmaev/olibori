@@ -1,5 +1,6 @@
 import { useState } from "react";
 import emailjs from "emailjs-com";
+import LeafletMap from "./LeafletMap";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -9,8 +10,10 @@ const ContactForm = () => {
   });
   const [formErrors, setFormErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [showMessage, setShowMessage] = useState(false); 
+  const [showMessage, setShowMessage] = useState(false);
   const [messageContent, setMessageContent] = useState("");
+  const [isAgreed, setIsAgreed] = useState(false);
+
   const [messageType, setMessageType] = useState("");
 
   const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -21,9 +24,13 @@ const ContactForm = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Проверка ошибок в процессе ввода
     const errors = validateField(name, value);
     setFormErrors((prevErrors) => ({ ...prevErrors, ...errors }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    setIsAgreed(e.target.checked);
+    console.log(e.target.checked);
   };
 
   const handleSubmit = (e) => {
@@ -32,9 +39,9 @@ const ContactForm = () => {
     const errors = validateForm();
     setFormErrors(errors);
 
-    if (Object.keys(errors).length === 0) {
+    if (Object.keys(errors).length === 0 && isAgreed) {
       setIsLoading(true);
-      setShowMessage(false); // Скрываем предыдущее сообщение
+      setShowMessage(false);
 
       emailjs.send(serviceId, templateId, formData, userId).then(
         () => {
@@ -45,6 +52,7 @@ const ContactForm = () => {
             "Vielen Dank! Wir werden uns in Kürze mit Ihnen in Verbindung setzen."
           );
           setFormData({ name: "", email: "", message: "" });
+          setIsAgreed(false);
         },
         () => {
           setIsLoading(false);
@@ -63,10 +71,7 @@ const ContactForm = () => {
     if (name === "name" && !/^[a-zA-ZäöüÄÖÜß\s]+$/.test(value)) {
       errors.name = "Der Name darf nur Buchstaben enthalten.";
     }
-    if (
-      name === "email" &&
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-    ) {
+    if (name === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
       errors.email = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
     }
     return errors;
@@ -88,54 +93,42 @@ const ContactForm = () => {
 
   return (
     <section
-    id="contact"
-    className="relative bg-cover bg-center bg-fixed sm:bg-fixed sm:bg-none"
-    style={{
-      backgroundImage: "url('/images/parallax.jpg')", 
-      backgroundAttachment: "fixed", 
-      backgroundSize: "cover",
-      backgroundPosition: "center", 
-      scrollMarginTop: "80px",
-    }}
-  >
-    <div className="bg-black bg-opacity-80 w-full py-16">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">      
-        <div className="p-6 bg-opacity-70 shadow-xl rounded-lg transition-transform hover:scale-105">
-          <h3 className="text-3xl sm:text-5xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
-            Unser Standort
-          </h3>
-          <p className=" mb-4 leading-relaxed text-teal-200">
-            <strong>Olidort Bedachungen</strong> <br />
-            Sellwigsweg 1 <br />
-            56470 Bad Marienberg <br />
-            Deutschland
-          </p>
-          <p className=" mb-4 text-teal-200">
-            <strong>Telefon:</strong> +49 157 300 50 570
-          </p>
-          <p className=" mb-4 text-teal-200">
-            <strong>E-Mail:</strong> olidort.b@gmail.com
-          </p>
-
-          <div className="mt-6 overflow-hidden rounded-lg shadow-lg">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2529.3663954056888!2d7.9638465771101234!3d50.65745737163248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bc214d4f89fb9b%3A0x5f585dd931148d6d!2sSellwigsweg%201%2C%2056470%20Bad%20Marienberg%20(Westerwald)!5e0!3m2!1sen!2sde!4v1729112679493!5m2!1sen!2sde"
-              width="100%"
-              height="250"
-              className="rounded-lg"
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+      id="contact"
+      className="relative bg-cover bg-center bg-fixed sm:bg-fixed sm:bg-none"
+      style={{
+        backgroundImage: "url('/images/parallax.jpg')",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        scrollMarginTop: "80px",
+      }}
+    >
+      <div className="bg-black bg-opacity-80 w-full py-16">
+        <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="p-6 bg-opacity-70 shadow-xl rounded-lg transition-transform hover:scale-105">
+            <h3 className="text-3xl sm:text-5xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
+              Unser Standort
+            </h3>
+            <p className="mb-4 leading-relaxed text-teal-200">
+              <strong>Olidort Bedachungen</strong> <br />
+              Sellwigsweg 1 <br />
+              56470 Bad Marienberg <br />
+              Deutschland
+            </p>
+            <p className="mb-4 text-teal-200">
+              <strong>Telefon:</strong> +49 157 300 50 570
+            </p>
+            <p className="mb-4 text-teal-200">
+              <strong>E-Mail:</strong> olidort.b@gmail.com
+            </p>
+            {/* Карта с использованием Leaflet */}
+            <LeafletMap />
           </div>
-        </div>
 
-
-        <div className="p-6 bg-opacity-10 text-gray-400 shadow-xl rounded-lg transition-transform hover:scale-105">
+          <div className="p-6 bg-opacity-10 text-gray-400 shadow-xl rounded-lg transition-transform hover:scale-105">
             <h3 className="text-3xl sm:text-5xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
               Kontaktieren Sie uns
             </h3>
-
 
             {showMessage && (
               <div
@@ -219,9 +212,29 @@ const ContactForm = () => {
                 ></textarea>
               </div>
 
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="datenschutz"
+                  name="datenschutz"
+                  checked={isAgreed}
+                  onChange={handleCheckboxChange}
+                  className="mr-2"
+                  required
+                />
+                <label htmlFor="datenschutz" className="text-teal-200">
+                  <p className="text-teal-300 ">
+                    Ich stimme den Datenschutz zu
+                  </p>
+                </label>
+              </div>
+
               <button
                 type="submit"
-                className="w-full bg-teal-900 text-white py-3 mt-10 rounded-md shimmer-button"
+                className={`w-full bg-teal-900 text-white py-3 mt-10 rounded-md shimmer-button ${
+                  !isAgreed ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                disabled={!isAgreed}
               >
                 Senden
               </button>
