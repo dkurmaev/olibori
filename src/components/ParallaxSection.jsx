@@ -42,11 +42,11 @@ const ParallaxSection = () => {
     >
       {/* Наложение темного фона */}
       <div className="absolute inset-0 bg-black opacity-80"></div>
-      <div className="relative  text-center text-white my-16">
+      <div className="relative text-center text-white my-16">
         <h1 className="text-xl sm:text-xl md:text-2xl lg:text-7xl font-heading font-bold text-gray-200 uppercase animate__animated animate__fadeIn animate__delay-1s">
           Wir führen einzelne Arten von Dacharbeiten durch:
         </h1>
-        <div className="grid grid-cols-1 gap-24 my-14 mx-2 lg:px-80 text-gray-300 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-14 my-14 mx-auto lg:px-16 items-center justify-center text-gray-300 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 max-w-screen-2xl">
           {/* Первый блок с 3 элементами */}
           <div className="flex flex-col">
             <p className="text-md font-sans text-left mt-4 custom-checkmark">
