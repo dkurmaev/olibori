@@ -17,14 +17,23 @@ const Footer = () => {
             </div>
             <div className="container mx-auto px-4 md:px-6 flex justify-center items-center py-2">
                 <p className="text-gray-600 text-center text-sm">
-                Powered by 
+                    Powered by
                     <a
                         href="https://www.linkedin.com/in/danil-kurmayev-141b44272"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-secondary hover:underline mx-2"
+                        className="text-teal-800 hover:underline px-2"
                     >
                         Danil Kurmayev
+                    </a>{' '}
+                    in collaboration with QA Engineer 
+                    <a
+                        href="https://www.linkedin.com/in/olexandra-baranovska"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-teal-800 hover:underline px-2"
+                    >
+                        Baranovska Olexandra
                     </a>
                 </p>
             </div>
