@@ -95,6 +95,7 @@ const ContactForm = () => {
       backgroundAttachment: "fixed", 
       backgroundSize: "cover",
       backgroundPosition: "center", 
+      scrollMarginTop: "80px",
     }}
   >
     <div className="bg-black bg-opacity-80 w-full py-16">
