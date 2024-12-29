@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaPhoneAlt } from "react-icons/fa";
+// import { FaPhoneAlt } from "react-icons/fa";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -26,7 +26,10 @@ const Header = () => {
   const scrollToCostCalculator = () => {
     const costCalculatorSection = document.getElementById("cost-calculator");
     if (costCalculatorSection) {
-      costCalculatorSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      costCalculatorSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
 
@@ -52,19 +55,20 @@ const Header = () => {
             </p>
           </div>
         </div>
-        <div className="responsive-container hidden lg-custom:hidden md-custom:hidden lg:block xl:block sm:hidden flex-wrap">
-          <p className="text-md lg:flex justify-between items-center font-light space-x-3 text-right text-yellow-400 animate-pulse">
-            <FaPhoneAlt className="my-auto h-16 w-4 mx-2 vibrate" />
-            <span
-              href="tel:+4915730050570"
-              className="text-teal-600 font-bold group relative glow"
-            >
-              +4915730050570
-            </span>
-          </p>
-        </div>
+        {/* <div className="responsive-container lg:flex flex-wrap ">
+  <p className="text-md flex justify-between items-center font-light space-x-3 text-right text-yellow-400 animate-pulse ">
+    <FaPhoneAlt className="my-auto h-16 w-4 mx-2 vibrate" />
+    <span
+      href="tel:+4915730050570"
+      className="text-teal-600 font-bold group relative glow"
+    >
+      +4915730050570
+    </span>
+  </p>
+</div> */}
 
-        <nav className="hidden md:flex items-center space-x-6">
+
+        <nav className="hidden md:flex items-center space-x-6 hide-on-small">
           <a
             href="#home"
             className="relative group bg-teal-800 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-all"
