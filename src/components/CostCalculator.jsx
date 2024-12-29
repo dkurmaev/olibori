@@ -303,7 +303,7 @@ const Kostenberechnung = () => {
                 onClick={handleBack}
                 className="bg-gray-400 text-white py-2 rounded-lg hover:bg-gray-500"
               >
-                Zurück
+                Zurücksetzen
               </button>
 
               <button
