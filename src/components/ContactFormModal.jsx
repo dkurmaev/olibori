@@ -3,7 +3,7 @@ import emailjs from "emailjs-com";
 import PropTypes from "prop-types";
 import InputMask from "react-input-mask";
 
-const ContactFormModal = ({ closeModal, selectedOptionsList, totalCost }) => {
+const ContactFormModal = ({ closeModal, selectedOptionsList, totalCost, selectedArea }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,6 +14,7 @@ const ContactFormModal = ({ closeModal, selectedOptionsList, totalCost }) => {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formErrors, setFormErrors] = useState({});
+  // const [selectedArea, setSelectedArea] = useState(""); // Define selectedArea
 
   const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
   const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -31,24 +32,28 @@ const ContactFormModal = ({ closeModal, selectedOptionsList, totalCost }) => {
   };  
 
   // Автозаполнение поля "message"
-  useEffect(() => {
-    if (selectedOptionsList && totalCost) {
-      const generatedMessage = generateMessage(selectedOptionsList, totalCost);
-      setFormData((prevData) => ({ ...prevData, message: generatedMessage }));
-    }
-  }, [selectedOptionsList, totalCost]);
+useEffect(() => {
+  if (selectedOptionsList && totalCost) {
+    const generatedMessage = generateMessage(selectedOptionsList, totalCost, selectedArea); // Передаем selectedArea
+    setFormData((prevData) => ({ ...prevData, message: generatedMessage }));
+  }
+}, [selectedOptionsList, totalCost, selectedArea]); // Добавляем selectedArea в зависимости
 
-  const generateMessage = (options, cost) => {
-    if (!options.length) return "";
+const generateMessage = (options, cost, area) => { // Добавляем area как параметр
+  let message = "Ihre ausgewählten Kategorien:\n";
+  options.forEach((option, index) => {
+    message += `${index + 1}. ${option.category}: ${option.option}\n`;
+  });
+  message += `\nGeschätzte Kosten: ${cost} €\n`;
 
-    let message = "Ihre ausgewählten Kategorien:\n";
-    options.forEach((option, index) => {
-      message += `${index + 1}. ${option.category}: ${option.option}\n`;
-    });
-    message += `\nGeschätzte Kosten: ${cost} €`;
+  // Добавляем информацию о площади, если она задана
+  if (area) {
+    message += `Ausgewählte Fläche: ${area} m²\n`;
+  }
 
-    return message;
-  };
+  return message;
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -276,6 +281,7 @@ ContactFormModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   selectedOptionsList: PropTypes.array.isRequired,
   totalCost: PropTypes.string.isRequired,
+  selectedArea: PropTypes.string.isRequired,
 };
 
 export default ContactFormModal;

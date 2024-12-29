@@ -95,7 +95,7 @@ const Kostenberechnung = () => {
     setArea(1);
     setTotalCost(0);
     setError("");
-    setIsCostCalculated(false); // Сбрасываем флаг расчёта стоимости
+    setIsCostCalculated(false); 
   };
 
   const optionsSectionRef = useRef(null);
@@ -381,6 +381,7 @@ const Kostenberechnung = () => {
           selectedOptionsList={selectedOptionsList}
           totalCost={totalCost}
           closeModal={toggleContactModal}
+          selectedArea={selectedArea} 
         />
       )}
     </div>
