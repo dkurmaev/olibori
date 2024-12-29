@@ -131,7 +131,8 @@ const Kostenberechnung = () => {
   return (
     <div
       id="cost-calculator"
-      className="relative z-10 text-center my-6  text-white mx-auto"
+      className="relative z-10 text-center my-6  text-white mx-auto "
+      style={{ scrollMarginTop: "80px" }}
     >
       <div className="container mx-auto mb-4 py-8 rounded-xl  bg-gray-200 shadow-xl">
         <h1 className="text-3xl sm:text-5xl font-bold uppercase text-gray-500 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">

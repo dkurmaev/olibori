@@ -293,6 +293,12 @@ body {
 .glowEffect:hover {
   filter: drop-shadow(0 0 20px rgb(9, 211, 144));
 }
+@media (max-width: 640px) {
+  .certificat {
+    height: 20px;
+  }
+}
+
 
 
 

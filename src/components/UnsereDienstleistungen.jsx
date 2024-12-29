@@ -128,6 +128,7 @@ const Services = () => {
       ref={sectionRef}
       id="services"
       className="py-16 bg-gray-400 inset-0  bg-opacity-100"
+      style={{ scrollMarginTop: "80px" }}
     >
       <div className="container mx-auto">
         <div className="text-center mb-8">

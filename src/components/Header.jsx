@@ -7,7 +7,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
+      if (window.scrollY > 1) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -22,15 +22,11 @@ const Header = () => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
   const scrollToCostCalculator = () => {
     const costCalculatorSection = document.getElementById("cost-calculator");
     if (costCalculatorSection) {
-      const rect = costCalculatorSection.getBoundingClientRect();
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-      const targetY =
-        rect.top + scrollTop - window.innerHeight / 2 + rect.height / 2;
-      window.scrollTo({ top: targetY, behavior: "smooth" });
+      costCalculatorSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
@@ -41,7 +37,7 @@ const Header = () => {
       }`}
     >
       <div className="container mx-auto flex justify-between items-center">
-        <div className="flex  items-center">
+        <div className="flex items-center">
           <img
             src="/images/Logo.png"
             alt="Olidort Bedachungen"

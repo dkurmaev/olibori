@@ -2,7 +2,6 @@ import { useState } from "react";
 import "animate.css";
 import ContactFormModal from "./ContactFormModal";
 
-
 const certificates = [
   {
     src: "/images/meisterbrief.webp",
@@ -87,7 +86,7 @@ const HomeSlider = () => {
           </span>
 
           <img
-            src="/images/certification.gif" 
+            src="/images/certification.gif"
             alt="close"
             className="h-12 w-12 text-teal-800 ml-2 cursor-pointer vibrateCertificate glowEffect"
             onClick={toggleCertificateModal}
@@ -117,21 +116,21 @@ const HomeSlider = () => {
             className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md"
             onClick={toggleCertificateModal}
           ></div>
-          <div className="relative rounded-lg w-full max-w-2xl max-h-[90vh] z-50 overflow-hidden">
-            <div className="relative w-full h-full flex items-center justify-center">
+          <div className="relative rounded-lg w-full max-w-lg h-auto z-50 overflow-hidden">
+            <div className="relative w-full h-full flex items-center justify-center ">
               <img
                 src={certificates[currentCertificateIndex].src}
                 alt={certificates[currentCertificateIndex].alt}
-                className="max-w-full max-h-full object-contain"
+                className="w-full h-full object-contain "
               />
               <button
-                className="absolute top-0 right-0  bg-opacity-80 rounded-full p-2 hover:bg-opacity-100 transition duration-200"
+                className="absolute top-2 right-2 bg-opacity-80 rounded-full p-2 hover:bg-opacity-100 transition duration-200"
                 onClick={toggleCertificateModal}
               >
                 <img
                   src="/images/close-icon.gif"
                   alt="close"
-                  className="w-10 h-10"
+                  className="w-8 h-8" // Уменьшаем размер для лучшего отображения
                 />
               </button>
               <button
