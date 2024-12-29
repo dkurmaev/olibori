@@ -32,6 +32,7 @@ const Footer = () => {
                 onClose={() => setIsDatenschutzOpen(false)} 
                 onAccept={() => setIsDatenschutzOpen(false)} 
             />
+            
         </footer>
     );
 };
