@@ -13,7 +13,6 @@ const ContactForm = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [messageContent, setMessageContent] = useState("");
   const [isAgreed, setIsAgreed] = useState(false);
-
   const [messageType, setMessageType] = useState("");
 
   const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -24,22 +23,21 @@ const ContactForm = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    const errors = validateField(name, value);
-    setFormErrors((prevErrors) => ({ ...prevErrors, ...errors }));
+    // Проверка поля на валидность при изменении
+    const errors = validateField(name, value, formErrors);
+    setFormErrors(errors);
   };
 
   const handleCheckboxChange = (e) => {
     setIsAgreed(e.target.checked);
-    console.log(e.target.checked);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const errors = validateForm();
-    setFormErrors(errors);
-
-    if (Object.keys(errors).length === 0 && isAgreed) {
+    const errors = validateForm(formData);
+    if (Object.keys(errors).length === 0) {
+      // Все валидно, отправляем данные
+      console.log("Form submitted:", formData);
       setIsLoading(true);
       setShowMessage(false);
 
@@ -53,6 +51,7 @@ const ContactForm = () => {
           );
           setFormData({ name: "", email: "", message: "" });
           setIsAgreed(false);
+          setFormErrors({}); // Сброс ошибок после успешной отправки
         },
         () => {
           setIsLoading(false);
@@ -63,30 +62,59 @@ const ContactForm = () => {
           );
         }
       );
+    } else {
+      // Устанавливаем ошибки для отображения
+      setFormErrors(errors);
     }
   };
 
-  const validateField = (name, value) => {
-    const errors = {};
-    if (name === "name" && !/^[a-zA-ZäöüÄÖÜß\s]+$/.test(value)) {
-      errors.name = "Der Name darf nur Buchstaben enthalten.";
+  const validateField = (name, value, currentErrors) => {
+    const errors = { ...currentErrors }; // Копируем текущие ошибки
+
+    // Проверка для поля "name"
+    if (name === "name") {
+      if (value.trim() === "") {
+        errors.name = "Name ist erforderlich.";
+      } else if (!/^[a-zA-ZäöüÄÖÜß\s]+$/.test(value)) {
+        errors.name = "Der Name darf nur Buchstaben enthalten.";
+      } else {
+        delete errors.name; // Убираем ошибку, если данные валидны
+      }
     }
-    if (name === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      errors.email = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+
+    // Проверка для поля "email"
+    if (name === "email") {
+      if (value.trim() === "") {
+        errors.email = "E-Mail ist erforderlich.";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        errors.email = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+      } else {
+        delete errors.email; // Убираем ошибку, если данные валидны
+      }
     }
+
+    // Проверка для поля "message"
+    if (name === "message") {
+      if (value.trim() === "") {
+        errors.message = "Nachricht ist erforderlich.";
+      } else {
+        delete errors.message; // Убираем ошибку, если данные валидны
+      }
+    }
+
     return errors;
   };
 
-  const validateForm = () => {
+  const validateForm = (formData) => {
     const errors = {};
-    if (!formData.name) {
+    if (!formData.name || formData.name.trim() === "") {
       errors.name = "Name ist erforderlich.";
     }
-    if (!formData.email) {
+    if (!formData.email || formData.email.trim() === "") {
       errors.email = "E-Mail ist erforderlich.";
     }
-    if (!/^[^\s@]+@[^\s@]+$/.test(formData.email)) {
-      errors.email = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+    if (!formData.message || formData.message.trim() === "") {
+      errors.message = "Nachricht ist erforderlich.";
     }
     return errors;
   };
@@ -173,9 +201,7 @@ const ContactForm = () => {
                   }`}
                   required
                 />
-                {formErrors.name && (
-                  <p className="text-red-500 text-sm">{formErrors.name}</p>
-                )}
+                {formErrors.name && <p className="text-red-500">{formErrors.name}</p>}
               </div>
 
               <div>
@@ -193,37 +219,40 @@ const ContactForm = () => {
                   }`}
                   required
                 />
-                {formErrors.email && (
-                  <p className="text-red-500 text-sm">{formErrors.email}</p>
-                )}
+                {formErrors.email && <p className="text-red-500">{formErrors.email}</p>}
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-teal-200">
-                  Nachricht
+                  Nachricht <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-4 py-8 rounded-md"
+                  className={`w-full px-4 py-8 rounded-md ${
+                    formErrors.message ? "border-red-500" : "border-transparent"
+                  }`}
                   rows="4"
+                  required
                 ></textarea>
+                {formErrors.message && <p className="text-red-500">{formErrors.message}</p>}
               </div>
 
               <div className="flex items-center">
                 <input
                   type="checkbox"
                   id="datenschutz"
-                  name="datenschutz"
                   checked={isAgreed}
                   onChange={handleCheckboxChange}
-                  className="mr-2"
+                  className={`inline-block w-6 h-6 mr-2 border-2 border-teal-200 rounded ${
+                    isAgreed ? "bg-yellow-400" : "bg-white"
+                  } flex items-center justify-center cursor-pointer`}
                   required
                 />
                 <label htmlFor="datenschutz" className="text-teal-200">
-                  <p className="text-teal-300 ">
+                  <p className="text-teal-300">
                     Ich stimme den Datenschutz zu
                   </p>
                 </label>
