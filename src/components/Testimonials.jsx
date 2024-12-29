@@ -6,14 +6,14 @@ const testimonialsData = [
     name: "Katrin Schneider",
     title: "Hausbesitzerin",
     feedback:
-      "Nach einem Sturmschaden benötigten wir dringend eine Reparatur unseres Dachs. Olidort Bedachungen war sofort zur Stelle und hat die Arbeiten schnell und sauber erledigt. Der Kundenservice war ausgezeichnet, und das Team war sehr freundlich und kompetent.",
+      "Nach einem Sturmschaden benötigten wir dringend eine Reparatur unseres Dachs. Olidort Bedachungen war sofort zur Stelle und hat die Arbeiten schnell und sauber erledigt. ",
     image: "/images/rezension2.png",
   },
   {
     name: "Michael Fischer",
     title: "Architekt",
     feedback:
-      "Als Architekt arbeite ich regelmäßig mit Dachdeckerfirmen zusammen, aber Olidort Bedachungen hebt sich durch ihre Zuverlässigkeit und Präzision ab. Die Zusammenarbeit war reibungslos und das Team hat alle unsere Erwartungen übertroffen.",
+      "Als Architekt arbeite ich regelmäßig mit Dachdeckerfirmen zusammen, aber Olidort Bedachungen hebt sich durch ihre Zuverlässigkeit und Präzision ab. ",
     image: "/images/rezension3.png",
   },
 ];
@@ -42,14 +42,14 @@ const Testimonials = () => {
 
   return (
     <section
-    className="relative h-[90vh] flex items-center justify-center bg-fixed bg-cover bg-center"
+    className="relative h-[120vh] flex items-center justify-center bg-fixed bg-cover bg-center"
     style={{
       backgroundImage: "url('/images/parallax.jpg')",
     }}
     {...swipeHandlers}
   >
     {/* Фон с затемнением */}
-    <div className="absolute inset-0 bg-black bg-opacity-80 filter blur-md"></div>
+    <div className="absolute inset-0 bg-black bg-opacity-80  "></div>
   
     {/* Контент блока */}
     <div className="relative bg-teal-900 bg-opacity-30 backdrop-blur-lg p-4 sm:p-8 rounded-xl shadow-lg max-w-4xl w-full mx-auto text-white">
@@ -61,17 +61,17 @@ const Testimonials = () => {
       {/* Отзыв */}
       <div className="flex flex-col md:flex-row items-center gap-24">
         {/* Изображение пользователя */}
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 ml-10">
           <img
             src={testimonialsData[currentIndex].image}
             alt={testimonialsData[currentIndex].name}
-            className="w-10 h-10 sm:w-14 sm:h-14 md:w-28 md:h-64 rounded-full object-cover "
+            className="w-auto h-auto sm:w-8 sm:h-8 md:w-36 md:h-64 rounded-full object-cover "
           />
         </div>
   
         {/* Текст отзыва */}
         <div className="text-center md:text-left flex-1">
-          <p className="text-base sm:text-lg md:text-xl italic text-gray-300 mb-4">
+          <p className="text-base sm:text-lg md:text-xl italic text-gray-300 mb-2">
             {testimonialsData[currentIndex].feedback}
           </p>
           <h3 className="text-lg sm:text-2xl md:text-3xl font-bold text-teal-400">
