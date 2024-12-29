@@ -17,6 +17,7 @@ const Kostenberechnung = () => {
   const [totalCost, setTotalCost] = useState(0);
   const [selectedArea, setSelectedArea] = useState(1);
   const [isCostCalculated, setIsCostCalculated] = useState(false);
+  const [agreementChecked, setAgreementChecked] = useState(false);
   const [error, setError] = useState("");
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
@@ -336,42 +337,56 @@ const Kostenberechnung = () => {
               <p className="text-gray-600 my-4"></p>
             )}
 
-            {isCostCalculated && (
-              <div className="mt-4">
-                <p className="text-md sm:text-md md:text-2xl text-teal-700 text-right mx-2 my-8">
-                  Ihre geschätzten Kosten betragen:
-                  <span className="text-yellow-600 mx-2 text-bold">
-                    {totalCost.toFixed(2)} €
-                  </span>
-                </p>
+{isCostCalculated && (
+  <div className="mt-4">
+    <p className="text-md sm:text-md md:text-2xl text-teal-700 text-right mx-2 my-8">
+      Ihre geschätzten Kosten betragen:
+      <span className="text-yellow-600 mx-2 font-bold">
+        {totalCost.toFixed(2)} €
+      </span>
+    </p>
 
-                
-                <p className="text-teal-600 mt-4 mx-4">
-                  Wir freuen uns darauf, mit Ihnen zusammenzuarbeiten!
-                </p>
-                <div className="text-sm sm:text-md md:text-xl text-left mt-4 mx-4">
-                  <p className="text-red-600 italic">
-                    *Hinweis: Die berechneten Kosten sind nur eine ungefähre
-                    Schätzung. Für detaillierte Informationen kontaktieren Sie
-                    uns bitte.
-                  </p>
-                </div>
-                <div className="flex justify-center px-4 mt-4">
-                  <button
-                    onClick={() =>
-                      toggleContactModal(
-                        selectedOptionsList,
-                        totalCost.toFixed(2), // Передаем данные в модалку
-                        selectedArea // Передаем площадь в модалку
-                      )
-                    }
-                    className="bg-teal-600 text-white py-2 px-6 rounded-lg hover:bg-teal-700 shimmer-button w-full sm:w-auto md:w-full"
-                  >
-                    Kontakt aufnehmen
-                  </button>
-                </div>
-              </div>
-            )}
+    <p className="text-teal-600 mt-4 mx-4">
+      Wir freuen uns darauf, mit Ihnen zusammenzuarbeiten!
+    </p>
+    
+    <div className="text-sm sm:text-md md:text-xl text-left mt-4 mx-4">
+      
+    </div>
+
+    <div className="flex justify-between mt-4 mx-4">
+      <input
+        type="checkbox"
+        id="agreementCheckbox"
+        onChange={(e) => setAgreementChecked(e.target.checked)}
+        className="mr-2 -mt-6"
+      />
+      <label htmlFor="agreementCheckbox" className="text-teal-600">
+      <p className="text-red-600 italic ">
+        Hinweis: Die berechneten Kosten sind nur eine ungefähre Schätzung. 
+        Für detaillierte Informationen kontaktieren Sie uns bitte.
+      </p>
+      </label>
+    </div>
+
+    <div className="flex justify-center px-4 mt-4">
+      <button
+        onClick={() =>
+          toggleContactModal(
+            selectedOptionsList,
+            totalCost.toFixed(2), 
+            selectedArea 
+          )
+        }
+        className={`bg-teal-600 text-white py-2 px-6 rounded-lg hover:bg-teal-700 shimmer-button w-full sm:w-auto md:w-full ${!agreementChecked ? 'opacity-50 cursor-not-allowed' : ''}`}
+        disabled={!agreementChecked} // Кнопка будет отключена, если чекбокс не отмечен
+      >
+        Kontakt aufnehmen
+      </button>
+    </div>
+  </div>
+)}
+
           </div>
         </div>
       </div>
