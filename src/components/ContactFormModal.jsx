@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import emailjs from "emailjs-com";
 import PropTypes from "prop-types";
 import InputMask from "react-input-mask";
 
-const ContactFormModal = ({ closeModal }) => {
+const ContactFormModal = ({ closeModal, selectedOptionsList, totalCost }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,6 +28,26 @@ const ContactFormModal = ({ closeModal }) => {
       ...prevErrors,
       [name]: fieldErrors[name],
     }));
+  };  
+
+  // Автозаполнение поля "message"
+  useEffect(() => {
+    if (selectedOptionsList && totalCost) {
+      const generatedMessage = generateMessage(selectedOptionsList, totalCost);
+      setFormData((prevData) => ({ ...prevData, message: generatedMessage }));
+    }
+  }, [selectedOptionsList, totalCost]);
+
+  const generateMessage = (options, cost) => {
+    if (!options.length) return "";
+
+    let message = "Ihre ausgewählten Kategorien:\n";
+    options.forEach((option, index) => {
+      message += `${index + 1}. ${option.category}: ${option.option}\n`;
+    });
+    message += `\nGeschätzte Kosten: ${cost} €`;
+
+    return message;
   };
 
   const handleSubmit = async (e) => {
@@ -254,6 +274,8 @@ const ContactFormModal = ({ closeModal }) => {
 
 ContactFormModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
+  selectedOptionsList: PropTypes.array.isRequired,
+  totalCost: PropTypes.string.isRequired,
 };
 
 export default ContactFormModal;

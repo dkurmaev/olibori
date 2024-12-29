@@ -92,6 +92,20 @@ const Kostenberechnung = () => {
 
   const optionsSectionRef = useRef(null);
 
+  const scrollToOptions = () => {
+    optionsSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleSetCategory = (category) => {
+    setCategory(category);
+    scrollToOptions();
+  };
+
+  const infoSectionRef = useRef(null);
+  const scrollToInfoSection = () => {
+    infoSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const handleSubmit = () => {
     const isValid = optionsData.every(
       (section) => selectedOptions[section.name]
@@ -102,6 +116,7 @@ const Kostenberechnung = () => {
     }
 
     setIsCostCalculated(true);
+    scrollToInfoSection();
     setError("");
   };
 
@@ -122,7 +137,7 @@ const Kostenberechnung = () => {
                 ? "bg-teal-600 text-white"
                 : "bg-white text-teal-800 border border-teal-800"
             }`}
-            onClick={() => setCategory("Neubau")}
+            onClick={() => handleSetCategory("Neubau")}
           >
             Neubau
           </button>
@@ -132,10 +147,11 @@ const Kostenberechnung = () => {
                 ? "bg-teal-600 text-white"
                 : "bg-white text-teal-800 border border-teal-800"
             }`}
-            onClick={() => setCategory("Sanierung")}
+            onClick={() => handleSetCategory("Sanierung")}
           >
             Sanierung
           </button>
+
           <button
             onClick={toggleContactModal}
             className="px-4 py-2 w-full sm:w-auto bg-white text-teal-800 border border-teal-800 text-lg font-semibold rounded-lg hover:bg-teal-700 hover:text-white transition"
@@ -151,7 +167,7 @@ const Kostenberechnung = () => {
                 ? "Wählen Sie die Optionen für den Neubau:"
                 : "Wählen Sie die Optionen für die Sanierung:"}
             </h2>
-
+            {error && <p className="text-red-500">{error}</p>}
             <div className="p-6">
               {category === "Sanierung" && (
                 <div className="flex gap-4 justify-center items-center text-xl font-semibold mb-4 text-teal-700">
@@ -223,8 +239,8 @@ const Kostenberechnung = () => {
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-2 gap-4 text-left">
-                <div className="mb-4">
+              <div className="grid grid-cols-2 gap-4 text-left mt-6">
+                <div className="mb-20 ">
                   <label
                     className="block text-teal-700 font-medium mb-2"
                     htmlFor="length"
@@ -262,19 +278,11 @@ const Kostenberechnung = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="my-2 mx-6 text-right">
-              <p className="text-lg text-teal-700 font-semibold">
-                Berechnete Fläche:
-              </p>
-              <p className="text-2xl font-bold text-teal-900">
-                {area.toFixed(2)} m²
-              </p>
-            </div> */}
 
-            <div className="grid grid-cols-2 gap-4 mb-4 mx-6">
+            <div className="grid grid-cols-2 gap-4 mb-8 mx-6 ">
               <button
                 onClick={handleBack}
-                className="bg-gray-400 text-white  py-2 rounded-lg hover:bg-gray-500"
+                className="bg-gray-400 text-white py-2 rounded-lg hover:bg-gray-500"
               >
                 Zurück
               </button>
@@ -286,23 +294,18 @@ const Kostenberechnung = () => {
                 Kosten berechnen
               </button>
             </div>
-
-            {error && <p className="text-red-500">{error}</p>}
           </div>
 
-          <div className="text-left">
+          <div ref={infoSectionRef} className="text-left">
             <h2 className="text-xl font-semibold mb-4 text-teal-700 text-left mx-4 border-b-2 border-gray-400 pb-1">
               Information:
             </h2>
             <p className="text-teal-900 text-lg mx-4">
               Bitte wählen Sie Optionen, um Details anzuzeigen.
-              {/* {category === "Neubau"
-                ? "Für Neubau empfehlen wir, die Energieeffizienz und Langlebigkeit der Materialien zu berücksichtigen."
-                : "Bei der Sanierung ist es wichtig, den Zustand des Daches zu überprüfen und mögliche Schäden zu bewerten."} */}
             </p>
 
             {selectedOptionsList.length > 0 ? (
-              <ul className="list-disc list-inside text-teal-700 mx-5 my-5">
+              <ul className="list-disc list-inside text-teal-700 mx-4 my-5">
                 {selectedOptionsList.map((item, index) => (
                   <li key={index} className="mb-2">
                     <span className="font-bold">{item.category}:</span>{" "}
@@ -317,58 +320,47 @@ const Kostenberechnung = () => {
 
             {isCostCalculated && (
               <div className="mt-4">
-                
-                <p className="text-2xl text-teal-700 text-right mx-2 my-8 ">
+                <p className="text-md sm:text-md md:text-2xl text-teal-700 text-right mx-2 my-8">
                   Ihre geschätzten Kosten betragen:
                   <span className="text-yellow-600 mx-2 text-bold">
                     {totalCost.toFixed(2)} €
                   </span>
                 </p>
-                <p className="text-teal-600 mt-4">
+                <p className="text-teal-600 mt-4 mx-4">
                   Wir freuen uns darauf, mit Ihnen zusammenzuarbeiten!
                 </p>
-                <div className="text-left mt-4">
+                <div className="text-sm sm:text-md md:text-xl text-left mt-4 mx-4">
                   <p className="text-red-600 italic">
-                    Hinweis: Die berechneten Kosten sind nur eine ungefähre
+                    *Hinweis: Die berechneten Kosten sind nur eine ungefähre
                     Schätzung. Für detaillierte Informationen kontaktieren Sie
                     uns bitte.
                   </p>
                 </div>
-                <button
-                  onClick={toggleContactModal}
-                  className="bg-teal-600 text-white py-2 w-full rounded-lg hover:bg-teal-700 shimmer-button mt-4"
-                >
-                  Kontakt aufnehmen
-                </button>
+                <div className="flex justify-center px-4 mt-4">
+                  <button
+                    onClick={() =>
+                      toggleContactModal(
+                        selectedOptionsList,
+                        totalCost.toFixed(2) // Передаем данные в модалку
+                      )
+                    }
+                    className="bg-teal-600 text-white py-2 px-6 rounded-lg hover:bg-teal-700 shimmer-button w-full sm:w-auto md:w-full"
+                  >
+                    Kontakt aufnehmen
+                  </button>
+                </div>
               </div>
             )}
           </div>
-
-          {/* {totalCost > 0 && (
-            <div className="mt-4">
-              <p className="text-2xl text-teal-700 text-left italic">
-                Ihre geschätzten Kosten betragen:{" "}
-                <span className="text-yellow-600">
-                  {totalCost.toFixed(2)} €
-                </span>
-              </p>
-              <p className="text-teal-600 mt-4">
-                Wir freuen uns darauf, mit Ihnen zusammenzuarbeiten!
-              </p>
-              <button
-                onClick={toggleContactModal}
-                className="bg-teal-600 text-white py-2 w-full rounded-lg hover:bg-teal-700 shimmer-button"
-              >
-                Kontakt aufnehmen
-              </button>
-            </div>
-          )} */}
         </div>
       </div>
 
       {/* Modal window */}
       {isContactModalOpen && (
-        <ContactFormModal closeModal={toggleContactModal} />
+        <ContactFormModal 
+        selectedOptionsList={selectedOptionsList}
+        totalCost={totalCost}
+        closeModal={toggleContactModal} />
       )}
     </div>
   );
