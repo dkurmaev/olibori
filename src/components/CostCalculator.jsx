@@ -15,6 +15,7 @@ const Kostenberechnung = () => {
   const [width, setWidth] = useState(1);
   const [area, setArea] = useState(1);
   const [totalCost, setTotalCost] = useState(0);
+  const [selectedArea, setSelectedArea] = useState(1);
   const [isCostCalculated, setIsCostCalculated] = useState(false);
   const [error, setError] = useState("");
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -68,12 +69,18 @@ const Kostenberechnung = () => {
         setWidth(Number(value) || 0);
         setArea(length * (Number(value) || 0));
       }
+      const newArea =
+        type === "length"
+          ? (Number(value) || 0) * width
+          : length * (Number(value) || 0);
+      setArea(newArea);
+      setSelectedArea(newArea);
 
       setTotalCost(
         Object.values(selectedOptions).reduce(
           (sum, opt) => sum + (opt?.cost || 0),
           0
-        ) * area
+        ) * newArea
       );
     }
   };
@@ -82,6 +89,7 @@ const Kostenberechnung = () => {
     setAbrissType("Ohne Abriss");
     setSelectedOptions({});
     setSelectedOptionsList([]);
+    setSelectedArea(1);
     setLength(1);
     setWidth(1);
     setArea(1);
@@ -239,7 +247,7 @@ const Kostenberechnung = () => {
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-2 gap-4 text-left mt-6">
+              <div className="grid grid-cols-2 gap-4 text-left mt-2">
                 <div className="mb-20 ">
                   <label
                     className="block text-teal-700 font-medium mb-2"
@@ -278,8 +286,17 @@ const Kostenberechnung = () => {
                 </div>
               </div>
             </div>
+            {/* Новая строка для отображения выбранной площади */}
+            {selectedArea && (
+                  <p className="text-md sm:text-md md:text-xl text-teal-700 text-right mx-4 my-10">
+                    Ihre ausgewählte Fläche beträgt:
+                    <span className="text-yellow-600 mx-2 text-bold">
+                      {selectedArea} m²
+                    </span>
+                  </p>
+                )}
 
-            <div className="grid grid-cols-2 gap-4 mb-8 mx-6 ">
+            <div className="grid grid-cols-2 gap-4 mb-4 mx-6 ">
               <button
                 onClick={handleBack}
                 className="bg-gray-400 text-white py-2 rounded-lg hover:bg-gray-500"
@@ -326,6 +343,8 @@ const Kostenberechnung = () => {
                     {totalCost.toFixed(2)} €
                   </span>
                 </p>
+
+                
                 <p className="text-teal-600 mt-4 mx-4">
                   Wir freuen uns darauf, mit Ihnen zusammenzuarbeiten!
                 </p>
@@ -341,7 +360,8 @@ const Kostenberechnung = () => {
                     onClick={() =>
                       toggleContactModal(
                         selectedOptionsList,
-                        totalCost.toFixed(2) // Передаем данные в модалку
+                        totalCost.toFixed(2), // Передаем данные в модалку
+                        selectedArea // Передаем площадь в модалку
                       )
                     }
                     className="bg-teal-600 text-white py-2 px-6 rounded-lg hover:bg-teal-700 shimmer-button w-full sm:w-auto md:w-full"
@@ -357,10 +377,11 @@ const Kostenberechnung = () => {
 
       {/* Modal window */}
       {isContactModalOpen && (
-        <ContactFormModal 
-        selectedOptionsList={selectedOptionsList}
-        totalCost={totalCost}
-        closeModal={toggleContactModal} />
+        <ContactFormModal
+          selectedOptionsList={selectedOptionsList}
+          totalCost={totalCost}
+          closeModal={toggleContactModal}
+        />
       )}
     </div>
   );
