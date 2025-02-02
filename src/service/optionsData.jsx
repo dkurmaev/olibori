@@ -26,7 +26,7 @@ export const neubauOptions = [
         name: "S4 + Alu",
         cost: 18,
         description:
-          "Effektive Dampfsperre mit Aluminium-Beschichtung, die hohe Dichtigkeit gewährleistet.",
+          "Effektive Dampfsperre mit Aluminium-Einlage, die Dampfdicht ist.",
       },
       {
         name: "PE-Folie",
@@ -45,7 +45,7 @@ export const neubauOptions = [
         name: "EPS",
         cost: 35,
         description:
-          "Günstige und effektive Dämmung mit guten Wärmedämmeigenschaften.",
+          "Effektive Dämmung mit guten Wärmedämmeigenschaften.",
       },
       {
         name: "PIR",
@@ -55,7 +55,7 @@ export const neubauOptions = [
       {
         name: "Steinwolle",
         cost: 35,
-        description: "Robustes und nicht brennbares Material, kostengünstig.",
+        description: "Robustes und nicht brennbares Material.",
       },
     ],
   },
@@ -98,14 +98,14 @@ export const ohneAbrissOptions = [
     description: "Komplette Neueindeckung mit Materialien Ihrer Wahl.",
     options: [
       {
-        name: "300 г/м² Vlies",
+        name: "300 g/m² Vlies",
         cost: 4,
-        description: "Klassischer und langlebiger Werkstoff.",
+        description: "Kostengünstige und langlebiger Trennlage.",
       },
       {
         name: "Sanierungsdämmung A1",
         cost: 8.5,
-        description: "Günstiger als Ton, ähnliche Optik.",
+        description: "Hoch verdichtete, sehr harte und dünne Sanierungsdämmplatte aus Steinwolle.",
       },
       
     ],
@@ -121,7 +121,7 @@ export const ohneAbrissOptions = [
         description: "Flexibel, langlebig und für viele Dacharten geeignet.",
       },
       {
-        name: "TPO",
+        name: "FPO",
         cost: 40,
         description: "Umweltfreundlicher und UV-beständiger als PVC.",
       },
@@ -169,7 +169,7 @@ export const mitAbrissOptions = [
         name: "S4 + Alu",
         cost: 10,
         description:
-          "Effektive Dampfsperre mit Aluminium-Beschichtung, die hohe Dichtigkeit gewährleistet.",
+          "Effektive Dampfsperre mit Aluminium-Einlage, die Dampfdicht ist.",
       },
       {
         name: "PE-Folie",
@@ -198,7 +198,7 @@ export const mitAbrissOptions = [
       {
         name: "Steinwolle",
         cost: 20,
-        description: "Robustes und nicht brennbares Material, kostengünstig.",
+        description: "Robustes und nicht brennbares Material.",
       },
     ],
   },
@@ -214,7 +214,7 @@ export const mitAbrissOptions = [
         description: "Flexibel, langlebig und für viele Dacharten geeignet.",
       },
       {
-        name: "TPO",
+        name: "FPO",
         cost: 40,
         description: "Umweltfreundlicher und UV-beständiger als PVC.",
       },

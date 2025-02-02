@@ -27,12 +27,13 @@ const Home = () => {
         <UnsereEtappen />
         <ParallaxSection />
         <UnsereDienstleistungen />
+        <References />
         <CostCalculator />
         <OurWorks />
         <Testimonials />
-        <Lieferanten />
-        <References />
         <AboutUs />
+        <Lieferanten />        
+        
         <ContactForm />
       </main>
       <Footer />

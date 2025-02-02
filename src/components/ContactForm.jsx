@@ -147,7 +147,7 @@ const ContactForm = () => {
               <strong>Telefon:</strong> +49 157 300 50 570
             </p>
             <p className="mb-4 text-teal-200">
-              <strong>E-Mail:</strong> olidort.b@gmail.com
+              <strong>E-Mail:</strong> info@bedachungen.olidort.de
             </p>
             {/* Карта с использованием Leaflet */}
             <LeafletMap />

@@ -132,7 +132,7 @@ const Services = () => {
     >
       <div className="container mx-auto">
         <div className="text-center mb-8">
-          <h2 className="text-3xl sm:text-5xl font-bold uppercase text-gray-800 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
+          <h2 className="text-3xl sm:text-5xl font-bold uppercase text-gray-800 tracking-wider mb-12 border-b-2 border-yellow-400 inline-block pb-1">
             Unsere Dienstleistungen
           </h2>
           <div className="flex justify-center items-center relative group">

@@ -1,19 +1,20 @@
 import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
+import { motion, AnimatePresence } from "framer-motion";
 
 const testimonialsData = [
   {
-    name: "Katrin Schneider",
-    title: "Hausbesitzerin",
+    name: "HOLZ-GROSS GmbH",
+    title: "Import & Export",
     feedback:
-      "Nach einem Sturmschaden benötigten wir dringend eine Reparatur unseres Dachs. Olidort Bedachungen war sofort zur Stelle und hat die Arbeiten schnell und sauber erledigt. ",
+      "Die Flachdachsanierung wurde fachgerecht, pünktlich und mit höchster Sorgfalt durchgeführt. Ein Meisterbetrieb, den wir uneingeschränkt weiterempfehlen können!",
     image: "/images/rezension2.png",
   },
   {
-    name: "Michael Fischer",
-    title: "Architekt",
+    name: "bauSpezi",
+    title: "Baumarkt-Systems",
     feedback:
-      "Als Architekt arbeite ich regelmäßig mit Dachdeckerfirmen zusammen, aber Olidort Bedachungen hebt sich durch ihre Zuverlässigkeit und Präzision ab. ",
+      "Die Arbeit wurde schnell, sauber und äußerst präzise erledigt. Ein vertrauenswürdiger Dachdecker-Meisterbetrieb, den wir jederzeit wieder beauftragen würden.",
     image: "/images/rezension3.png",
   },
 ];
@@ -42,73 +43,68 @@ const Testimonials = () => {
 
   return (
     <section
-    className="relative h-[120vh] flex items-center justify-center bg-fixed bg-cover bg-center"
-    style={{
-      backgroundImage: "url('/images/parallax.jpg')",
-    }}
-    {...swipeHandlers}
-  >
-    {/* Фон с затемнением */}
-    <div className="absolute inset-0 bg-black bg-opacity-80  "></div>
-  
-    {/* Контент блока */}
-    <div className="relative bg-teal-900 bg-opacity-30 backdrop-blur-lg p-4 sm:p-8 rounded-xl shadow-lg max-w-4xl w-full mx-auto text-white">
-      {/* Заголовок */}
-      <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl text-center my-8 tracking-wider font-heading font-bold text-gray-200 uppercase border-b-2 border-teal-400 pb-1">
-        Rezensionen 
-      </h2>
-  
-      {/* Отзыв */}
-      <div className="flex flex-col md:flex-row items-center gap-24">
-        {/* Изображение пользователя */}
-        <div className="flex-shrink-0 ml-10">
-          <img
-            src={testimonialsData[currentIndex].image}
-            alt={testimonialsData[currentIndex].name}
-            className="w-auto h-auto sm:w-8 sm:h-8 md:w-36 md:h-64 rounded-full object-cover "
-          />
-        </div>
-  
-        {/* Текст отзыва */}
-        <div className="text-center md:text-left flex-1">
-          <p className="text-base sm:text-lg md:text-xl italic text-gray-300 mb-2">
-            {testimonialsData[currentIndex].feedback}
-          </p>
-          <h3 className="text-lg sm:text-2xl md:text-3xl font-bold text-teal-400">
-            {testimonialsData[currentIndex].name}
-          </h3>
-          <p className="text-yellow-400 text-sm sm:text-lg">
-            {testimonialsData[currentIndex].title}
-          </p>
-        </div>
-      </div>
-  
-      {/* Индикаторы */}
-      <div className="flex justify-center items-center gap-2 mt-6">
-        {testimonialsData.map((_, idx) => (
-          <div
-            key={idx}
-            onClick={() => setCurrentIndex(idx)}
-            className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full cursor-pointer transition ${
-              idx === currentIndex
-                ? "bg-teal-400 transform scale-125"
-                : "bg-gray-500"
-            }`}
-          ></div>
-        ))}
-      </div>
-  
-      {/* Кнопки навигации */}
-      <div className="absolute top-1/2 left-2 transform -translate-y-1/2 cursor-pointer text-teal-400 hover:text-teal-300 text-xl sm:text-2xl">
-        <button onClick={prevSlide}>&#8249;</button>
-      </div>
-      <div className="absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer text-teal-400 hover:text-teal-300 text-xl sm:text-2xl">
-        <button onClick={nextSlide}>&#8250;</button>
-      </div>
-    </div>
-  </section>
-  
+      className="relative h-[80vh] flex items-center justify-center bg-fixed bg-cover bg-center"
+      style={{
+        backgroundImage: "url('/images/parallax.jpg')",
+      }}
+    >
+      {/* Затемнение фона */}
+      <div className="absolute inset-0 bg-black bg-opacity-80"></div>
 
+      {/* Контейнер с отзывом */}
+      <div className="relative bg-teal-900 bg-opacity-30 backdrop-blur-lg p-4 sm:p-8 rounded-xl shadow-lg max-w-3xl w-full mx-auto text-white">
+        <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl text-center my-8 tracking-wider font-heading font-bold text-gray-200 uppercase border-b-2 border-teal-400 pb-1">
+          Rezensionen
+        </h2>
+
+        {/* Отзыв с анимацией */}
+        <div {...swipeHandlers}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 50 }}
+              transition={{ duration: 0.5 }}
+              className="text-center mx-auto md:text-center"
+            >
+              <p className="text-base my-4 sm:text-lg md:text-xl italic text-gray-300 mb-4">
+                {testimonialsData[currentIndex].feedback}
+              </p>
+              <h3 className="text-lg mt-8 text-right sm:text-2xl md:text-3xl font-bold text-teal-400">
+                {testimonialsData[currentIndex].name}
+              </h3>
+              <p className="text-yellow-400 text-right text-sm sm:text-lg">
+                {testimonialsData[currentIndex].title}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <div className="flex justify-center items-center gap-4 mt-16">
+          <button
+            onClick={prevSlide}
+            className="absolute left-8 sm:left-8 md:left-8 lg:left-8  transform -translate-y-1/2 "
+          >
+            <img
+              src="/images/left-arrow.gif"
+              alt="left"
+              className="w-12 h-12"
+            />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-8 sm:right-8 md:right-8 lg:right-8 transform -translate-y-1/2 "
+          >
+            <img
+              src="/images/right-arrow.gif"
+              alt="right"
+              className="w-12 h-12"
+            />
+          </button>
+        </div>
+      </div>
+    </section>
   );
 };
 

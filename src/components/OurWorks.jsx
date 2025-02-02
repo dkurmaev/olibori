@@ -94,8 +94,8 @@ const OurWorks = () => {
   return (
     <section id="works" className="py-16 bg-gray-400 inset-0  bg-opacity-100">
       <div className="container mx-auto my-4  py-8 text-center">
-        <h2 className="text-xl md:text-5xl sm:text-2xl font-bold uppercase text-gray-800 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
-          Unsere Flachdachlösungen:
+        <h2 className="text-xl md:text-5xl sm:text-2xl font-bold uppercase text-gray-800 tracking-wider mb-12 border-b-2 border-yellow-400 inline-block pb-1">
+          Unsere Flachdachlösungen
         </h2>
         <div
           className="relative mt-10 overflow-hidden"
