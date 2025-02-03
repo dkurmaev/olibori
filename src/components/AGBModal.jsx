@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';  // Импортируем ReactDOM для создания порталов
+import ReactDOM from 'react-dom';  
 
 const AGBModal = ({ isOpen, onClose }) => {
     const [isScrollEnd, setIsScrollEnd] = useState(false);
