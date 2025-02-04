@@ -1,8 +1,19 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { createHtmlPlugin } from 'vite-plugin-html';
+import sitemap from 'vite-plugin-sitemap';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    createHtmlPlugin(),
+    sitemap({
+      hostname: 'https://bedachungen.olidort.de', // Домен сайта
+      outDir: 'dist', // Куда сохраняется карта сайта
+      changefreq: 'weekly', // Частота обновления
+      priority: 0.8, // Приоритет страниц
+    }),
+  ],
   build: {
     rollupOptions: {
       output: {
@@ -14,4 +25,5 @@ export default defineConfig({
       },
     },
   },
+
 });

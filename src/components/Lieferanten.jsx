@@ -29,16 +29,27 @@ const Lieferanten = () => {
   return (
     <section className="py-16 bg-gray-400">
       <div className="container mx-auto text-center px-6">
-        <h2 className="text-xl md:text-5xl font-bold uppercase text-gray-800 mb-12">
+        <h2 className="text-xl md:text-5xl sm:text-2xl font-bold uppercase text-gray-800 tracking-wider mb-12 border-b-2 border-yellow-400 inline-block pb-1">
           Unser Partner
         </h2>
+
+        <h2 className="text-2xl sm:text-3xl md:text-6xl lg:text-6xl my-8 font-heading font-bold text-gray-500 uppercase border-b-2 border-teal-400 pb-1"></h2>
+
         <div ref={sliderRef} className="keen-slider my-16">
           {sliderImages.map((image) => (
-            <div key={image.id} className="keen-slider__slide">
-              <img src={image.src} alt={image.alt} />
+            <div 
+            key={image.id} 
+            className="keen-slider__slide flex justify-center items-center"
+            >
+              <img 
+              src={image.src} 
+              alt={image.alt}
+              className="h-20 sm:h-24 md:h-28 lg:h-32 object-contain"
+               />
             </div>
           ))}
         </div>
+        <h2 className="text-2xl sm:text-3xl md:text-6xl lg:text-6xl my-8 font-heading font-bold text-gray-500 uppercase border-b-2 border-teal-400 pb-1"></h2>
       </div>
     </section>
   );
