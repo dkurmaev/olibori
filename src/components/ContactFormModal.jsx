@@ -3,7 +3,12 @@ import emailjs from "emailjs-com";
 import PropTypes from "prop-types";
 import InputMask from "react-input-mask";
 
-const ContactFormModal = ({ closeModal, selectedOptionsList, totalCost, selectedArea }) => {
+const ContactFormModal = ({
+  closeModal,
+  selectedOptionsList,
+  totalCost,
+  selectedArea,
+}) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,10 +19,10 @@ const ContactFormModal = ({ closeModal, selectedOptionsList, totalCost, selected
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formErrors, setFormErrors] = useState({});
-  // const [selectedArea, setSelectedArea] = useState(""); // Define selectedArea
 
   const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  const userTemplateId = import.meta.env.VITE_EMAILJS_USER_TEMPLATE_ID;
+  const adminTemplateId = import.meta.env.VITE_EMAILJS_ADMIN_TEMPLATE_ID;
   const userId = import.meta.env.VITE_EMAILJS_USER_ID;
 
   const handleChange = (e) => {
@@ -29,31 +34,32 @@ const ContactFormModal = ({ closeModal, selectedOptionsList, totalCost, selected
       ...prevErrors,
       [name]: fieldErrors[name],
     }));
-  };  
+  };
 
-  // Автозаполнение поля "message"
-useEffect(() => {
-  if (selectedOptionsList && totalCost) {
-    const generatedMessage = generateMessage(selectedOptionsList, totalCost, selectedArea); // Передаем selectedArea
-    setFormData((prevData) => ({ ...prevData, message: generatedMessage }));
-  }
-}, [selectedOptionsList, totalCost, selectedArea]); // Добавляем selectedArea в зависимости
+  useEffect(() => {
+    if (selectedOptionsList && totalCost) {
+      const generatedMessage = generateMessage(
+        selectedOptionsList,
+        totalCost,
+        selectedArea
+      );
+      setFormData((prevData) => ({ ...prevData, message: generatedMessage }));
+    }
+  }, [selectedOptionsList, totalCost, selectedArea]);
 
-const generateMessage = (options, cost, area) => { // Добавляем area как параметр
-  let message = "Ihre ausgewählten Kategorien:\n";
-  options.forEach((option, index) => {
-    message += `${index + 1}. ${option.category}: ${option.option}\n`;
-  });
-  message += `\nGeschätzte Kosten: ${cost} €\n`;
+  const generateMessage = (options, cost, area) => {
+    let message = `Ihre ausgewählten Kategorien:\n`;
+    options.forEach((option, index) => {
+      message += `${index + 1}. ${option.category}: ${option.option}\n`;
+    });
+    message += `\nGeschätzte Kosten: ${cost} €\n`;
 
-  // Добавляем информацию о площади, если она задана
-  if (area) {
-    message += `Ausgewählte Fläche: ${area} m²\n`;
-  }
+    if (area) {
+      message += `Ausgewählte Fläche: ${area} m²\n`;
+    }
 
-  return message;
-};
-
+    return message;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,15 +79,52 @@ const generateMessage = (options, cost, area) => { // Добавляем area к
       setIsError(false);
 
       try {
-        await emailjs.send(serviceId, templateId, formData, userId);
+        // Письмо пользователю
+        await emailjs.send(
+          serviceId,
+          userTemplateId,
+          {
+            from_name: formData.name,
+            to_email: formData.email, 
+            message: formData.message,
+          },
+          userId
+        );
+
+        // Письмо администратору
+        await emailjs.send(
+          serviceId,
+          adminTemplateId,
+          {
+            from_name: formData.name,
+            email: formData.email, 
+            phone: formData.phone, 
+            message: formData.message, 
+          },
+          userId
+        );
+
         setIsSubmitted(true);
         setFormData({ name: "", email: "", phone: "", message: "" });
       } catch (error) {
-        console.error("Ошибка отправки формы: ", error);
+        console.error("Fehler beim Senden:", error);
         setIsError(true);
       } finally {
         setIsLoading(false);
       }
+
+      console.log("User Template Params:", {
+        from_name: formData.name,
+        to_email: formData.email,
+        message: formData.message,
+      });
+
+      console.log("Admin Template Params:", {
+        from_name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+      });
     }
   };
 
@@ -118,7 +161,8 @@ const generateMessage = (options, cost, area) => { // Добавляем area к
 
         const domainParts = domain.split(".");
         if (domainParts.some((part) => part.length === 1)) {
-          errors.email = "Jede Domain-Stufe muss mehr als einen Buchstaben enthalten.";
+          errors.email =
+            "Jede Domain-Stufe muss mehr als einen Buchstaben enthalten.";
         }
       }
     }
@@ -151,7 +195,9 @@ const generateMessage = (options, cost, area) => { // Добавляем area к
         >
           <img src="/images/close-icon.gif" alt="close" className="w-16 h-16" />
         </button>
-        <h2 className="text-3xl font-bold mb-6 text-center text-teal-900">Kontaktformular</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-teal-900">
+          Kontaktformular
+        </h2>
 
         {isSubmitted && (
           <div className="mb-6 p-4 bg-green-100 text-green-800 rounded-lg text-center">
