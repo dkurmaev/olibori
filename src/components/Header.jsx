@@ -34,9 +34,10 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full p-4 z-20 py-4 shadow-2xl bg-gray-400 backdrop-blur-xl transition-all duration-500  ${
-        scrolled ? "bg-opacity-200" : "bg-opacity-10"
+      className={`fixed top-0 left-0 w-full p-4 z-20 py-4 shadow-2xl bg-gray-400 backdrop-blur-xl transition-all duration-500 ${
+        scrolled ? "bg-opacity-20" : "bg-opacity-10"
       }`}
+      style={{ height: window.innerWidth >= 768 ? 96 : 80 }}
     >
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
@@ -145,18 +146,20 @@ const Header = () => {
               Dienstleistungen
             </a>
 
-            <a 
-            href="#flachdach" 
-            className="text-white hover:text-secondary border-b border-gray-200 py-2"
-            onClick={toggleMenu}
+            <a
+              href="#flachdach"
+              className="text-white hover:text-secondary border-b border-gray-200 py-2"
+              onClick={toggleMenu}
             >
-              Flachdachlösungen</a>
+              Flachdachlösungen
+            </a>
             <a
               href="#before-after-slider"
               className="text-white hover:text-secondary border-b border-gray-200 py-2"
               onClick={toggleMenu}
             >
-              Vorher / Nachher</a>
+              Vorher / Nachher
+            </a>
             <a
               href="#cost-calculator"
               className="text-white hover:text-secondary border-b border-gray-200 py-2"

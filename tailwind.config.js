@@ -1,5 +1,13 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  safelist: [
+   // полупрозрачные бейджи и hover-эффекты
+    'bg-emerald-600/90','bg-emerald-600/30','bg-slate-900/80','bg-slate-900/30',
+    'group-hover:opacity-0','group-hover:opacity-100','group-hover:scale-105',
+     // заголовки/скролл-отступ
+    'scroll-mt-24','border-b','border-yellow-400'
+    ],
+
   theme: {
     extend: {
       screens: {

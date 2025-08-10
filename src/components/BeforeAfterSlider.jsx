@@ -1,8 +1,59 @@
-import React, { useEffect, useMemo, useState, useRef } from "react";
-
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+  useCallback,
+} from "react";
 import PropTypes from "prop-types";
 
-/** ДАННЫЕ — подставь свои кейсы */
+// Улучшенный компонент ImageSmart с PropTypes и используемый в коде
+function ImageSmart({
+  src,
+  alt,
+  className = "",
+  mode = "cover",
+  w = 800,
+  h = 600,
+}) {
+  const base = `${src}${src.includes("?") ? "&" : "?"}auto=format&fit=crop`;
+  const classes = `${className} ${
+    mode === "cover" ? "object-cover" : "object-contain"
+  }`.trim();
+
+  return (
+    <img
+      src={`${base}&w=${w}&q=70`}
+      srcSet={`
+        ${base}&w=480&q=60 480w,
+        ${base}&w=800&q=70 800w,
+        ${base}&w=1200&q=70 1200w
+      `}
+      sizes="(max-width: 768px) 100vw, 33vw"
+      width={w}
+      height={h}
+      loading="lazy"
+      decoding="async"
+      alt={alt}
+      className={classes}
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = "/images/placeholder.jpg";
+      }}
+    />
+  );
+}
+
+ImageSmart.propTypes = {
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  mode: PropTypes.oneOf(["cover", "contain"]),
+  w: PropTypes.number,
+  h: PropTypes.number,
+};
+
+// Уникальные данные без дублирования
 const items = [
   {
     before: "/images/projekte/project1-before.jpg",
@@ -26,130 +77,141 @@ const items = [
     year: "2024",
   },
   {
-    before: "/images/projekte/project1-before.jpg",
-    after: "/images/projekte/project1-after.jpg",
-    title: "Flachdach-Sanierung",
-    location: "Düsseldorf",
-    year: "2024",
-  },
-  {
-    before: "/images/projekte/project2-before.jpg",
-    after: "/images/projekte/project2-after.jpg",
-    title: "Komplettumbau",
-    location: "Köln",
+    before: "/images/projekte/project4-before.jpg",
+    after: "/images/projekte/project4-after.jpg",
+    title: "Fassadenrenovierung",
+    location: "Berlin",
     year: "2023",
   },
   {
-    before: "/images/projekte/project3-before.jpg",
-    after: "/images/projekte/project3-after.jpg",
-    title: "Dachsanierung",
-    location: "Essen",
+    before: "/images/projekte/project5-before.jpg",
+    after: "/images/projekte/project5-after.jpg",
+    title: "Dachstuhlsanierung",
+    location: "Hamburg",
     year: "2024",
+  },
+  {
+    before: "/images/projekte/project6-before.jpg",
+    after: "/images/projekte/project6-after.jpg",
+    title: "Komplettsanierung",
+    location: "München",
+    year: "2023",
   },
 ];
 
-/* ===== Карточка на странице (hover/tap) ===== */
+function CardSkeleton() {
+  return (
+    <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-slate-200 to-slate-100" />
+  );
+}
 
 function BeforeAfterCard({ item, isMobile, onOpen }) {
   const [tapped, setTapped] = useState(false);
   const [afterPreloaded, setAfterPreloaded] = useState(false);
   const [loadedBefore, setLoadedBefore] = useState(false);
   const [loadedAfter, setLoadedAfter] = useState(false);
+  const [errorBefore, setErrorBefore] = useState(false);
+  const [errorAfter, setErrorAfter] = useState(false);
 
   const showAfter = isMobile ? tapped : false;
-  const toggle = () => isMobile && setTapped((v) => !v);
+
+  const toggle = useCallback(
+    () => isMobile && setTapped((v) => !v),
+    [isMobile]
+  );
+  const handleOpen = useCallback(
+    (e) => {
+      e?.stopPropagation();
+      onOpen?.();
+    },
+    [onOpen]
+  );
 
   // Прелоад "после" при первом наведении
-  const handleMouseEnter = () => {
-    if (!afterPreloaded) {
+  const handleMouseEnter = useCallback(() => {
+    if (!afterPreloaded && !errorAfter) {
       const img = new Image();
       img.src = item.after;
       img.onload = () => setAfterPreloaded(true);
+      img.onerror = () => setErrorAfter(true);
     }
-  };
-  BeforeAfterCard.propTypes = {
-    item: PropTypes.shape({
-      before: PropTypes.string.isRequired,
-      after: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      location: PropTypes.string.isRequired,
-      year: PropTypes.string.isRequired,
-    }).isRequired,
-    isMobile: PropTypes.bool.isRequired,
-    onOpen: PropTypes.func,
-  };
+  }, [afterPreloaded, errorAfter, item.after]);
+
   return (
     <div
       className="relative group rounded-lg border border-gray-200 shadow-lg overflow-hidden cursor-pointer bg-white"
       style={{ aspectRatio: "4 / 3" }}
       onMouseEnter={handleMouseEnter}
       onClick={toggle}
-      onDoubleClick={(e) => {
-        e.stopPropagation();
-        onOpen?.();
-      }}
+      onDoubleClick={handleOpen}
+      aria-label={`Vorher/Nachher Vergleich: ${item.title}`}
+      role="button"
+      tabIndex={0}
       title="Doppelklick für Vollbild"
     >
       {/* BEFORE */}
-      {!loadedBefore && <CardSkeleton />}
-      <img
-        src={item.before}
-        alt="Vorher"
+      {(!loadedBefore || errorBefore) && <CardSkeleton />}
+      <ImageSmart
+        src={errorBefore ? "/images/placeholder.jpg" : item.before}
+        alt={`Vorher: ${item.title}`}
         onLoad={() => setLoadedBefore(true)}
-        className={
-          "absolute inset-0 w-full h-full object-cover transition-all duration-500 " +
-          (showAfter
+        onError={() => setErrorBefore(true)}
+        className={`absolute inset-0 w-full h-full transition-all duration-500 ${
+          showAfter
             ? "opacity-0 scale-100"
-            : "opacity-100 group-hover:opacity-0 group-hover:scale-105")
-        }
-        loading="lazy"
-        decoding="async"
+            : "opacity-100 group-hover:opacity-0 group-hover:scale-105"
+        }`}
+        mode="cover"
       />
 
       {/* AFTER */}
-      {!loadedAfter && showAfter && <CardSkeleton />}
-      <img
-        src={item.after}
-        alt="Nachher"
-        onLoad={() => setLoadedAfter(true)}
-        className={
-          "absolute inset-0 w-full h-full object-cover transition-all duration-500 " +
-          (showAfter
-            ? "opacity-100 scale-105"
-            : "opacity-0 group-hover:opacity-100 group-hover:scale-105")
-        }
-        loading="lazy"
-        decoding="async"
-      />
+      {(!loadedAfter || errorAfter) && showAfter && <CardSkeleton />}
+      {(!errorAfter || errorBefore) && (
+        <ImageSmart
+          src={errorAfter ? "/images/placeholder.jpg" : item.after}
+          alt={`Nachher: ${item.title}`}
+          onLoad={() => setLoadedAfter(true)}
+          onError={() => setErrorAfter(true)}
+          className={`absolute inset-0 w-full h-full transition-all duration-500 ${
+            showAfter
+              ? "opacity-100 scale-105"
+              : "opacity-0 group-hover:opacity-100 group-hover:scale-105"
+          }`}
+          mode="cover"
+        />
+      )}
 
       {/* Бейджи */}
       <div
-        className={
-          "absolute top-2 left-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur " +
-          (isMobile
+        className={`absolute top-2 left-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur transition-colors ${
+          isMobile
             ? tapped
               ? "bg-slate-900/30 text-white/50"
               : "bg-slate-900/80 text-white"
-            : "bg-slate-900/80 text-white group-hover:bg-slate-900/30 group-hover:text-white/50")
-        }
+            : "bg-slate-900/80 text-white group-hover:bg-slate-900/30 group-hover:text-white/50"
+        }`}
+        aria-hidden="true"
       >
         VORHER
       </div>
       <div
-        className={
-          "absolute top-2 right-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur " +
-          (isMobile
+        className={`absolute top-2 right-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur transition-colors ${
+          isMobile
             ? tapped
               ? "bg-emerald-600/90 text-white"
               : "bg-emerald-600/30 text-white/60"
-            : "bg-emerald-600/30 text-white/60 group-hover:bg-emerald-600/90 group-hover:text-white")
-        }
+            : "bg-emerald-600/30 text-white/60 group-hover:bg-emerald-600/90 group-hover:text-white"
+        }`}
+        aria-hidden="true"
       >
         NACHHER
       </div>
 
       {/* Хинт */}
-      <div className="absolute bottom-10 right-2 bg-white/85 text-[11px] px-2 py-[3px] rounded shadow text-gray-800 font-medium pointer-events-none">
+      <div
+        className="absolute bottom-10 right-2 bg-white/85 text-[11px] px-2 py-[3px] rounded shadow text-gray-800 font-medium pointer-events-none"
+        aria-hidden="true"
+      >
         {isMobile
           ? "👆 Tippen (Doppeltipp: Vollbild)"
           : "🖱️ Hover • Doppelklick: Vollbild"}
@@ -164,11 +226,9 @@ function BeforeAfterCard({ item, isMobile, onOpen }) {
       {isMobile && (
         <button
           type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onOpen?.();
-          }}
+          onClick={handleOpen}
           className="absolute left-2 bottom-2 text-xs bg-white/90 text-gray-800 px-2 py-1 rounded shadow"
+          aria-label="Vollbildmodus öffnen"
         >
           Vollbild
         </button>
@@ -177,62 +237,67 @@ function BeforeAfterCard({ item, isMobile, onOpen }) {
   );
 }
 
-function CardSkeleton() {
-  return (
-    <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-slate-200 to-slate-100" />
-  );
-}
+BeforeAfterCard.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    before: PropTypes.string.isRequired,
+    after: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    year: PropTypes.string.isRequired,
+  }).isRequired,
+  isMobile: PropTypes.bool.isRequired,
+  onOpen: PropTypes.func,
+};
 
-/* ===== Свой слайдер (без зависимостей) ===== */
-function SimpleSlider({
-  children,
-  slidesPerViewDesktop = 3,
-  auto = true,
-  intervalMs = 10555,
-}) {
-  SimpleSlider.propTypes = {
-    children: PropTypes.node.isRequired,
-    slidesPerViewDesktop: PropTypes.number,
-    auto: PropTypes.bool,
-    intervalMs: PropTypes.number,
-  };
+function SimpleSlider({ children, slidesPerViewDesktop = 3 }) {
+  // Убраны параметры auto и intervalMs
   const slides = useMemo(() => React.Children.toArray(children), [children]);
   const [isMobile, setIsMobile] = useState(false);
   const [index, setIndex] = useState(0);
+
+  // Убрана логика авто-прокрутки
+  const checkMobile = useCallback(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  useEffect(() => {
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, [checkMobile]);
 
   const k = isMobile ? 1 : slidesPerViewDesktop;
   const total = slides.length;
   const maxIndex = Math.max(0, total - k);
 
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  useEffect(() => {
-    if (!auto || total <= k) return;
-    const t = setInterval(
-      () => setIndex((i) => (i >= maxIndex ? 0 : i + 1)),
-      intervalMs
-    );
-    return () => clearInterval(t);
-  }, [auto, intervalMs, total, k, maxIndex]);
-
   const trackWidthPct = (total * 100) / k;
   const oneSlidePct = (100 / total) * k;
   const translatePct = (index * 100) / total;
+
+  const goPrev = useCallback(() => {
+    setIndex((i) => Math.max(0, i - 1));
+  }, []);
+
+  const goNext = useCallback(() => {
+    setIndex((i) => Math.min(maxIndex, i + 1));
+  }, [maxIndex]);
+
+  const goToSlide = useCallback((i) => {
+    setIndex(i);
+  }, []);
 
   return (
     <div className="relative" role="region" aria-label="Galerie Vorher/Nachher">
       <div className="overflow-hidden">
         <div
-          className="flex transition-transform duration-500 ease-in-out"
+          className="flex"
           style={{
             width: `${trackWidthPct}%`,
             transform: `translateX(-${translatePct}%)`,
+            transition: "none", // Отключаем анимацию
           }}
+          aria-live="polite"
         >
           {slides.map((child, i) => (
             <div
@@ -250,11 +315,10 @@ function SimpleSlider({
       {maxIndex > 0 && (
         <>
           <button
-            onClick={() => setIndex((i) => Math.max(0, i - 1))}
+            onClick={goPrev}
             disabled={index === 0}
-            className="absolute top-1/2 -translate-y-1/2 -left-4 z-10 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-            aria-label="Zurück"
-            title="Zurück"
+            className="absolute top-1/2 -translate-y-1/2 -left-4 z-10 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Vorheriges Bild"
           >
             <svg
               className="w-5 h-5 text-gray-800"
@@ -271,11 +335,10 @@ function SimpleSlider({
             </svg>
           </button>
           <button
-            onClick={() => setIndex((i) => Math.min(maxIndex, i + 1))}
+            onClick={goNext}
             disabled={index === maxIndex}
-            className="absolute top-1/2 -translate-y-1/2 -right-4 z-10 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-            aria-label="Weiter"
-            title="Weiter"
+            className="absolute top-1/2 -translate-y-1/2 -right-4 z-10 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Nächstes Bild"
           >
             <svg
               className="w-5 h-5 text-gray-800"
@@ -296,21 +359,15 @@ function SimpleSlider({
 
       {/* Точки */}
       {maxIndex > 0 && (
-        <div
-          className="flex justify-center mt-6 space-x-2"
-          aria-label="Pagination"
-        >
+        <div className="flex justify-center mt-6 space-x-2">
           {Array.from({ length: maxIndex + 1 }, (_, i) => (
             <button
               key={i}
-              onClick={() => setIndex(i)}
-              className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                i === index
-                  ? "bg-yellow-400 scale-125"
-                  : "bg-gray-300 hover:bg-gray-400"
+              onClick={() => goToSlide(i)}
+              className={`w-2 h-2 rounded-full ${
+                i === index ? "bg-yellow-400" : "bg-gray-300 hover:bg-gray-400"
               }`}
               aria-label={`Gehe zu Slide ${i + 1}`}
-              title={`Slide ${i + 1}`}
             />
           ))}
         </div>
@@ -319,72 +376,92 @@ function SimpleSlider({
   );
 }
 
-/* ===== Модалка с ползунком (Before/After Divider) ===== */
+SimpleSlider.propTypes = {
+  children: PropTypes.node.isRequired,
+  slidesPerViewDesktop: PropTypes.number,
+};
+
 function BeforeAfterModal({ items, startIndex, onClose }) {
   const [idx, setIdx] = useState(startIndex);
   const [divider, setDivider] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef(null);
   const [mounted, setMounted] = useState(false);
+  const animationRef = useRef();
 
-  // Prop Types
-  BeforeAfterModal.propTypes = {
-    items: PropTypes.arrayOf(
-      PropTypes.shape({
-        before: PropTypes.string.isRequired,
-        after: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        location: PropTypes.string.isRequired,
-        year: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    startIndex: PropTypes.number.isRequired,
-    onClose: PropTypes.func.isRequired,
-  };
+  const item = items[idx];
 
   // Навигация
-  const prev = () => {
+  const prev = useCallback(() => {
     setIdx((i) => (i - 1 + items.length) % items.length);
     setDivider(50);
-  };
+  }, [items.length]);
 
-  const next = () => {
+  const next = useCallback(() => {
     setIdx((i) => (i + 1) % items.length);
     setDivider(50);
-  };
+  }, [items.length]);
 
   // Обновление позиции ползунка
-  const updateDivider = (clientX) => {
+  const updateDivider = useCallback((clientX) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
     setDivider((x / rect.width) * 100);
-  };
+  }, []);
 
   // Обработчики событий
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    setIsDragging(true);
-    updateDivider(e.clientX);
-  };
+  const handleMouseDown = useCallback(
+    (e) => {
+      e.preventDefault();
+      setIsDragging(true);
+      updateDivider(e.clientX);
+    },
+    [updateDivider]
+  );
 
-  const handleMouseMove = (e) => {
-    if (isDragging) updateDivider(e.clientX);
-  };
+  const handleMouseMove = useCallback(
+    (e) => {
+      if (isDragging) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = requestAnimationFrame(() => {
+          updateDivider(e.clientX);
+        });
+      }
+    },
+    [isDragging, updateDivider]
+  );
 
-  const handleMouseUp = () => setIsDragging(false);
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+    cancelAnimationFrame(animationRef.current);
+  }, []);
 
-  const handleTouchStart = (e) => {
-    e.preventDefault();
-    setIsDragging(true);
-    updateDivider(e.touches[0].clientX);
-  };
+  const handleTouchStart = useCallback(
+    (e) => {
+      e.preventDefault();
+      setIsDragging(true);
+      updateDivider(e.touches[0].clientX);
+    },
+    [updateDivider]
+  );
 
-  const handleTouchMove = (e) => {
-    if (isDragging) updateDivider(e.touches[0].clientX);
-  };
+  const handleTouchMove = useCallback(
+    (e) => {
+      if (isDragging) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = requestAnimationFrame(() => {
+          updateDivider(e.touches[0].clientX);
+        });
+      }
+    },
+    [isDragging, updateDivider]
+  );
 
-  const handleTouchEnd = () => setIsDragging(false);
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+    cancelAnimationFrame(animationRef.current);
+  }, []);
 
   // Глобальные обработчики
   useEffect(() => {
@@ -401,9 +478,16 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
         document.removeEventListener("mouseup", handleMouseUp);
         document.removeEventListener("touchmove", handleTouchMove);
         document.removeEventListener("touchend", handleTouchEnd);
+        cancelAnimationFrame(animationRef.current);
       };
     }
-  }, [isDragging]);
+  }, [
+    isDragging,
+    handleMouseMove,
+    handleMouseUp,
+    handleTouchMove,
+    handleTouchEnd,
+  ]);
 
   // Обработка клавиш
   useEffect(() => {
@@ -426,6 +510,8 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
           e.preventDefault();
           setDivider((d) => Math.max(0, d - 5));
           break;
+        default:
+          break;
       }
     };
 
@@ -435,16 +521,15 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
+      cancelAnimationFrame(animationRef.current);
     };
-  }, [onClose]);
+  }, [onClose, prev, next]);
 
   // Анимация появления
   useEffect(() => {
     const timer = setTimeout(() => setMounted(true), 10);
     return () => clearTimeout(timer);
   }, []);
-
-  const item = items[idx];
 
   return (
     <div
@@ -454,7 +539,7 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label="Vorher-Nachher Vergleich"
+      aria-labelledby="modal-title"
     >
       <div
         className={`relative bg-white rounded-lg shadow-2xl overflow-hidden max-w-6xl w-full transition-transform duration-300 ${
@@ -477,11 +562,19 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
               aria-label="Schließen"
               title="Schließen"
             >
-              <img
-                src="/images/close-icon.gif"
-                alt="close"
-                className="w-8 h-8"
-              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-gray-600"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
             </button>
           </div>
         </div>
@@ -493,11 +586,11 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
           style={{ aspectRatio: "16 / 9", minHeight: "300px" }}
         >
           {/* Изображение "После" (полное) */}
-          <img
+          <ImageSmart
             src={item.after}
-            alt="Nachher"
+            alt={`Nachher: ${item.title}`}
             className="absolute inset-0 w-full h-full object-contain pointer-events-none"
-            draggable="false"
+            mode="contain"
           />
 
           {/* Изображение "До" с маской */}
@@ -505,11 +598,11 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
             className="absolute inset-0 overflow-hidden"
             style={{ clipPath: `inset(0 ${100 - divider}% 0 0)` }}
           >
-            <img
+            <ImageSmart
               src={item.before}
-              alt="Vorher"
+              alt={`Vorher: ${item.title}`}
               className="w-full h-full object-contain pointer-events-none"
-              draggable="false"
+              mode="contain"
             />
           </div>
 
@@ -529,7 +622,11 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
             tabIndex={0}
           >
             <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center">
-              <svg className="w-5 h-5 text-gray-600" viewBox="0 0 24 24">
+              <svg
+                className="w-5 h-5 text-gray-600"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
                 <path d="M8 12l4-4 4 4-4 4-4-4z" />
                 <path d="M16 12l-4 4-4-4 4-4 4 4z" />
               </svg>
@@ -545,6 +642,7 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
                 ? "bg-red-600/50 text-white/70"
                 : "bg-red-600/90 text-white"
             }`}
+            aria-hidden="true"
           >
             VORHER
           </div>
@@ -556,6 +654,7 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
                 ? "bg-green-600/50 text-white/70"
                 : "bg-green-600/90 text-white"
             }`}
+            aria-hidden="true"
           >
             NACHHER
           </div>
@@ -571,7 +670,9 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
 
         {/* Подпись */}
         <div className="p-4 text-center border-t border-gray-200 bg-gray-50">
-          <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
+          <h3 id="modal-title" className="text-lg font-semibold text-gray-800">
+            {item.title}
+          </h3>
           <p className="text-sm text-gray-600">
             {item.location}, {item.year}
           </p>
@@ -580,16 +681,42 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
     </div>
   );
 }
-/* ===== Главный блок ===== */
+
+BeforeAfterModal.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      before: PropTypes.string.isRequired,
+      after: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      location: PropTypes.string.isRequired,
+      year: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  startIndex: PropTypes.number.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
 export default function BeforeAfterSlider() {
   const [isMobile, setIsMobile] = useState(false);
   const [modalIndex, setModalIndex] = useState(null);
 
+  const checkMobile = useCallback(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, [checkMobile]);
+
+  const openModal = useCallback((index) => {
+    setModalIndex(index);
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setModalIndex(null);
   }, []);
 
   return (
@@ -615,10 +742,10 @@ export default function BeforeAfterSlider() {
           <SimpleSlider slidesPerViewDesktop={3}>
             {items.map((item, i) => (
               <BeforeAfterCard
-                key={i}
+                key={item.id}
                 item={item}
                 isMobile={isMobile}
-                onOpen={() => setModalIndex(i)}
+                onOpen={() => openModal(i)}
               />
             ))}
           </SimpleSlider>
@@ -629,7 +756,7 @@ export default function BeforeAfterSlider() {
         <BeforeAfterModal
           items={items}
           startIndex={modalIndex}
-          onClose={() => setModalIndex(null)}
+          onClose={closeModal}
         />
       )}
     </section>
