@@ -26,20 +26,17 @@ const ReasonsSection = () => {
   }, [isVisible]);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative bg-gray-100 py-2 my-2"
-    >
-      <div className="relative grid gap-6 px-2 lg:grid-cols-3 md:px-80 lg:px-20 sm:px-80 text-gray-300  md:-mt-16 sm:mt-2 z-10">
+    <section ref={sectionRef} className="relative bg-gray-100 py-2 my-2">
+      <div className="relative  grid gap-6 px-2 lg:grid-cols-3 md:px-80 lg:px-20 sm:px-80 text-gray-300  md:-mt-16 sm:mt-2 z-10">
         {/* Card 1 */}
         <div
-          className={`relative ag-courses_item transition-all duration-1000 transform ${
+          className={`relative ag-courses-item_link transition-all duration-1000 transform ${
             isVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
           } hover:transform hover:translate-y-[-10px] hover:shadow-6xl`}
         >
-          <div className="ag-courses-item_link shadow-3xl  rounded-lg  ">
+          <div className="shadow-3xl  rounded-lg  ">
             <div className="relative flex flex-col items-center justify-center ">
               {/* Background */}
               <div className="ag-courses-item_bg bg-teal-900"></div>
@@ -50,9 +47,7 @@ const ReasonsSection = () => {
             <h2 className="relative z-10 text-gray-400 font-semibold text-2xl text-center items-center justify-center my-9 hover:text-teal-900 border-b-2 border-gray-400 pb-1">
               Erfahrung
             </h2>
-            <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10">
-             
-            </p>
+            <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10"></p>
             {/* Description */}
             <p className="ag-courses-item_date-box text-center mt-2 mx-auto hover:text-white">
               Wir verfügen über ein Verständnis für moderne Dachtechnologien.
@@ -80,14 +75,13 @@ const ReasonsSection = () => {
 
         {/* Card 2 */}
         <div
-        
-          className={`relative ag-courses_item transition-all duration-1000 transform ${
+          className={`relative ag-courses-item transition-all shadow-sm duration-1000 transform ${
             isVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
           } hover:transform hover:translate-y-[-10px] hover:shadow-6xl`}
         >
-          <div className="ag-courses-item_link_midlle shadow-2xl rounded-lg bg-white">
+          <div className="ag-courses-item_link_midlle  rounded-lg bg-white">
             <div className="relative flex flex-col items-center justify-center">
               {/* Background */}
               <div className="ag-courses-item_bg"></div>
@@ -98,9 +92,7 @@ const ReasonsSection = () => {
             <h3 className="relative z-10 text-teal-400 font-semibold text-2xl text-center items-center justify-center my-9 hover:text-teal-900 border-b-2 border-gray-400 pb-1">
               Zuverlässigkeit
             </h3>
-            <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10">
-            
-            </p>
+            <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10"></p>
             {/* Description */}
             <p className="ag-courses-item_date-box_middle text-center mt-2 mx-auto hover:text-teal-900">
               Wir garantieren termingerechte Fertigstellung jedes Projekts.
@@ -128,17 +120,17 @@ const ReasonsSection = () => {
 
         {/* Card 3 */}
         <div
-          className={`relative ag-courses_item transition-all duration-1000 transform ${
+          className={`relative ag-courses-item_link transition-all duration-1000 transform ${
             isVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
-          } hover:transform hover:translate-y-[-10px] hover:shadow-6xl transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
- `}
+          } hover:transform hover:translate-y-[-10px] hover:shadow-6xl`}
         >
-          <div className="ag-courses-item_link shadow-lg rounded-lg bg-white">
-            <div className="relative flex flex-col items-center justify-center">
+          <div className="shadow-3xl  rounded-lg  ">
+            <div className="relative flex flex-col items-center justify-center ">
               {/* Background */}
-              <div className="ag-courses-item_bg"></div>
+              <div className="ag-courses-item_bg bg-teal-900"></div>
+              {/* Icon */}
               {/* Icon */}
               <FaShieldAlt className="w-14 h-14 text-gray-700 z-10" />
             </div>
@@ -146,9 +138,7 @@ const ReasonsSection = () => {
             <h3 className="relative z-10 text-gray-400 font-semibold text-2xl text-center items-center justify-center my-9 hover:text-teal-900 border-b-2 border-gray-400 pb-1">
               Garantie
             </h3>
-            <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10">
-              
-            </p>
+            <p className="text-xl font-semibold justify-center items-center text-center text-yellow-500 z-10"></p>
             {/* Description */}
             <p className="ag-courses-item_date-box text-center mt-2 hover:text-teal-800 ">
               Wir bieten umfassende Garantien auf unsere Arbeiten.
