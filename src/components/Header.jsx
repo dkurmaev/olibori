@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import { FaPhoneAlt } from "react-icons/fa";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -55,18 +54,6 @@ const Header = () => {
             </p>
           </div>
         </div>
-        {/* <div className="responsive-container lg:flex flex-wrap ">
-  <p className="text-md flex justify-between items-center font-light space-x-3 text-right text-yellow-400 animate-pulse ">
-    <FaPhoneAlt className="my-auto h-16 w-4 mx-2 vibrate" />
-    <span
-      href="tel:+4915730050570"
-      className="text-teal-600 font-bold group relative glow"
-    >
-      +4915730050570
-    </span>
-  </p>
-</div> */}
-
 
         <nav className="hidden md:flex items-center space-x-6 hide-on-small">
           <a
@@ -80,6 +67,20 @@ const Header = () => {
             className="relative group bg-teal-800 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-all"
           >
             Dienstleistungen
+          </a>
+
+          <a
+            href="#works"
+            className="relative group bg-teal-800 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-all"
+          >
+            Flachdachlösungen
+          </a>
+
+          <a
+            href="#before-after-card"
+            className="relative group bg-teal-800 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-all"
+          >
+            Vorher / Nachher
           </a>
           <button
             onClick={scrollToCostCalculator}
@@ -143,6 +144,19 @@ const Header = () => {
             >
               Dienstleistungen
             </a>
+
+            <a 
+            href="#flachdach" 
+            className="text-white hover:text-secondary border-b border-gray-200 py-2"
+            onClick={toggleMenu}
+            >
+              Flachdachlösungen</a>
+            <a
+              href="#before-after-slider"
+              className="text-white hover:text-secondary border-b border-gray-200 py-2"
+              onClick={toggleMenu}
+            >
+              Vorher / Nachher</a>
             <a
               href="#cost-calculator"
               className="text-white hover:text-secondary border-b border-gray-200 py-2"

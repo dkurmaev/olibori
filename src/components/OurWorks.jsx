@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const sliderImages = [
   { id: 1, src: "/images/Slide1.jpg", alt: "Arbeit 1" },
@@ -19,6 +19,7 @@ const sliderImages = [
 ];
 
 const OurWorks = () => {
+  const sectionRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -26,7 +27,7 @@ const OurWorks = () => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
 
-  // Закрытие модального окна по клавише Escape
+  
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
@@ -40,7 +41,7 @@ const OurWorks = () => {
     };
   }, []);
 
-  // Автопереключение слайдов
+  
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
@@ -92,7 +93,12 @@ const OurWorks = () => {
   const slidesToShow = window.innerWidth < 768 ? 1 : 3;
 
   return (
-    <section id="works" className="py-16 bg-gray-400 inset-0  bg-opacity-100">
+    <section
+      ref={sectionRef}
+      id="works"
+      className="py-16 bg-gray-400 inset-0  bg-opacity-100"
+      style={{ scrollMarginBlockStart: "80px" }}
+    >
       <div className="container mx-auto my-4  py-8 text-center">
         <h2 className="text-xl md:text-5xl sm:text-2xl font-bold uppercase text-gray-800 tracking-wider mb-12 border-b-2 border-yellow-400 inline-block pb-1">
           Unsere Flachdachlösungen

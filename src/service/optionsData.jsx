@@ -6,13 +6,13 @@ export const neubauOptions = [
     options: [
       {
         name: "Beton",
-        cost: 4,
+        cost: 6,
         description:
           "Robuste und stabile Grundlage für schwere Konstruktionen.",
       },
       {
         name: "Trapezblech",
-        cost: 2,
+        cost: 3,
         description: "Leicht und wirtschaftlich, ideal für moderne Bauten.",
       },
     ],
@@ -24,13 +24,13 @@ export const neubauOptions = [
     options: [
       {
         name: "S4 + Alu",
-        cost: 18,
+        cost: 20,
         description:
           "Effektive Dampfsperre mit Aluminium-Einlage, die Dampfdicht ist.",
       },
       {
         name: "PE-Folie",
-        cost: 6,
+        cost: 7,
         description:
           "Wirtschaftliche Lösung, geeignet für einfache Anwendungen.",
       },
@@ -43,18 +43,18 @@ export const neubauOptions = [
     options: [
       {
         name: "EPS",
-        cost: 35,
+        cost: 40,
         description:
           "Effektive Dämmung mit guten Wärmedämmeigenschaften.",
       },
       {
         name: "PIR",
-        cost: 40,
+        cost: 42,
         description: "Hohe Dämmwerte bei geringem Platzbedarf.",
       },
       {
         name: "Steinwolle",
-        cost: 35,
+        cost: 40,
         description: "Robustes und nicht brennbares Material.",
       },
     ],
@@ -67,12 +67,12 @@ export const neubauOptions = [
     options: [
       {
         name: "PVC",
-        cost: 20,
+        cost: 25,
         description: "Flexibel, langlebig und für viele Dacharten geeignet.",
       },
       {
         name: "FPO",
-        cost: 30,
+        cost: 29,
         description: "Umweltfreundlicher und UV-beständiger als PVC.",
       },
       {
@@ -83,7 +83,7 @@ export const neubauOptions = [
       },
       {
         name: "Bitumenbahn (2 lägig)",
-        cost: 40,
+        cost: 45,
         description: "Klassische Wahl für Flachdächer.",
       },
     ],
@@ -99,12 +99,12 @@ export const ohneAbrissOptions = [
     options: [
       {
         name: "300 g/m² Vlies",
-        cost: 4,
+        cost: 6,
         description: "Kostengünstige und langlebiger Trennlage.",
       },
       {
         name: "Sanierungsdämmung A1",
-        cost: 8.5,
+        cost: 9.5,
         description: "Hoch verdichtete, sehr harte und dünne Sanierungsdämmplatte aus Steinwolle.",
       },
       
@@ -117,17 +117,17 @@ export const ohneAbrissOptions = [
     options: [
       {
         name: "PVC",
-        cost: 30,
+        cost: 35,
         description: "Flexibel, langlebig und für viele Dacharten geeignet.",
       },
       {
         name: "FPO",
-        cost: 40,
+        cost: 45,
         description: "Umweltfreundlicher und UV-beständiger als PVC.",
       },
       {
         name: "Flüssigabdichtung",
-        cost: 30,
+        cost: 80,
         description:
           "Ideal für die präzise Abdichtung schwer zugänglicher Stellen.",
       },
@@ -149,13 +149,13 @@ export const mitAbrissOptions = [
     options: [
       {
         name: "Beton",
-        cost: 50,
+        cost: 60,
         description:
           "Robuste und stabile Grundlage für schwere Konstruktionen.",
       },
       {
         name: "Trapezblech",
-        cost: 30,
+        cost: 40,
         description: "Leicht und wirtschaftlich, ideal für moderne Bauten.",
       },
     ],
@@ -167,13 +167,13 @@ export const mitAbrissOptions = [
     options: [
       {
         name: "S4 + Alu",
-        cost: 10,
+        cost: 13,
         description:
           "Effektive Dampfsperre mit Aluminium-Einlage, die Dampfdicht ist.",
       },
       {
         name: "PE-Folie",
-        cost: 5,
+        cost: 7,
         description:
           "Wirtschaftliche Lösung, geeignet für einfache Anwendungen.",
       },
@@ -186,18 +186,18 @@ export const mitAbrissOptions = [
     options: [
       {
         name: "EPS",
-        cost: 30,
+        cost: 40,
         description:
           "Günstige und effektive Dämmung mit guten Wärmedämmeigenschaften.",
       },
       {
         name: "PIR",
-        cost: 40,
+        cost: 42,
         description: "Hohe Dämmwerte bei geringem Platzbedarf.",
       },
       {
         name: "Steinwolle",
-        cost: 20,
+        cost: 40,
         description: "Robustes und nicht brennbares Material.",
       },
     ],
@@ -220,13 +220,13 @@ export const mitAbrissOptions = [
       },
       {
         name: "Flüssigabdichtung",
-        cost: 30,
+        cost: 80,
         description:
           "Ideal für die präzise Abdichtung schwer zugänglicher Stellen.",
       },
       {
         name: "Bitumenbahn (2 lägig)",
-        cost: 10,
+        cost: 45,
         description: "Klassische Wahl für Flachdächer.",
       },
     ],

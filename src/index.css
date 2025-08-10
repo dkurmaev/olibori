@@ -7,6 +7,13 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--header-height); ;
 }
+
+html,
+body {
+  overflow-x: hidden;
+  
+}
+
 .home {
   background-size: cover;
 }
@@ -30,10 +37,75 @@ html {
   z-index: 50;
 }
 
-html,
-body {
-  overflow-x: hidden;
-  
+/* Анимация модалки */
+.modal-backdrop { background: rgba(0,0,0,.0); transition: background .18s ease; }
+.modal-backdrop.modal-backdrop-in { background: rgba(0,0,0,.7); }
+.modal-panel { transform: scale(.98); opacity: 0; transition: transform .18s ease, opacity .18s ease; }
+.modal-panel.modal-panel-in { transform: scale(1); opacity: 1; }
+
+/* Стрелки слайдера (секция) */
+.slider-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  background: linear-gradient(135deg,#fff,#f8fafc);
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:9999px; padding:.5rem;
+  box-shadow:0 6px 20px rgba(0,0,0,.10);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease, opacity .2s ease;
+}
+.slider-arrow:hover{ transform:translateY(-50%) scale(1.06); box-shadow:0 10px 24px rgba(0,0,0,.15); }
+.slider-arrow:disabled{ opacity:.45; cursor:not-allowed; }
+
+/* Стрелки в модалке */
+.modal-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  background: linear-gradient(135deg,#fefefe,#ffffff);
+  border:1px solid rgba(0,0,0,.1);
+  border-radius:9999px; padding:.75rem;
+  box-shadow:0 8px 26px rgba(0,0,0,.18);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.modal-arrow:hover{ transform:translateY(-50%) scale(1.07); box-shadow:0 12px 30px rgba(0,0,0,.24); }
+
+/* Точки пагинации */
+.dot{
+  width:10px;height:10px;border-radius:9999px;background:#e5e7eb; /* slate-200 */
+  transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease;
+  box-shadow:0 2px 6px rgba(0,0,0,.06);
+}
+.dot:hover{ transform:scale(1.1); }
+.dot-active{
+  background:#14b8a6; /* teal-500 */
+  transform:scale(1.15);
+  box-shadow:0 4px 10px rgba(20,184,166,.35);
+}
+
+/* Кнопки в модалке */
+.btn-ghost{
+  background:rgba(255,255,255,.9);
+  border:1px solid rgba(0,0,0,.1);
+  border-radius:.5rem;
+  padding:.35rem .55rem;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  font-size:.875rem; color:#111827;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.btn-ghost:hover{ background:#ffffff; transform:translateY(-1px); box-shadow:0 10px 22px rgba(0,0,0,.14); }
+
+/* Ползунок сравнения (модалка) */
+.compare-handle{
+  position:absolute; top:0; bottom:0; width:2px; cursor:ew-resize; z-index:2;
+}
+.compare-line{
+  position:absolute; top:0; bottom:0; left:0; right:0;
+  background: linear-gradient(to bottom, rgba(20,184,166,.95), rgba(20,184,166,.45));
+}
+.compare-knob{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  display:flex; align-items:center; gap:.25rem;
+  background:#ffffff; color:#0f172a; /* slate-900 */
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:9999px; padding:.25rem .45rem;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
 }
 
 .shadow-custom {

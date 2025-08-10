@@ -14,13 +14,14 @@ import AboutUs from "../components/AboutUs";
 import CostCalculator from "../components/CostCalculator";
 import UnsereEtappen from "../components/UnsereEtappen";
 import UnsereDienstleistungen from "../components/UnsereDienstleistungen";
+import BeforeAfterSlider from "../components/BeforeAfterSlider";
 
 const Home = () => {
   console.log("Rendering Home component");
   return (
     <div className="Home">
       <Header />
-      <main style={{ minHeight: "calc(100vh - 80px)" }}>
+      <main style={{ minBlockSize: "calc(100vh - 80px)" }}>
         <HomeSlider />
         <CookieModal />
         <ReasonsSection />
@@ -30,10 +31,10 @@ const Home = () => {
         <References />
         <CostCalculator />
         <OurWorks />
+        <BeforeAfterSlider />
         <Testimonials />
         <AboutUs />
-        <Lieferanten />        
-        
+        <Lieferanten />  
         <ContactForm />
       </main>
       <Footer />
