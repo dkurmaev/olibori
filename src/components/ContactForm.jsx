@@ -169,14 +169,14 @@ const handleCheckboxChange = (e) => {
       <div className="bg-black bg-opacity-80 w-full py-16">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="p-6 bg-opacity-70 shadow-xl rounded-lg transition-transform hover:scale-105">
-            <h3 className="text-3xl sm:text-5xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
+            <h3 className="text-3xl sm:text-4xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
               Unser Standort
             </h3>
             <p className="mb-4 leading-relaxed text-teal-200">
               <strong>Olidort Bedachungen</strong> <br />
               Sellwigsweg 1 <br />
-              56470 Bad Marienberg <br />
-              Deutschland
+              D - 56470 Bad Marienberg <br />
+              
             </p>
             <p className="mb-4 text-teal-200">
               <strong>Telefon:</strong> +49 157 300 50 570
@@ -189,8 +189,8 @@ const handleCheckboxChange = (e) => {
           </div>
 
           <div className="p-6 bg-opacity-10 text-gray-400 shadow-xl rounded-lg transition-transform hover:scale-105">
-            <h3 className="text-3xl sm:text-5xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
-              Kontaktieren Sie uns
+            <h3 className="text-3xl sm:text-4xl font-bold uppercase text-teal-200 tracking-wider mb-12 border-b-2 border-teal-400 inline-block pb-1">
+              Haben Sie Interesse?
             </h3>
 
             {showMessage && (
@@ -207,7 +207,7 @@ const handleCheckboxChange = (e) => {
                     onClick={() => setShowMessage(false)}
                     className="text-lg font-bold text-gray-600 hover:text-gray-800"
                   >
-                    ×
+                    x
                   </button>
                 </div>
               </div>

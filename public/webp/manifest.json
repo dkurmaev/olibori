@@ -1,0 +1,292 @@
+{
+  "images/bauspezilogo.png": {
+    "480": "images/480/bauspezilogo.webp",
+    "800": "images/800/bauspezilogo.webp",
+    "1200": "images/1200/bauspezilogo.webp"
+  },
+  "images/Beton.jpg": {
+    "480": "images/480/Beton.webp",
+    "800": "images/800/Beton.webp",
+    "1200": "images/1200/Beton.webp"
+  },
+  "images/cemex.png": {
+    "480": "images/480/cemex.webp",
+    "800": "images/800/cemex.webp",
+    "1200": "images/1200/cemex.webp"
+  },
+  "images/Dampfsperre.jpg": {
+    "480": "images/480/Dampfsperre.webp",
+    "800": "images/800/Dampfsperre.webp",
+    "1200": "images/1200/Dampfsperre.webp"
+  },
+  "images/EPS.jpg": {
+    "480": "images/480/EPS.webp",
+    "800": "images/800/EPS.webp",
+    "1200": "images/1200/EPS.webp"
+  },
+  "images/Flussigkunstoff.jpg": {
+    "480": "images/480/Flussigkunstoff.webp",
+    "800": "images/800/Flussigkunstoff.webp",
+    "1200": "images/1200/Flussigkunstoff.webp"
+  },
+  "images/FPO.jpg": {
+    "480": "images/480/FPO.webp",
+    "800": "images/800/FPO.webp",
+    "1200": "images/1200/FPO.webp"
+  },
+  "images/holzgross.png": {
+    "480": "images/480/holzgross.webp",
+    "800": "images/800/holzgross.webp",
+    "1200": "images/1200/holzgross.webp"
+  },
+  "images/home.png": {
+    "480": "images/480/home.webp",
+    "800": "images/800/home.webp",
+    "1200": "images/1200/home.webp"
+  },
+  "images/Logo.png": {
+    "480": "images/480/Logo.webp",
+    "800": "images/800/Logo.webp",
+    "1200": "images/1200/Logo.webp"
+  },
+  "images/main_banner.png": {
+    "480": "images/480/main_banner.webp",
+    "800": "images/800/main_banner.webp",
+    "1200": "images/1200/main_banner.webp"
+  },
+  "images/main_page.jpg": {
+    "480": "images/480/main_page.webp",
+    "800": "images/800/main_page.webp",
+    "1200": "images/1200/main_page.webp"
+  },
+  "images/mapei.png": {
+    "480": "images/480/mapei.webp",
+    "800": "images/800/mapei.webp",
+    "1200": "images/1200/mapei.webp"
+  },
+  "images/meisterbrief.webp": {
+    "480": "images/480/meisterbrief.webp",
+    "800": "images/800/meisterbrief.webp",
+    "1200": "images/1200/meisterbrief.webp"
+  },
+  "images/Neubau.jpg": {
+    "480": "images/480/Neubau.webp",
+    "800": "images/800/Neubau.webp",
+    "1200": "images/1200/Neubau.webp"
+  },
+  "images/output.jpg": {
+    "480": "images/480/output.webp",
+    "800": "images/800/output.webp",
+    "1200": "images/1200/output.webp"
+  },
+  "images/paralax.webp": {
+    "480": "images/480/paralax.webp",
+    "800": "images/800/paralax.webp",
+    "1200": "images/1200/paralax.webp"
+  },
+  "images/parallax.jpg": {
+    "480": "images/480/parallax.webp",
+    "800": "images/800/parallax.webp",
+    "1200": "images/1200/parallax.webp"
+  },
+  "images/Pe Folie.jpg": {
+    "480": "images/480/Pe Folie.webp",
+    "800": "images/800/Pe Folie.webp",
+    "1200": "images/1200/Pe Folie.webp"
+  },
+  "images/PIR.jpg": {
+    "480": "images/480/PIR.webp",
+    "800": "images/800/PIR.webp",
+    "1200": "images/1200/PIR.webp"
+  },
+  "images/PVC.jpg": {
+    "480": "images/480/PVC.webp",
+    "800": "images/800/PVC.webp",
+    "1200": "images/1200/PVC.webp"
+  },
+  "images/Reparatur.jpg": {
+    "480": "images/480/Reparatur.webp",
+    "800": "images/800/Reparatur.webp",
+    "1200": "images/1200/Reparatur.webp"
+  },
+  "images/rezension1.png": {
+    "480": "images/480/rezension1.webp",
+    "800": "images/800/rezension1.webp",
+    "1200": "images/1200/rezension1.webp"
+  },
+  "images/rezension2.png": {
+    "480": "images/480/rezension2.webp",
+    "800": "images/800/rezension2.webp",
+    "1200": "images/1200/rezension2.webp"
+  },
+  "images/rezension3.png": {
+    "480": "images/480/rezension3.webp",
+    "800": "images/800/rezension3.webp",
+    "1200": "images/1200/rezension3.webp"
+  },
+  "images/rockwool.png": {
+    "480": "images/480/rockwool.webp",
+    "800": "images/800/rockwool.webp",
+    "1200": "images/1200/rockwool.webp"
+  },
+  "images/roofing.jpeg": {
+    "480": "images/480/roofing.webp",
+    "800": "images/800/roofing.webp",
+    "1200": "images/1200/roofing.webp"
+  },
+  "images/Sanierung.jpg": {
+    "480": "images/480/Sanierung.webp",
+    "800": "images/800/Sanierung.webp",
+    "1200": "images/1200/Sanierung.webp"
+  },
+  "images/Slide1.jpg": {
+    "480": "images/480/Slide1.webp",
+    "800": "images/800/Slide1.webp",
+    "1200": "images/1200/Slide1.webp"
+  },
+  "images/Slide2.jpg": {
+    "480": "images/480/Slide2.webp",
+    "800": "images/800/Slide2.webp",
+    "1200": "images/1200/Slide2.webp"
+  },
+  "images/Slide3.jpg": {
+    "480": "images/480/Slide3.webp",
+    "800": "images/800/Slide3.webp",
+    "1200": "images/1200/Slide3.webp"
+  },
+  "images/Slide4.jpg": {
+    "480": "images/480/Slide4.webp",
+    "800": "images/800/Slide4.webp",
+    "1200": "images/1200/Slide4.webp"
+  },
+  "images/Slide5.jpg": {
+    "480": "images/480/Slide5.webp",
+    "800": "images/800/Slide5.webp",
+    "1200": "images/1200/Slide5.webp"
+  },
+  "images/Slide6.jpg": {
+    "480": "images/480/Slide6.webp",
+    "800": "images/800/Slide6.webp",
+    "1200": "images/1200/Slide6.webp"
+  },
+  "images/Slide7.jpg": {
+    "480": "images/480/Slide7.webp",
+    "800": "images/800/Slide7.webp",
+    "1200": "images/1200/Slide7.webp"
+  },
+  "images/Slide8.jpg": {
+    "480": "images/480/Slide8.webp",
+    "800": "images/800/Slide8.webp",
+    "1200": "images/1200/Slide8.webp"
+  },
+  "images/Slide9.jpg": {
+    "480": "images/480/Slide9.webp",
+    "800": "images/800/Slide9.webp",
+    "1200": "images/1200/Slide9.webp"
+  },
+  "images/Slide10.jpg": {
+    "480": "images/480/Slide10.webp",
+    "800": "images/800/Slide10.webp",
+    "1200": "images/1200/Slide10.webp"
+  },
+  "images/Slide11.jpg": {
+    "480": "images/480/Slide11.webp",
+    "800": "images/800/Slide11.webp",
+    "1200": "images/1200/Slide11.webp"
+  },
+  "images/Slide12.jpg": {
+    "480": "images/480/Slide12.webp",
+    "800": "images/800/Slide12.webp",
+    "1200": "images/1200/Slide12.webp"
+  },
+  "images/Slide13.jpg": {
+    "480": "images/480/Slide13.webp",
+    "800": "images/800/Slide13.webp",
+    "1200": "images/1200/Slide13.webp"
+  },
+  "images/Slide14.jpg": {
+    "480": "images/480/Slide14.webp",
+    "800": "images/800/Slide14.webp",
+    "1200": "images/1200/Slide14.webp"
+  },
+  "images/Slide15.jpg": {
+    "480": "images/480/Slide15.webp",
+    "800": "images/800/Slide15.webp",
+    "1200": "images/1200/Slide15.webp"
+  },
+  "images/Trapezblech.jpg": {
+    "480": "images/480/Trapezblech.webp",
+    "800": "images/800/Trapezblech.webp",
+    "1200": "images/1200/Trapezblech.webp"
+  },
+  "images/wartung.jpg": {
+    "480": "images/480/wartung.webp",
+    "800": "images/800/wartung.webp",
+    "1200": "images/1200/wartung.webp"
+  },
+  "images/zertifikat.webp": {
+    "480": "images/480/zertifikat.webp",
+    "800": "images/800/zertifikat.webp",
+    "1200": "images/1200/zertifikat.webp"
+  },
+  "images/projekte/project1-after.jpg": {
+    "480": "images/projekte/480/project1-after.webp",
+    "800": "images/projekte/800/project1-after.webp",
+    "1200": "images/projekte/1200/project1-after.webp"
+  },
+  "images/projekte/project1-before.jpg": {
+    "480": "images/projekte/480/project1-before.webp",
+    "800": "images/projekte/800/project1-before.webp",
+    "1200": "images/projekte/1200/project1-before.webp"
+  },
+  "images/projekte/project2-after.jpg": {
+    "480": "images/projekte/480/project2-after.webp",
+    "800": "images/projekte/800/project2-after.webp",
+    "1200": "images/projekte/1200/project2-after.webp"
+  },
+  "images/projekte/project2-before.jpg": {
+    "480": "images/projekte/480/project2-before.webp",
+    "800": "images/projekte/800/project2-before.webp",
+    "1200": "images/projekte/1200/project2-before.webp"
+  },
+  "images/projekte/project3-after.jpg": {
+    "480": "images/projekte/480/project3-after.webp",
+    "800": "images/projekte/800/project3-after.webp",
+    "1200": "images/projekte/1200/project3-after.webp"
+  },
+  "images/projekte/project3-before.jpg": {
+    "480": "images/projekte/480/project3-before.webp",
+    "800": "images/projekte/800/project3-before.webp",
+    "1200": "images/projekte/1200/project3-before.webp"
+  },
+  "projekte/project1-after.jpg": {
+    "480": "projekte/480/project1-after.webp",
+    "800": "projekte/800/project1-after.webp",
+    "1200": "projekte/1200/project1-after.webp"
+  },
+  "projekte/project1-before.jpg": {
+    "480": "projekte/480/project1-before.webp",
+    "800": "projekte/800/project1-before.webp",
+    "1200": "projekte/1200/project1-before.webp"
+  },
+  "projekte/project2-after.jpg": {
+    "480": "projekte/480/project2-after.webp",
+    "800": "projekte/800/project2-after.webp",
+    "1200": "projekte/1200/project2-after.webp"
+  },
+  "projekte/project2-before.jpg": {
+    "480": "projekte/480/project2-before.webp",
+    "800": "projekte/800/project2-before.webp",
+    "1200": "projekte/1200/project2-before.webp"
+  },
+  "projekte/project3-after.jpg": {
+    "480": "projekte/480/project3-after.webp",
+    "800": "projekte/800/project3-after.webp",
+    "1200": "projekte/1200/project3-after.webp"
+  },
+  "projekte/project3-before.jpg": {
+    "480": "projekte/480/project3-before.webp",
+    "800": "projekte/800/project3-before.webp",
+    "1200": "projekte/1200/project3-before.webp"
+  }
+}

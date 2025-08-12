@@ -3,16 +3,19 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: var(--header-height); ;
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+@media (max-width: 767px){
+  html { scroll-padding-top: 80px; }
 }
+
 
 html,
 body {
   overflow-x: hidden;
   
 }
+
+img { display: block; }
 
 .home {
   background-size: cover;

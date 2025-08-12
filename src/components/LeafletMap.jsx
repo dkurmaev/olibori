@@ -20,7 +20,7 @@ const LeafletMap = () => {
       <MapContainer
         center={position}
         zoom={15}
-        style={{ height: "300px", width: "100%" }}
+        style={{ height: "500px", width: "100%" }}
         className="rounded-lg z-50"
       >
         

@@ -27,7 +27,6 @@ const OurWorks = () => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
 
-  
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
@@ -41,7 +40,6 @@ const OurWorks = () => {
     };
   }, []);
 
-  
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
@@ -90,7 +88,13 @@ const OurWorks = () => {
     setTouchEnd(0);
   };
 
-  const slidesToShow = window.innerWidth < 768 ? 1 : 3;
+  const [slidesToShow, setSlidesToShow] = useState(3);
+  useEffect(() => {
+    const calc = () => setSlidesToShow(window.innerWidth < 768 ? 1 : 3);
+    calc();
+    window.addEventListener("resize", calc);
+    return () => window.removeEventListener("resize", calc);
+  }, []);
 
   return (
     <section
@@ -124,6 +128,10 @@ const OurWorks = () => {
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-64 object-cover rounded-lg shadow-lg cursor-pointer"
+                  width="800"
+                  height="600"
+                  loading="lazy"
+                  decoding="async"
                   onClick={() => openModal(image)}
                 />
               </div>

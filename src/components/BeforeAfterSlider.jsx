@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import PropTypes from "prop-types";
 
-// Улучшенный компонент ImageSmart с PropTypes и используемый в коде
+// Оптимизированный ImageSmart компонент с правильными путями к WebP
 function ImageSmart({
   src,
   alt,
@@ -15,32 +15,48 @@ function ImageSmart({
   mode = "cover",
   w = 800,
   h = 600,
+  ...imgProps
 }) {
-  const base = `${src}${src.includes("?") ? "&" : "?"}auto=format&fit=crop`;
-  const classes = `${className} ${
-    mode === "cover" ? "object-cover" : "object-contain"
-  }`.trim();
+  // Извлекаем путь после /images/
+  const imagePath = src.startsWith("/images/")
+    ? src.slice("/images/".length)
+    : src.replace(/^\//, "");
+
+  // Имя файла без расширения
+  const baseNoExt = imagePath.replace(/\.(jpe?g|png|webp|avif)$/i, "");
+
+  // Генерируем пути к WebP в /webp/projekte/
+  const webpBase = `/webp/projekte/`;
+  const webp480 = `${webpBase}480/${baseNoExt.replace("projekte/", "")}.webp`;
+  const webp800 = `${webpBase}800/${baseNoExt.replace("projekte/", "")}.webp`;
+  const webp1200 = `${webpBase}1200/${baseNoExt.replace("projekte/", "")}.webp`;
+
+  const objectClass = mode === "cover" ? "object-cover" : "object-contain";
+  const classes = `${className} ${objectClass}`.trim();
 
   return (
-    <img
-      src={`${base}&w=${w}&q=70`}
-      srcSet={`
-        ${base}&w=480&q=60 480w,
-        ${base}&w=800&q=70 800w,
-        ${base}&w=1200&q=70 1200w
-      `}
-      sizes="(max-width: 768px) 100vw, 33vw"
-      width={w}
-      height={h}
-      loading="lazy"
-      decoding="async"
-      alt={alt}
-      className={classes}
-      onError={(e) => {
-        e.target.onerror = null;
-        e.target.src = "/images/placeholder.jpg";
-      }}
-    />
+    <picture>
+      <source
+        type="image/webp"
+        srcSet={`${webp480} 480w, ${webp800} 800w, ${webp1200} 1200w`}
+        sizes="(max-width: 768px) 100vw, 33vw"
+      />
+      <img
+        src={src}
+        width={w}
+        height={h}
+        loading="lazy"
+        decoding="async"
+        alt={alt}
+        className={classes}
+        {...imgProps}
+        onError={(e) => {
+          if (imgProps.onError) imgProps.onError(e);
+          e.currentTarget.onerror = null;
+          e.currentTarget.src = "/images/placeholder.jpg";
+        }}
+      />
+    </picture>
   );
 }
 
@@ -53,9 +69,10 @@ ImageSmart.propTypes = {
   h: PropTypes.number,
 };
 
-// Уникальные данные без дублирования
-const items = [
+// Данные проектов
+const projects = [
   {
+    id: 1,
     before: "/images/projekte/project1-before.jpg",
     after: "/images/projekte/project1-after.jpg",
     title: "Flachdach-Sanierung",
@@ -63,6 +80,7 @@ const items = [
     year: "2024",
   },
   {
+    id: 2,
     before: "/images/projekte/project2-before.jpg",
     after: "/images/projekte/project2-after.jpg",
     title: "Komplettumbau",
@@ -70,32 +88,12 @@ const items = [
     year: "2023",
   },
   {
+    id: 3,
     before: "/images/projekte/project3-before.jpg",
     after: "/images/projekte/project3-after.jpg",
     title: "Dachsanierung",
     location: "Essen",
     year: "2024",
-  },
-  {
-    before: "/images/projekte/project4-before.jpg",
-    after: "/images/projekte/project4-after.jpg",
-    title: "Fassadenrenovierung",
-    location: "Berlin",
-    year: "2023",
-  },
-  {
-    before: "/images/projekte/project5-before.jpg",
-    after: "/images/projekte/project5-after.jpg",
-    title: "Dachstuhlsanierung",
-    location: "Hamburg",
-    year: "2024",
-  },
-  {
-    before: "/images/projekte/project6-before.jpg",
-    after: "/images/projekte/project6-after.jpg",
-    title: "Komplettsanierung",
-    location: "München",
-    year: "2023",
   },
 ];
 
@@ -105,7 +103,8 @@ function CardSkeleton() {
   );
 }
 
-function BeforeAfterCard({ item, isMobile, onOpen }) {
+// Оптимизированная карточка "до/после"
+function BeforeAfterCard({ project, isMobile, onOpen }) {
   const [tapped, setTapped] = useState(false);
   const [afterPreloaded, setAfterPreloaded] = useState(false);
   const [loadedBefore, setLoadedBefore] = useState(false);
@@ -127,33 +126,32 @@ function BeforeAfterCard({ item, isMobile, onOpen }) {
     [onOpen]
   );
 
-  // Прелоад "после" при первом наведении
+  // Прелоад изображения "после" при наведении
   const handleMouseEnter = useCallback(() => {
     if (!afterPreloaded && !errorAfter) {
       const img = new Image();
-      img.src = item.after;
+      img.src = project.after;
       img.onload = () => setAfterPreloaded(true);
       img.onerror = () => setErrorAfter(true);
     }
-  }, [afterPreloaded, errorAfter, item.after]);
+  }, [afterPreloaded, errorAfter, project.after]);
 
   return (
     <div
-      className="relative group rounded-lg border border-gray-200 shadow-lg overflow-hidden cursor-pointer bg-white"
+      className="relative group rounded-lg border border-gray-200 shadow-lg overflow-hidden cursor-pointer bg-white content-auto"
       style={{ aspectRatio: "4 / 3" }}
       onMouseEnter={handleMouseEnter}
       onClick={toggle}
       onDoubleClick={handleOpen}
-      aria-label={`Vorher/Nachher Vergleich: ${item.title}`}
+      aria-label={`Vorher/Nachher Vergleich: ${project.title}`}
       role="button"
       tabIndex={0}
-      title="Doppelklick für Vollbild"
     >
-      {/* BEFORE */}
       {(!loadedBefore || errorBefore) && <CardSkeleton />}
+
       <ImageSmart
-        src={errorBefore ? "/images/placeholder.jpg" : item.before}
-        alt={`Vorher: ${item.title}`}
+        src={errorBefore ? "/images/placeholder.jpg" : project.before}
+        alt={`Vorher: ${project.title}`}
         onLoad={() => setLoadedBefore(true)}
         onError={() => setErrorBefore(true)}
         className={`absolute inset-0 w-full h-full transition-all duration-500 ${
@@ -164,12 +162,11 @@ function BeforeAfterCard({ item, isMobile, onOpen }) {
         mode="cover"
       />
 
-      {/* AFTER */}
       {(!loadedAfter || errorAfter) && showAfter && <CardSkeleton />}
       {(!errorAfter || errorBefore) && (
         <ImageSmart
-          src={errorAfter ? "/images/placeholder.jpg" : item.after}
-          alt={`Nachher: ${item.title}`}
+          src={errorAfter ? "/images/placeholder.jpg" : project.after}
+          alt={`Nachher: ${project.title}`}
           onLoad={() => setLoadedAfter(true)}
           onError={() => setErrorAfter(true)}
           className={`absolute inset-0 w-full h-full transition-all duration-500 ${
@@ -181,7 +178,6 @@ function BeforeAfterCard({ item, isMobile, onOpen }) {
         />
       )}
 
-      {/* Бейджи */}
       <div
         className={`absolute top-2 left-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur transition-colors ${
           isMobile
@@ -190,10 +186,10 @@ function BeforeAfterCard({ item, isMobile, onOpen }) {
               : "bg-slate-900/80 text-white"
             : "bg-slate-900/80 text-white group-hover:bg-slate-900/30 group-hover:text-white/50"
         }`}
-        aria-hidden="true"
       >
         VORHER
       </div>
+
       <div
         className={`absolute top-2 right-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur transition-colors ${
           isMobile
@@ -202,27 +198,20 @@ function BeforeAfterCard({ item, isMobile, onOpen }) {
               : "bg-emerald-600/30 text-white/60"
             : "bg-emerald-600/30 text-white/60 group-hover:bg-emerald-600/90 group-hover:text-white"
         }`}
-        aria-hidden="true"
       >
         NACHHER
       </div>
 
-      {/* Хинт */}
-      <div
-        className="absolute bottom-10 right-2 bg-white/85 text-[11px] px-2 py-[3px] rounded shadow text-gray-800 font-medium pointer-events-none"
-        aria-hidden="true"
-      >
+      <div className="absolute bottom-10 right-2 bg-white/85 text-[11px] px-2 py-[3px] rounded shadow text-gray-800 font-medium pointer-events-none">
         {isMobile
           ? "👆 Tippen (Doppeltipp: Vollbild)"
           : "🖱️ Hover • Doppelklick: Vollbild"}
       </div>
 
-      {/* Подпись */}
       <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-sm p-2 text-center">
-        {item.title} – {item.location}, {item.year}
+        {project.title} – {project.location}, {project.year}
       </div>
 
-      {/* Кнопка Vollbild на мобиле */}
       {isMobile && (
         <button
           type="button"
@@ -238,7 +227,7 @@ function BeforeAfterCard({ item, isMobile, onOpen }) {
 }
 
 BeforeAfterCard.propTypes = {
-  item: PropTypes.shape({
+  project: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     before: PropTypes.string.isRequired,
     after: PropTypes.string.isRequired,
@@ -250,13 +239,12 @@ BeforeAfterCard.propTypes = {
   onOpen: PropTypes.func,
 };
 
+// Оптимизированный слайдер
 function SimpleSlider({ children, slidesPerViewDesktop = 3 }) {
-  // Убраны параметры auto и intervalMs
   const slides = useMemo(() => React.Children.toArray(children), [children]);
   const [isMobile, setIsMobile] = useState(false);
   const [index, setIndex] = useState(0);
 
-  // Убрана логика авто-прокрутки
   const checkMobile = useCallback(() => {
     setIsMobile(window.innerWidth < 768);
   }, []);
@@ -267,43 +255,36 @@ function SimpleSlider({ children, slidesPerViewDesktop = 3 }) {
     return () => window.removeEventListener("resize", checkMobile);
   }, [checkMobile]);
 
-  const k = isMobile ? 1 : slidesPerViewDesktop;
-  const total = slides.length;
-  const maxIndex = Math.max(0, total - k);
+  const slidesToShow = isMobile ? 1 : slidesPerViewDesktop;
+  const totalSlides = slides.length;
+  const maxIndex = Math.max(0, totalSlides - slidesToShow);
 
-  const trackWidthPct = (total * 100) / k;
-  const oneSlidePct = (100 / total) * k;
-  const translatePct = (index * 100) / total;
+  const trackWidth = (totalSlides * 100) / slidesToShow;
+  const slideWidth = (100 / totalSlides) * slidesToShow;
+  const translateX = (index * 100) / totalSlides;
 
-  const goPrev = useCallback(() => {
-    setIndex((i) => Math.max(0, i - 1));
-  }, []);
-
-  const goNext = useCallback(() => {
-    setIndex((i) => Math.min(maxIndex, i + 1));
-  }, [maxIndex]);
-
-  const goToSlide = useCallback((i) => {
-    setIndex(i);
-  }, []);
+  const goPrev = useCallback(() => setIndex((i) => Math.max(0, i - 1)), []);
+  const goNext = useCallback(
+    () => setIndex((i) => Math.min(maxIndex, i + 1)),
+    [maxIndex]
+  );
+  const goToSlide = useCallback((i) => setIndex(i), []);
 
   return (
     <div className="relative" role="region" aria-label="Galerie Vorher/Nachher">
       <div className="overflow-hidden">
         <div
-          className="flex"
+          className="flex transition-transform duration-300 ease-in-out"
           style={{
-            width: `${trackWidthPct}%`,
-            transform: `translateX(-${translatePct}%)`,
-            transition: "none", // Отключаем анимацию
+            width: `${trackWidth}%`,
+            transform: `translateX(-${translateX}%)`,
           }}
-          aria-live="polite"
         >
           {slides.map((child, i) => (
             <div
               key={i}
               className="px-2 md:px-3"
-              style={{ width: `${oneSlidePct}%` }}
+              style={{ width: `${slideWidth}%` }}
             >
               {child}
             </div>
@@ -311,7 +292,6 @@ function SimpleSlider({ children, slidesPerViewDesktop = 3 }) {
         </div>
       </div>
 
-      {/* Стрелки */}
       {maxIndex > 0 && (
         <>
           <button
@@ -357,7 +337,6 @@ function SimpleSlider({ children, slidesPerViewDesktop = 3 }) {
         </>
       )}
 
-      {/* Точки */}
       {maxIndex > 0 && (
         <div className="flex justify-center mt-6 space-x-2">
           {Array.from({ length: maxIndex + 1 }, (_, i) => (
@@ -380,29 +359,86 @@ SimpleSlider.propTypes = {
   children: PropTypes.node.isRequired,
   slidesPerViewDesktop: PropTypes.number,
 };
+// Добавь этот компонент перед BeforeAfterModal
+const AnimatedModalHints = () => {
+  const [currentHint, setCurrentHint] = useState(0);
 
-function BeforeAfterModal({ items, startIndex, onClose }) {
-  const [idx, setIdx] = useState(startIndex);
+  const hints = [
+    {
+      text: "ESC zum Schließen",
+      key: "ESC",
+      icon: "×",
+      color: "text-red-500",
+      bgColor: "bg-red-50",
+    },
+    {
+      text: "← → zum Wechseln",
+      key: "← →",
+      icon: "⟷",
+      color: "text-teal-500",
+      bgColor: "bg-teal-50",
+    },
+    {
+      text: "↑ ↓ zum Vergleichen",
+      key: "↑ ↓",
+      icon: "⟷",
+      color: "text-teal-500",
+      bgColor: "bg-teal-50",
+    },
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHint((prev) => (prev + 1) % hints.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentHintData = hints[currentHint];
+
+  return (
+    <div className="text-xs hidden md:block">
+      <div
+        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all duration-500 ${currentHintData.bgColor} border hover:scale-105`}
+      >
+        <span
+          className={`text-sm font-bold ${currentHintData.color} animate-pulse`}
+        >
+          {currentHintData.icon}
+        </span>
+        <span className={`font-medium ${currentHintData.color}`}>
+          {currentHintData.text}
+        </span>
+        <kbd
+          className={`px-1.5 py-0.5 rounded text-[10px] font-mono bg-white/70 ${currentHintData.color}`}
+        >
+          {currentHintData.key}
+        </kbd>
+      </div>
+    </div>
+  );
+};
+
+function BeforeAfterModal({ projects, startIndex, onClose }) {
+  const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [divider, setDivider] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef(null);
   const [mounted, setMounted] = useState(false);
   const animationRef = useRef();
 
-  const item = items[idx];
+  const currentProject = projects[currentIndex];
 
-  // Навигация
   const prev = useCallback(() => {
-    setIdx((i) => (i - 1 + items.length) % items.length);
+    setCurrentIndex((i) => (i - 1 + projects.length) % projects.length);
     setDivider(50);
-  }, [items.length]);
+  }, [projects.length]);
 
   const next = useCallback(() => {
-    setIdx((i) => (i + 1) % items.length);
+    setCurrentIndex((i) => (i + 1) % projects.length);
     setDivider(50);
-  }, [items.length]);
+  }, [projects.length]);
 
-  // Обновление позиции ползунка
   const updateDivider = useCallback((clientX) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -410,7 +446,6 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
     setDivider((x / rect.width) * 100);
   }, []);
 
-  // Обработчики событий
   const handleMouseDown = useCallback(
     (e) => {
       e.preventDefault();
@@ -463,7 +498,7 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
     cancelAnimationFrame(animationRef.current);
   }, []);
 
-  // Глобальные обработчики
+  // Эффекты для обработки событий
   useEffect(() => {
     if (isDragging) {
       document.addEventListener("mousemove", handleMouseMove);
@@ -489,7 +524,6 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
     handleTouchEnd,
   ]);
 
-  // Обработка клавиш
   useEffect(() => {
     const handleKeyDown = (e) => {
       switch (e.key) {
@@ -525,7 +559,6 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
     };
   }, [onClose, prev, next]);
 
-  // Анимация появления
   useEffect(() => {
     const timer = setTimeout(() => setMounted(true), 10);
     return () => clearTimeout(timer);
@@ -533,7 +566,7 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
 
   return (
     <div
-      className={`fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/80 transition-opacity duration-300 ${
+      className={`fixed inset-0 z-[999] flex items-center justify-center p-2 sm:p-4 bg-black/80 transition-opacity duration-300 ${
         mounted ? "opacity-100" : "opacity-0"
       }`}
       onClick={onClose}
@@ -542,71 +575,54 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
       aria-labelledby="modal-title"
     >
       <div
-        className={`relative bg-white rounded-lg shadow-2xl overflow-hidden max-w-6xl w-full transition-transform duration-300 ${
+        className={`relative bg-black/5 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden w-full max-w-6xl max-h-[95vh] sm:max-h-[90vh] flex flex-col transition-transform duration-300 border border-white/20 ${
           mounted ? "scale-100" : "scale-95"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Шапка */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-gray-50">
-          <div className="text-sm text-gray-600">
-            <span className="font-semibold">{idx + 1}</span> von {items.length}
-          </div>
+        <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-200 bg-gray-50 flex-shrink-0">
           <div className="flex items-center gap-2">
-            <div className="text-xs text-gray-500 hidden sm:block">
-              ESC zum Schließen • ← → zum Wechseln
-            </div>
+            <AnimatedModalHints />
+          </div>
+          <div className="flex items-center gap-1 sm:gap-2">
             <button
               onClick={onClose}
               className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 transition-colors"
               aria-label="Schließen"
-              title="Schließen"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-600"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              <img
+                src="/images/close-icon.gif"
+                alt="close"
+                className="w-8 h-8"
+              />
             </button>
           </div>
         </div>
 
-        {/* Область сравнения */}
         <div
           ref={containerRef}
-          className="relative bg-gray-100 cursor-col-resize select-none"
-          style={{ aspectRatio: "16 / 9", minHeight: "300px" }}
+          className="relative bg-gray-100 cursor-col-resize select-none flex-1 min-h-0 aspect-[16/9] sm:aspect-[16/9] xs:aspect-[4/3]"
+          style={{ minHeight: "280px" }}
         >
-          {/* Изображение "После" (полное) */}
           <ImageSmart
-            src={item.after}
-            alt={`Nachher: ${item.title}`}
-            className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+            src={currentProject.after}
+            alt={`Nachher: ${currentProject.title}`}
+            className="absolute inset-0 w-full h-full pointer-events-none"
             mode="contain"
           />
 
-          {/* Изображение "До" с маской */}
           <div
             className="absolute inset-0 overflow-hidden"
             style={{ clipPath: `inset(0 ${100 - divider}% 0 0)` }}
           >
             <ImageSmart
-              src={item.before}
-              alt={`Vorher: ${item.title}`}
-              className="w-full h-full object-contain pointer-events-none"
+              src={currentProject.before}
+              alt={`Vorher: ${currentProject.title}`}
+              className="w-full h-full pointer-events-none"
               mode="contain"
             />
           </div>
 
-          {/* Ползунок */}
           <div
             className={`absolute top-0 bottom-0 w-1 bg-white/80 shadow-lg z-20 ${
               isDragging ? "cursor-grabbing" : "cursor-col-resize"
@@ -621,9 +637,9 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
             aria-label="Vergleichsregler"
             tabIndex={0}
           >
-            <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center">
+            <div className="absolute -left-2 sm:-left-3 top-1/2 -translate-y-1/2 w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full shadow-md flex items-center justify-center">
               <svg
-                className="w-5 h-5 text-gray-600"
+                className="w-3 h-3 sm:w-5 sm:h-5 text-gray-600"
                 viewBox="0 0 24 24"
                 aria-hidden="true"
               >
@@ -633,48 +649,49 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
             </div>
           </div>
 
-          {/* Улучшенные бейджи с плавными переходами */}
           <div
-            className={`absolute top-4 left-4 px-3 py-1.5 rounded-md text-sm font-semibold shadow-lg transition-opacity duration-300 ${
+            className={`absolute top-2 sm:top-4 left-2 sm:left-4 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold shadow-lg transition-opacity duration-300 ${
               divider < 20
                 ? "bg-red-600/20 text-white/50"
                 : divider < 40
                 ? "bg-red-600/50 text-white/70"
                 : "bg-red-600/90 text-white"
             }`}
-            aria-hidden="true"
           >
             VORHER
           </div>
+
           <div
-            className={`absolute top-4 right-4 px-3 py-1.5 rounded-md text-sm font-semibold shadow-lg transition-opacity duration-300 ${
+            className={`absolute top-2 sm:top-4 right-2 sm:right-4 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold shadow-lg transition-opacity duration-300 ${
               divider > 80
                 ? "bg-green-600/20 text-white/50"
                 : divider > 60
                 ? "bg-green-600/50 text-white/70"
                 : "bg-green-600/90 text-white"
             }`}
-            aria-hidden="true"
           >
             NACHHER
           </div>
 
-          {/* Подсказка */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-3 py-2 rounded-lg pointer-events-none">
+          <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-2 sm:px-3 py-1 sm:py-2 rounded-lg pointer-events-none">
             <div className="text-center">
               <div>Ziehen zum Vergleichen</div>
-              <div className="text-white/70">← → wechseln • ESC schließen</div>
+              <div className="text-white/70 hidden sm:block">
+                ← → wechseln • ESC schließen
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Подпись */}
-        <div className="p-4 text-center border-t border-gray-200 bg-gray-50">
-          <h3 id="modal-title" className="text-lg font-semibold text-gray-800">
-            {item.title}
+        <div className="p-3 sm:p-4 text-center border-t border-gray-200 bg-gray-50 flex-shrink-0">
+          <h3
+            id="modal-title"
+            className="text-base sm:text-lg font-semibold text-gray-800"
+          >
+            {currentProject.title}
           </h3>
-          <p className="text-sm text-gray-600">
-            {item.location}, {item.year}
+          <p className="text-xs sm:text-sm text-gray-600">
+            {currentProject.location}, {currentProject.year}
           </p>
         </div>
       </div>
@@ -683,7 +700,7 @@ function BeforeAfterModal({ items, startIndex, onClose }) {
 }
 
 BeforeAfterModal.propTypes = {
-  items: PropTypes.arrayOf(
+  projects: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       before: PropTypes.string.isRequired,
@@ -697,6 +714,7 @@ BeforeAfterModal.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
+// Основной компонент
 export default function BeforeAfterSlider() {
   const [isMobile, setIsMobile] = useState(false);
   const [modalIndex, setModalIndex] = useState(null);
@@ -711,13 +729,8 @@ export default function BeforeAfterSlider() {
     return () => window.removeEventListener("resize", checkMobile);
   }, [checkMobile]);
 
-  const openModal = useCallback((index) => {
-    setModalIndex(index);
-  }, []);
-
-  const closeModal = useCallback(() => {
-    setModalIndex(null);
-  }, []);
+  const openModal = useCallback((index) => setModalIndex(index), []);
+  const closeModal = useCallback(() => setModalIndex(null), []);
 
   return (
     <section
@@ -726,7 +739,6 @@ export default function BeforeAfterSlider() {
       style={{ scrollMarginBlockStart: "88px" }}
     >
       <div className="container mx-auto px-4 py-8 text-center">
-        {/* Заголовок */}
         <div className="mb-8">
           <h2 className="text-3xl md:text-5xl font-bold uppercase text-gray-800 tracking-wider inline-block border-b-4 border-yellow-400 pb-2">
             Vorher / Nachher
@@ -740,10 +752,10 @@ export default function BeforeAfterSlider() {
 
         <div className="mt-12">
           <SimpleSlider slidesPerViewDesktop={3}>
-            {items.map((item, i) => (
+            {projects.map((project, i) => (
               <BeforeAfterCard
-                key={item.id}
-                item={item}
+                key={project.id}
+                project={project}
                 isMobile={isMobile}
                 onOpen={() => openModal(i)}
               />
@@ -754,7 +766,7 @@ export default function BeforeAfterSlider() {
 
       {modalIndex !== null && (
         <BeforeAfterModal
-          items={items}
+          projects={projects}
           startIndex={modalIndex}
           onClose={closeModal}
         />
