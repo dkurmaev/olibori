@@ -1,13 +1,13 @@
 import React, {
+  useCallback,
   useEffect,
   useMemo,
-  useState,
   useRef,
-  useCallback,
+  useState,
 } from "react";
 import PropTypes from "prop-types";
 
-// Оптимизированный ImageSmart компонент с правильными путями к WebP
+/* ===== ImageSmart — использует WebP (если есть), иначе оригинал ===== */
 function ImageSmart({
   src,
   alt,
@@ -15,61 +15,63 @@ function ImageSmart({
   mode = "cover",
   w = 800,
   h = 600,
+  sizes = "(max-width: 768px) 100vw, 50vw",
   ...imgProps
 }) {
-  // Извлекаем путь после /images/
-  const imagePath = src.startsWith("/images/")
-    ? src.slice("/images/".length)
-    : src.replace(/^\//, "");
+  const m = src.match(/^\/images\/([^/]+)\/([^/.]+)\.(jpe?g|png|webp|avif)$/i);
+  const subdir = m ? m[1] : "";
+  const name = m ? m[2] : "";
 
-  // Имя файла без расширения
-  const baseNoExt = imagePath.replace(/\.(jpe?g|png|webp|avif)$/i, "");
+  const webpBase = `/webp/${subdir}`;
+  const webp480 = `${webpBase}/480/${name}.webp`;
+  const webp800 = `${webpBase}/800/${name}.webp`;
+  const webp1200 = `${webpBase}/1200/${name}.webp`;
 
-  // Генерируем пути к WebP в /webp/projekte/
-  const webpBase = `/webp/projekte/`;
-  const webp480 = `${webpBase}480/${baseNoExt.replace("projekte/", "")}.webp`;
-  const webp800 = `${webpBase}800/${baseNoExt.replace("projekte/", "")}.webp`;
-  const webp1200 = `${webpBase}1200/${baseNoExt.replace("projekte/", "")}.webp`;
+  const [hasWebp, setHasWebp] = useState(true);
+  useEffect(() => {
+    let alive = true;
+    const img = new Image();
+    img.src = webp800;
+    img.onload = () => alive && setHasWebp(true);
+    img.onerror = () => alive && setHasWebp(false);
+    return () => {
+      alive = false;
+    };
+  }, [webp800]);
 
   const objectClass = mode === "cover" ? "object-cover" : "object-contain";
   const classes = `${className} ${objectClass}`.trim();
 
-  return (
+  const commonProps = {
+    width: w,
+    height: h,
+    loading: "lazy",
+    decoding: "async",
+    alt,
+    className: classes,
+    ...imgProps,
+    onError: (e) => {
+      imgProps.onError?.(e);
+      e.currentTarget.onerror = null;
+      e.currentTarget.src = "/images/placeholder.jpg";
+    },
+  };
+
+  return hasWebp ? (
     <picture>
       <source
         type="image/webp"
         srcSet={`${webp480} 480w, ${webp800} 800w, ${webp1200} 1200w`}
-        sizes="(max-width: 768px) 100vw, 33vw"
+        sizes={sizes}
       />
-      <img
-        src={src}
-        width={w}
-        height={h}
-        loading="lazy"
-        decoding="async"
-        alt={alt}
-        className={classes}
-        {...imgProps}
-        onError={(e) => {
-          if (imgProps.onError) imgProps.onError(e);
-          e.currentTarget.onerror = null;
-          e.currentTarget.src = "/images/placeholder.jpg";
-        }}
-      />
+      <img src={src} {...commonProps} />
     </picture>
+  ) : (
+    <img src={src} {...commonProps} />
   );
 }
 
-ImageSmart.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  mode: PropTypes.oneOf(["cover", "contain"]),
-  w: PropTypes.number,
-  h: PropTypes.number,
-};
-
-// Данные проектов
+/* ===== ДАННЫЕ ===== */
 const projects = [
   {
     id: 1,
@@ -95,70 +97,94 @@ const projects = [
     location: "Essen",
     year: "2024",
   },
+  {
+    id: 4,
+    before: "/images/projekte/project4-before.jpg",
+    after: "/images/projekte/project4-after.jpg",
+    title: "Fassadenrenovierung",
+    location: "Berlin",
+    year: "2023",
+  },
 ];
 
+/* ===== Скелетон ===== */
 function CardSkeleton() {
   return (
     <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-slate-200 to-slate-100" />
   );
 }
 
-// Оптимизированная карточка "до/после"
+/* ===== Карточка ===== */
 function BeforeAfterCard({ project, isMobile, onOpen }) {
-  const [tapped, setTapped] = useState(false);
-  const [afterPreloaded, setAfterPreloaded] = useState(false);
   const [loadedBefore, setLoadedBefore] = useState(false);
   const [loadedAfter, setLoadedAfter] = useState(false);
   const [errorBefore, setErrorBefore] = useState(false);
   const [errorAfter, setErrorAfter] = useState(false);
 
-  const showAfter = isMobile ? tapped : false;
+  const [hovered, setHovered] = useState(false);
+  const [pressing, setPressing] = useState(false);
+  const touchStartRef = useRef({ t: 0, x: 0, y: 0, moved: false });
 
-  const toggle = useCallback(
-    () => isMobile && setTapped((v) => !v),
-    [isMobile]
-  );
-  const handleOpen = useCallback(
+  const showAfter = isMobile ? pressing : hovered;
+
+  const handleMouseEnter = useCallback(() => setHovered(true), []);
+  const handleMouseLeave = useCallback(() => setHovered(false), []);
+
+  const onTouchStart = useCallback((e) => {
+    const t = e.touches[0];
+    touchStartRef.current = {
+      t: performance.now(),
+      x: t.clientX,
+      y: t.clientY,
+      moved: false,
+    };
+    setPressing(true);
+  }, []);
+
+  const onTouchMove = useCallback((e) => {
+    const t = e.touches[0];
+    const s = touchStartRef.current;
+    if (Math.hypot(t.clientX - s.x, t.clientY - s.y) > 8) {
+      touchStartRef.current.moved = true;
+    }
+  }, []);
+
+  const onTouchEnd = useCallback(
     (e) => {
-      e?.stopPropagation();
-      onOpen?.();
+      e.preventDefault();
+      const s = touchStartRef.current;
+      const dt = performance.now() - s.t;
+      const isTap = dt < 200 && !s.moved;
+      setPressing(false);
+      if (isTap) onOpen?.();
     },
     [onOpen]
   );
 
-  // Прелоад изображения "после" при наведении
-  const handleMouseEnter = useCallback(() => {
-    if (!afterPreloaded && !errorAfter) {
-      const img = new Image();
-      img.src = project.after;
-      img.onload = () => setAfterPreloaded(true);
-      img.onerror = () => setErrorAfter(true);
-    }
-  }, [afterPreloaded, errorAfter, project.after]);
-
   return (
     <div
-      className="relative group rounded-lg border border-gray-200 shadow-lg overflow-hidden cursor-pointer bg-white content-auto"
+      className="relative group rounded-lg border border-gray-200 shadow-lg overflow-hidden cursor-pointer bg-white"
       style={{ aspectRatio: "4 / 3" }}
-      onMouseEnter={handleMouseEnter}
-      onClick={toggle}
-      onDoubleClick={handleOpen}
-      aria-label={`Vorher/Nachher Vergleich: ${project.title}`}
+      onMouseEnter={!isMobile ? handleMouseEnter : undefined}
+      onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+      onDoubleClick={!isMobile ? onOpen : undefined}
+      onTouchStart={isMobile ? onTouchStart : undefined}
+      onTouchMove={isMobile ? onTouchMove : undefined}
+      onTouchEnd={isMobile ? onTouchEnd : undefined}
       role="button"
-      tabIndex={0}
+      aria-label={`Vorher/Nachher: ${project.title}`}
     >
       {(!loadedBefore || errorBefore) && <CardSkeleton />}
-
       <ImageSmart
         src={errorBefore ? "/images/placeholder.jpg" : project.before}
         alt={`Vorher: ${project.title}`}
         onLoad={() => setLoadedBefore(true)}
         onError={() => setErrorBefore(true)}
-        className={`absolute inset-0 w-full h-full transition-all duration-500 ${
-          showAfter
-            ? "opacity-0 scale-100"
-            : "opacity-100 group-hover:opacity-0 group-hover:scale-105"
+        className={`absolute inset-0 w-full h-full transition-all duration-400 pointer-events-none ${
+          showAfter ? "opacity-0" : "opacity-100 group-hover:scale-105"
         }`}
+        w={800}
+        h={600}
         mode="cover"
       />
 
@@ -169,34 +195,25 @@ function BeforeAfterCard({ project, isMobile, onOpen }) {
           alt={`Nachher: ${project.title}`}
           onLoad={() => setLoadedAfter(true)}
           onError={() => setErrorAfter(true)}
-          className={`absolute inset-0 w-full h-full transition-all duration-500 ${
-            showAfter
-              ? "opacity-100 scale-105"
-              : "opacity-0 group-hover:opacity-100 group-hover:scale-105"
+          className={`absolute inset-0 w-full h-full transition-all duration-400 pointer-events-none ${
+            showAfter ? "opacity-100 scale-105" : "opacity-0"
           }`}
+          w={800}
+          h={600}
           mode="cover"
         />
       )}
 
       <div
-        className={`absolute top-2 left-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur transition-colors ${
-          isMobile
-            ? tapped
-              ? "bg-slate-900/30 text-white/50"
-              : "bg-slate-900/80 text-white"
-            : "bg-slate-900/80 text-white group-hover:bg-slate-900/30 group-hover:text-white/50"
+        className={`absolute top-2 left-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur ${
+          showAfter ? "bg-slate-900/30 text-white/50" : "bg-slate-900/80 text-white"
         }`}
       >
         VORHER
       </div>
-
       <div
-        className={`absolute top-2 right-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur transition-colors ${
-          isMobile
-            ? tapped
-              ? "bg-emerald-600/90 text-white"
-              : "bg-emerald-600/30 text-white/60"
-            : "bg-emerald-600/30 text-white/60 group-hover:bg-emerald-600/90 group-hover:text-white"
+        className={`absolute top-2 right-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur ${
+          showAfter ? "bg-emerald-600/90 text-white" : "bg-emerald-600/30 text-white/60"
         }`}
       >
         NACHHER
@@ -204,71 +221,42 @@ function BeforeAfterCard({ project, isMobile, onOpen }) {
 
       <div className="absolute bottom-10 right-2 bg-white/85 text-[11px] px-2 py-[3px] rounded shadow text-gray-800 font-medium pointer-events-none">
         {isMobile
-          ? "👆 Tippen (Doppeltipp: Vollbild)"
-          : "🖱️ Hover • Doppelklick: Vollbild"}
+          ? "👆 Удерживайте — Nachher • Тап — Vollbild"
+          : "🖱️ Hover • Двойной клик — Vollbild"}
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-sm p-2 text-center">
         {project.title} – {project.location}, {project.year}
       </div>
-
-      {isMobile && (
-        <button
-          type="button"
-          onClick={handleOpen}
-          className="absolute left-2 bottom-2 text-xs bg-white/90 text-gray-800 px-2 py-1 rounded shadow"
-          aria-label="Vollbildmodus öffnen"
-        >
-          Vollbild
-        </button>
-      )}
     </div>
   );
 }
 
-BeforeAfterCard.propTypes = {
-  project: PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    before: PropTypes.string.isRequired,
-    after: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
-    year: PropTypes.string.isRequired,
-  }).isRequired,
-  isMobile: PropTypes.bool.isRequired,
-  onOpen: PropTypes.func,
-};
-
-// Оптимизированный слайдер
-function SimpleSlider({ children, slidesPerViewDesktop = 3 }) {
+/* ===== Слайдер ===== */
+function SimpleSlider({ children, slidesPerViewDesktop = 2 }) {
   const slides = useMemo(() => React.Children.toArray(children), [children]);
   const [isMobile, setIsMobile] = useState(false);
-  const [index, setIndex] = useState(0);
+  const [page, setPage] = useState(0);
 
-  const checkMobile = useCallback(() => {
-    setIsMobile(window.innerWidth < 768);
-  }, []);
-
+  const checkMobile = useCallback(() => setIsMobile(window.innerWidth < 768), []);
   useEffect(() => {
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, [checkMobile]);
 
-  const slidesToShow = isMobile ? 1 : slidesPerViewDesktop;
-  const totalSlides = slides.length;
-  const maxIndex = Math.max(0, totalSlides - slidesToShow);
+  const k = isMobile ? 1 : slidesPerViewDesktop;
+  const total = slides.length;
+  const pages = Math.max(1, Math.ceil(total / k));
+  const maxPage = pages - 1;
 
-  const trackWidth = (totalSlides * 100) / slidesToShow;
-  const slideWidth = (100 / totalSlides) * slidesToShow;
-  const translateX = (index * 100) / totalSlides;
+  const trackWidthPct = (total * 100) / k;
+  const itemWidthPct = (100 / total) * k;
+  const translatePct = (100 / pages) * page;
 
-  const goPrev = useCallback(() => setIndex((i) => Math.max(0, i - 1)), []);
-  const goNext = useCallback(
-    () => setIndex((i) => Math.min(maxIndex, i + 1)),
-    [maxIndex]
-  );
-  const goToSlide = useCallback((i) => setIndex(i), []);
+  const goPrev = useCallback(() => setPage((p) => Math.max(0, p - 1)), []);
+  const goNext = useCallback(() => setPage((p) => Math.min(maxPage, p + 1)), [maxPage]);
+  const goTo = useCallback((p) => setPage(p), []);
 
   return (
     <div className="relative" role="region" aria-label="Galerie Vorher/Nachher">
@@ -276,15 +264,16 @@ function SimpleSlider({ children, slidesPerViewDesktop = 3 }) {
         <div
           className="flex transition-transform duration-300 ease-in-out"
           style={{
-            width: `${trackWidth}%`,
-            transform: `translateX(-${translateX}%)`,
+            width: `${trackWidthPct}%`,
+            transform: `translateX(-${translatePct}%)`,
           }}
+          aria-live="polite"
         >
           {slides.map((child, i) => (
             <div
               key={i}
               className="px-2 md:px-3"
-              style={{ width: `${slideWidth}%` }}
+              style={{ width: `${itemWidthPct}%` }}
             >
               {child}
             </div>
@@ -292,13 +281,13 @@ function SimpleSlider({ children, slidesPerViewDesktop = 3 }) {
         </div>
       </div>
 
-      {maxIndex > 0 && (
+      {pages > 1 && (
         <>
           <button
             onClick={goPrev}
-            disabled={index === 0}
-            className="absolute top-1/2 -translate-y-1/2 -left-4 z-10 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-label="Vorheriges Bild"
+            disabled={page === 0}
+            className="absolute top-1/2 -translate-y-1/2 -left-4 z-10 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center disabled:opacity-50"
+            aria-label="Vorherige Seite"
           >
             <svg
               className="w-5 h-5 text-gray-800"
@@ -316,9 +305,9 @@ function SimpleSlider({ children, slidesPerViewDesktop = 3 }) {
           </button>
           <button
             onClick={goNext}
-            disabled={index === maxIndex}
-            className="absolute top-1/2 -translate-y-1/2 -right-4 z-10 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-label="Nächstes Bild"
+            disabled={page === maxPage}
+            className="absolute top-1/2 -translate-y-1/2 -right-4 z-10 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center disabled:opacity-50"
+            aria-label="Nächste Seite"
           >
             <svg
               className="w-5 h-5 text-gray-800"
@@ -334,195 +323,106 @@ function SimpleSlider({ children, slidesPerViewDesktop = 3 }) {
               />
             </svg>
           </button>
-        </>
-      )}
 
-      {maxIndex > 0 && (
-        <div className="flex justify-center mt-6 space-x-2">
-          {Array.from({ length: maxIndex + 1 }, (_, i) => (
-            <button
-              key={i}
-              onClick={() => goToSlide(i)}
-              className={`w-2 h-2 rounded-full ${
-                i === index ? "bg-yellow-400" : "bg-gray-300 hover:bg-gray-400"
-              }`}
-              aria-label={`Gehe zu Slide ${i + 1}`}
-            />
-          ))}
-        </div>
+          <div className="flex justify-center mt-6 space-x-2">
+            {Array.from({ length: pages }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className={`w-2 h-2 rounded-full ${
+                  i === page ? "bg-yellow-400" : "bg-gray-300 hover:bg-gray-400"
+                }`}
+                aria-label={`Seite ${i + 1}`}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
 }
 
-SimpleSlider.propTypes = {
-  children: PropTypes.node.isRequired,
-  slidesPerViewDesktop: PropTypes.number,
-};
-// Добавь этот компонент перед BeforeAfterModal
-const AnimatedModalHints = () => {
-  const [currentHint, setCurrentHint] = useState(0);
-
-  const hints = [
-    {
-      text: "ESC zum Schließen",
-      key: "ESC",
-      icon: "×",
-      color: "text-red-500",
-      bgColor: "bg-red-50",
-    },
-    {
-      text: "← → zum Wechseln",
-      key: "← →",
-      icon: "⟷",
-      color: "text-teal-500",
-      bgColor: "bg-teal-50",
-    },
-    {
-      text: "↑ ↓ zum Vergleichen",
-      key: "↑ ↓",
-      icon: "⟷",
-      color: "text-teal-500",
-      bgColor: "bg-teal-50",
-    },
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentHint((prev) => (prev + 1) % hints.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
-
-  const currentHintData = hints[currentHint];
-
-  return (
-    <div className="text-xs hidden md:block">
-      <div
-        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all duration-500 ${currentHintData.bgColor} border hover:scale-105`}
-      >
-        <span
-          className={`text-sm font-bold ${currentHintData.color} animate-pulse`}
-        >
-          {currentHintData.icon}
-        </span>
-        <span className={`font-medium ${currentHintData.color}`}>
-          {currentHintData.text}
-        </span>
-        <kbd
-          className={`px-1.5 py-0.5 rounded text-[10px] font-mono bg-white/70 ${currentHintData.color}`}
-        >
-          {currentHintData.key}
-        </kbd>
-      </div>
-    </div>
-  );
-};
-
-function BeforeAfterModal({ projects, startIndex, onClose }) {
+/* ===== Модалка ===== */
+function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [divider, setDivider] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
-  const containerRef = useRef(null);
   const [mounted, setMounted] = useState(false);
-  const animationRef = useRef();
+  const [showHintToast, setShowHintToast] = useState(true);
+  const containerRef = useRef(null);
+  const hintTimeoutRef = useRef();
 
   const currentProject = projects[currentIndex];
 
   const prev = useCallback(() => {
     setCurrentIndex((i) => (i - 1 + projects.length) % projects.length);
     setDivider(50);
+    showTemporaryHint();
   }, [projects.length]);
 
   const next = useCallback(() => {
     setCurrentIndex((i) => (i + 1) % projects.length);
     setDivider(50);
+    showTemporaryHint();
   }, [projects.length]);
 
-  const updateDivider = useCallback((clientX) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
-    setDivider((x / rect.width) * 100);
+  const showTemporaryHint = useCallback(() => {
+    setShowHintToast(true);
+    clearTimeout(hintTimeoutRef.current);
+    hintTimeoutRef.current = setTimeout(() => {
+      setShowHintToast(false);
+    }, 3000);
   }, []);
 
-  const handleMouseDown = useCallback(
-    (e) => {
-      e.preventDefault();
-      setIsDragging(true);
-      updateDivider(e.clientX);
-    },
-    [updateDivider]
-  );
+  const getLabelOpacity = useCallback((position, dividerPos) => {
+    const distance = Math.abs(position - dividerPos);
+    if (distance < 10) return 1;
+    if (distance < 30) return 0.7;
+    if (distance < 50) return 0.4;
+    return 0.2;
+  }, []);
 
-  const handleMouseMove = useCallback(
-    (e) => {
-      if (isDragging) {
-        cancelAnimationFrame(animationRef.current);
-        animationRef.current = requestAnimationFrame(() => {
-          updateDivider(e.clientX);
-        });
-      }
-    },
-    [isDragging, updateDivider]
-  );
+  const handleMouseDown = useCallback(() => {
+    setIsDragging(true);
+  }, []);
+
+  const handleMouseMove = useCallback((e) => {
+    if (!isDragging) return;
+    const container = containerRef.current;
+    if (!container) return;
+    
+    const rect = container.getBoundingClientRect();
+    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    setDivider((x / rect.width) * 100);
+  }, [isDragging]);
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-    cancelAnimationFrame(animationRef.current);
   }, []);
 
-  const handleTouchStart = useCallback(
-    (e) => {
-      e.preventDefault();
-      setIsDragging(true);
-      updateDivider(e.touches[0].clientX);
-    },
-    [updateDivider]
-  );
+  const handleTouchStart = useCallback((e) => {
+    setIsDragging(true);
+    const container = containerRef.current;
+    if (!container) return;
+    
+    const rect = container.getBoundingClientRect();
+    const x = Math.max(0, Math.min(e.touches[0].clientX - rect.left, rect.width));
+    setDivider((x / rect.width) * 100);
+  }, []);
 
-  const handleTouchMove = useCallback(
-    (e) => {
-      if (isDragging) {
-        cancelAnimationFrame(animationRef.current);
-        animationRef.current = requestAnimationFrame(() => {
-          updateDivider(e.touches[0].clientX);
-        });
-      }
-    },
-    [isDragging, updateDivider]
-  );
+  const handleTouchMove = useCallback((e) => {
+    if (!isDragging) return;
+    const container = containerRef.current;
+    if (!container) return;
+    
+    const rect = container.getBoundingClientRect();
+    const x = Math.max(0, Math.min(e.touches[0].clientX - rect.left, rect.width));
+    setDivider((x / rect.width) * 100);
+  }, [isDragging]);
 
   const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
-    cancelAnimationFrame(animationRef.current);
   }, []);
-
-  // Эффекты для обработки событий
-  useEffect(() => {
-    if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-      document.addEventListener("touchmove", handleTouchMove, {
-        passive: false,
-      });
-      document.addEventListener("touchend", handleTouchEnd);
-
-      return () => {
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
-        document.removeEventListener("touchmove", handleTouchMove);
-        document.removeEventListener("touchend", handleTouchEnd);
-        cancelAnimationFrame(animationRef.current);
-      };
-    }
-  }, [
-    isDragging,
-    handleMouseMove,
-    handleMouseUp,
-    handleTouchMove,
-    handleTouchEnd,
-  ]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -550,23 +450,31 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
     };
 
     document.addEventListener("keydown", handleKeyDown);
-    document.body.style.overflow = "hidden";
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
+    document.addEventListener("touchend", handleTouchEnd);
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
-      cancelAnimationFrame(animationRef.current);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [onClose, prev, next]);
+  }, [handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd, next, onClose, prev]);
 
   useEffect(() => {
-    const timer = setTimeout(() => setMounted(true), 10);
+    setMounted(true);
+    const timer = setTimeout(() => {
+      setShowHintToast(false);
+    }, 3000);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div
-      className={`fixed inset-0 z-[999] flex items-center justify-center p-2 sm:p-4 bg-black/80 transition-opacity duration-300 ${
+      className={`fixed inset-0 z-[999] flex items-center justify-center p-2 sm:p-4 bg-black/90 transition-opacity duration-300 ${
         mounted ? "opacity-100" : "opacity-0"
       }`}
       onClick={onClose}
@@ -575,34 +483,35 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
       aria-labelledby="modal-title"
     >
       <div
-        className={`relative bg-black/5 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden w-full max-w-6xl max-h-[95vh] sm:max-h-[90vh] flex flex-col transition-transform duration-300 border border-white/20 ${
+        className={`relative bg-white rounded-lg shadow-2xl overflow-hidden w-full max-w-6xl max-h-[95vh] sm:max-h-[90vh] flex flex-col transition-transform duration-300 ${
           mounted ? "scale-100" : "scale-95"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-200 bg-gray-50 flex-shrink-0">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-gray-50 flex-shrink-0">
           <div className="flex items-center gap-2">
-            <AnimatedModalHints />
+            <span className="text-sm text-gray-600 md:hidden">
+              {currentIndex + 1} / {projects.length}
+            </span>
           </div>
-          <div className="flex items-center gap-1 sm:gap-2">
-            <button
-              onClick={onClose}
-              className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 transition-colors"
-              aria-label="Schließen"
-            >
-              <img
-                src="/images/close-icon.gif"
-                alt="close"
-                className="w-8 h-8"
-              />
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 transition-colors"
+            aria-label="Schließen"
+            type="button"
+          >
+            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+            </svg>
+          </button>
         </div>
 
         <div
           ref={containerRef}
-          className="relative bg-gray-100 cursor-col-resize select-none flex-1 min-h-0 aspect-[16/9] sm:aspect-[16/9] xs:aspect-[4/3]"
-          style={{ minHeight: "280px" }}
+          className="relative bg-gray-100 cursor-col-resize select-none flex-1 min-h-0 touch-none"
+          style={{ minHeight: "300px" }}
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
         >
           <ImageSmart
             src={currentProject.after}
@@ -624,12 +533,10 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
           </div>
 
           <div
-            className={`absolute top-0 bottom-0 w-1 bg-white/80 shadow-lg z-20 ${
+            className={`absolute top-0 bottom-0 w-1 bg-white shadow-lg z-20 ${
               isDragging ? "cursor-grabbing" : "cursor-col-resize"
             }`}
             style={{ left: `${divider}%` }}
-            onMouseDown={handleMouseDown}
-            onTouchStart={handleTouchStart}
             role="slider"
             aria-valuemin={0}
             aria-valuemax={100}
@@ -637,61 +544,134 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
             aria-label="Vergleichsregler"
             tabIndex={0}
           >
-            <div className="absolute -left-2 sm:-left-3 top-1/2 -translate-y-1/2 w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full shadow-md flex items-center justify-center">
+            <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center">
               <svg
-                className="w-3 h-3 sm:w-5 sm:h-5 text-gray-600"
+                className="w-4 h-4 text-gray-600"
                 viewBox="0 0 24 24"
-                aria-hidden="true"
+                fill="currentColor"
               >
                 <path d="M8 12l4-4 4 4-4 4-4-4z" />
-                <path d="M16 12l-4 4-4-4 4-4 4 4z" />
               </svg>
             </div>
           </div>
 
           <div
-            className={`absolute top-2 sm:top-4 left-2 sm:left-4 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold shadow-lg transition-opacity duration-300 ${
+            className={`absolute top-4 left-4 px-3 py-1.5 rounded-md text-sm font-semibold shadow-lg transition-all duration-300 ${
               divider < 20
-                ? "bg-red-600/20 text-white/50"
+                ? "bg-red-600/90 text-white"
                 : divider < 40
-                ? "bg-red-600/50 text-white/70"
-                : "bg-red-600/90 text-white"
+                ? "bg-red-600/70 text-white/90"
+                : "bg-red-600/50 text-white/80"
             }`}
+            style={{
+              opacity: getLabelOpacity(10, divider),
+              transform: `translateX(${Math.min(0, 50 - divider)}px)`,
+            }}
           >
             VORHER
           </div>
 
           <div
-            className={`absolute top-2 sm:top-4 right-2 sm:right-4 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold shadow-lg transition-opacity duration-300 ${
+            className={`absolute top-4 right-4 px-3 py-1.5 rounded-md text-sm font-semibold shadow-lg transition-all duration-300 ${
               divider > 80
-                ? "bg-green-600/20 text-white/50"
+                ? "bg-green-600/90 text-white"
                 : divider > 60
-                ? "bg-green-600/50 text-white/70"
-                : "bg-green-600/90 text-white"
+                ? "bg-green-600/70 text-white/90"
+                : "bg-green-600/50 text-white/80"
             }`}
+            style={{
+              opacity: getLabelOpacity(90, divider),
+              transform: `translateX(${Math.max(0, 50 - (100 - divider))}px)`,
+            }}
           >
             NACHHER
           </div>
 
-          <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-2 sm:px-3 py-1 sm:py-2 rounded-lg pointer-events-none">
-            <div className="text-center">
-              <div>Ziehen zum Vergleichen</div>
-              <div className="text-white/70 hidden sm:block">
-                ← → wechseln • ESC schließen
+          {showHintToast && (
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/90 text-white text-sm px-4 py-2 rounded-lg shadow-xl animate-fade-in pointer-events-none">
+              <div className="flex items-center gap-2">
+                <span className="text-yellow-400">💡</span>
+                <div>
+                  <div className="font-medium">Tipp:</div>
+                  <div className="text-xs">
+                    {isMobile
+                      ? "Ziehen Sie den Regler zum Vergleichen"
+                      : "Verwenden Sie die Pfeiltasten für präzise Steuerung"}
+                  </div>
+                </div>
               </div>
             </div>
+          )}
+
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white text-xs px-3 py-1.5 rounded-lg pointer-events-none hidden md:block">
+            <div className="flex items-center gap-2">
+              <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-xs">
+                ← →
+              </kbd>
+              <span>Wechseln</span>
+              <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-xs">
+                ESC
+              </kbd>
+              <span>Schließen</span>
+            </div>
+          </div>
+
+          <div className="md:hidden absolute left-4 top-1/2 -translate-y-1/2">
+            <button
+              onClick={prev}
+              className="w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center"
+              aria-label="Vorheriges"
+              type="button"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div className="md:hidden absolute right-4 top-1/2 -translate-y-1/2">
+            <button
+              onClick={next}
+              className="w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center"
+              aria-label="Nächstes"
+              type="button"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
           </div>
         </div>
 
-        <div className="p-3 sm:p-4 text-center border-t border-gray-200 bg-gray-50 flex-shrink-0">
-          <h3
-            id="modal-title"
-            className="text-base sm:text-lg font-semibold text-gray-800"
-          >
+        <div className="p-4 text-center border-t border-gray-200 bg-gray-50 flex-shrink-0">
+          <h3 id="modal-title" className="text-lg font-semibold text-gray-800">
             {currentProject.title}
           </h3>
-          <p className="text-xs sm:text-sm text-gray-600">
+          <p className="text-sm text-gray-600">
             {currentProject.location}, {currentProject.year}
+          </p>
+          <p className="text-xs text-gray-500 mt-1 hidden md:block">
+            Projekt {currentIndex + 1} von {projects.length}
           </p>
         </div>
       </div>
@@ -699,30 +679,12 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
   );
 }
 
-BeforeAfterModal.propTypes = {
-  projects: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      before: PropTypes.string.isRequired,
-      after: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      location: PropTypes.string.isRequired,
-      year: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  startIndex: PropTypes.number.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
-
-// Основной компонент
+/* ===== Главный блок ===== */
 export default function BeforeAfterSlider() {
   const [isMobile, setIsMobile] = useState(false);
   const [modalIndex, setModalIndex] = useState(null);
 
-  const checkMobile = useCallback(() => {
-    setIsMobile(window.innerWidth < 768);
-  }, []);
-
+  const checkMobile = useCallback(() => setIsMobile(window.innerWidth < 768), []);
   useEffect(() => {
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -751,7 +713,7 @@ export default function BeforeAfterSlider() {
         </div>
 
         <div className="mt-12">
-          <SimpleSlider slidesPerViewDesktop={3}>
+          <SimpleSlider slidesPerViewDesktop={2}>
             {projects.map((project, i) => (
               <BeforeAfterCard
                 key={project.id}
@@ -769,8 +731,45 @@ export default function BeforeAfterSlider() {
           projects={projects}
           startIndex={modalIndex}
           onClose={closeModal}
+          isMobile={isMobile}
         />
       )}
     </section>
   );
 }
+
+/* ===== PropTypes ===== */
+ImageSmart.propTypes = {
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  mode: PropTypes.oneOf(["cover", "contain"]),
+  w: PropTypes.number,
+  h: PropTypes.number,
+  sizes: PropTypes.string,
+};
+
+BeforeAfterCard.propTypes = {
+  project: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    before: PropTypes.string.isRequired,
+    after: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    year: PropTypes.string.isRequired,
+  }).isRequired,
+  isMobile: PropTypes.bool.isRequired,
+  onOpen: PropTypes.func,
+};
+
+SimpleSlider.propTypes = {
+  children: PropTypes.node.isRequired,
+  slidesPerViewDesktop: PropTypes.number,
+};
+
+BeforeAfterModal.propTypes = {
+  projects: PropTypes.arrayOf(BeforeAfterCard.propTypes.project).isRequired,
+  startIndex: PropTypes.number.isRequired,
+  onClose: PropTypes.func.isRequired,
+  isMobile: PropTypes.bool.isRequired,
+};
