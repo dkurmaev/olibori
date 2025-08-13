@@ -490,9 +490,9 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-gray-50 flex-shrink-0">
           <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600 md:hidden">
+            {/* <span className="text-sm text-gray-600 md:hidden">
               {currentIndex + 1} / {projects.length}
-            </span>
+            </span> */}
           </div>
           <button
             onClick={onClose}
@@ -506,12 +506,13 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
                   className="w-8 h-8"
                 />
           </button>
+          
         </div>
 
         <div
           ref={containerRef}
           className="relative bg-gray-100 cursor-col-resize select-none flex-1 min-h-0 touch-none"
-          style={{ minHeight: "600px" }}
+          style={{ minHeight: "500px" }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
         >
@@ -619,7 +620,7 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
             </div>
           </div>
 
-          <div className="md:hidden absolute left-4 top-1/2 -translate-y-1/2">
+          {/* <div className="md:hidden absolute left-4 top-1/2 -translate-y-1/2">
             <button
               onClick={prev}
               className="w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center"
@@ -640,9 +641,9 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
                 />
               </svg>
             </button>
-          </div>
+          </div> */}
 
-          <div className="md:hidden absolute right-4 top-1/2 -translate-y-1/2">
+          {/* <div className="md:hidden absolute right-4 top-1/2 -translate-y-1/2">
             <button
               onClick={next}
               className="w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center"
@@ -663,7 +664,7 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
                 />
               </svg>
             </button>
-          </div>
+          </div> */}
         </div>
 
         <div className="p-4 text-center border-t border-gray-200 bg-gray-50 flex-shrink-0">
@@ -673,9 +674,9 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
           <p className="text-sm text-gray-600">
             {currentProject.location}, {currentProject.year}
           </p>
-          <p className="text-xs text-gray-500 mt-1 hidden md:block">
+         {/*  <p className="text-xs text-gray-500 mt-1 hidden md:block">
             Projekt {currentIndex + 1} von {projects.length}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
