@@ -77,33 +77,33 @@ const projects = [
     id: 1,
     before: "/images/projekte/project1-before.jpg",
     after: "/images/projekte/project1-after.jpg",
-    title: "Flachdach-Sanierung",
-    location: "Düsseldorf",
-    year: "2024",
+    title: "Neubau",
+    location: "Feuerwehr Niederfischbach",
+    year: "2025",
   },
   {
     id: 2,
     before: "/images/projekte/project2-before.jpg",
     after: "/images/projekte/project2-after.jpg",
-    title: "Komplettumbau",
-    location: "Köln",
-    year: "2023",
+    title: "Sanierung",
+    location: "Rewe Siegen",
+    year: "2025",
   },
   {
     id: 3,
     before: "/images/projekte/project3-before.jpg",
     after: "/images/projekte/project3-after.jpg",
-    title: "Dachsanierung",
-    location: "Essen",
-    year: "2024",
+    title: "Neubau",
+    location: "B&B Hotel Lippstadt",
+    year: "2025",
   },
   {
     id: 4,
     before: "/images/projekte/project4-before.jpg",
     after: "/images/projekte/project4-after.jpg",
-    title: "Fassadenrenovierung",
-    location: "Berlin",
-    year: "2023",
+    title: "Neubau",
+    location: "Uni Campus",
+    year: "2025",
   },
 ];
 
@@ -500,16 +500,18 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
             aria-label="Schließen"
             type="button"
           >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-            </svg>
+           <img
+                  src="/images/close-icon.gif"
+                  alt="close"
+                  className="w-8 h-8"
+                />
           </button>
         </div>
 
         <div
           ref={containerRef}
           className="relative bg-gray-100 cursor-col-resize select-none flex-1 min-h-0 touch-none"
-          style={{ minHeight: "300px" }}
+          style={{ minHeight: "600px" }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
         >
@@ -564,8 +566,8 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
                 : "bg-red-600/50 text-white/80"
             }`}
             style={{
-              opacity: getLabelOpacity(10, divider),
-              transform: `translateX(${Math.min(0, 50 - divider)}px)`,
+              opacity: getLabelOpacity(90, divider),
+              transform: `translateX(${Math.max(0, 50 - (100 - divider))}px)`,
             }}
           >
             VORHER
@@ -573,15 +575,16 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
 
           <div
             className={`absolute top-4 right-4 px-3 py-1.5 rounded-md text-sm font-semibold shadow-lg transition-all duration-300 ${
-              divider > 80
+              divider > 20
                 ? "bg-green-600/90 text-white"
-                : divider > 60
-                ? "bg-green-600/70 text-white/90"
+                : divider > 40
+                ? "bg-green-600/30 text-white/90"
                 : "bg-green-600/50 text-white/80"
             }`}
             style={{
-              opacity: getLabelOpacity(90, divider),
-              transform: `translateX(${Math.max(0, 50 - (100 - divider))}px)`,
+              opacity: getLabelOpacity(10, divider),
+              transform: `translateX(${Math.min(0, 80 - divider)}px)`,
+              
             }}
           >
             NACHHER
