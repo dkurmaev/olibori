@@ -221,8 +221,8 @@ function BeforeAfterCard({ project, isMobile, onOpen }) {
 
       <div className="absolute bottom-10 right-2 bg-white/85 text-[11px] px-2 py-[3px] rounded shadow text-gray-800 font-medium pointer-events-none">
         {isMobile
-          ? "👆 Удерживайте — Nachher • Тап — Vollbild"
-          : "🖱️ Hover • Двойной клик — Vollbild"}
+            ? "👆 Halten für Nachher"
+            : "🖱️ Doppelklick für Vollbild"}
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-sm p-2 text-center">
@@ -483,7 +483,7 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
       aria-labelledby="modal-title"
     >
       <div
-        className={`relative bg-white rounded-lg shadow-2xl overflow-hidden w-full max-w-6xl max-h-[95vh] sm:max-h-[90vh] flex flex-col transition-transform duration-300 ${
+        className={`relative bg-white rounded-lg shadow-2xl overflow-hidden w-full max-w-6xl max-h-[90vh] sm:max-h-[90vh] flex flex-col transition-transform duration-300 ${
           mounted ? "scale-100" : "scale-95"
         }`}
         onClick={(e) => e.stopPropagation()}
