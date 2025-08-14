@@ -113,7 +113,7 @@ export default function Header() {
       className={`fixed top-0 left-0 w-full z-50 shadow-2xl bg-gray-400 backdrop-blur-xl transition-all duration-500 ${
         scrolled ? "bg-opacity-20" : "bg-opacity-10"
       }`}
-      style={{ height: "96px" }} 
+      style={{ height: "82px" }} 
     >
       <div
         className="container mx-auto h-full flex items-center"
@@ -228,18 +228,20 @@ export default function Header() {
     
       {menuOpen && showBurger && (
         <div
-          className="fixed inset-0 z-40 mt-20 md:mt-24 bg-black/50"
+          className="fixed inset-0 z-40 mt-10 md:mt-20 bg-black/50"
+          //style={{ top: '8px' }}
           onClick={toggleMenu}
         >
           <nav
-            className="bg-teal-900 bg-opacity-95 p-6 flex flex-col space-y-4"
+            className="absolute top-0 right-0 bg-teal-900 bg-opacity-95 min-w-max shadow-2xl rounded-bl-lg"
             onClick={(e) => e.stopPropagation()}
           >
+            <div className="p-6 flex flex-col space-y-4 whitespace-nowrap">
             {LINKS.map(({ href, label }) => (
               <a
                 key={href}
                 href={href}
-                className="text-white hover:text-secondary border-b border-teal-700 py-3"
+                className="text-white hover:text-secondary border-b border-teal-700 py-3 transition-colors"
                 onClick={toggleMenu}
               >
                 {label}
@@ -251,14 +253,14 @@ export default function Header() {
                 toggleMenu();
                 scrollToCostCalculator();
               }}
-              className="text-white hover:text-secondary border-b border-teal-700 py-3 text-left"
+              className="text-white hover:text-secondary border-b border-teal-700 py-3 text-left transition-colors"
             >
               Kostenberechnung
             </button>
 
             <a
               href="#contact"
-              className="text-white hover:text-secondary py-3"
+              className="text-white hover:text-secondary py-3 transition-colors"
               onClick={toggleMenu}
             >
               Kontakt
@@ -266,14 +268,16 @@ export default function Header() {
 
             <a
               href="tel:+4915730050570"
-              className="bg-yellow-400 text-gray-900 px-4 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-center mt-4"
+              className="bg-yellow-400 text-gray-900 px-4 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-center mt-4 transition-colors"
               onClick={toggleMenu}
             >
               Anruf: +49 157 300 505 70
             </a>
+            </div>
           </nav>
         </div>
       )}
     </header>
+    
   );
 }
