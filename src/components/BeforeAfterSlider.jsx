@@ -15,13 +15,16 @@ function ImageSmart({
   mode = "cover",
   w = 800,
   h = 600,
-  sizes = "(max-width: 768px) 100vw, 50vw",
+  sizes = "(max-width: 768px) 100vw, 50vw", // 2 карточки на десктопе
   ...imgProps
 }) {
+  // ждём, что src вида /images/projekte/NAME.jpg
   const m = src.match(/^\/images\/([^/]+)\/([^/.]+)\.(jpe?g|png|webp|avif)$/i);
   const subdir = m ? m[1] : "";
   const name = m ? m[2] : "";
 
+  // куда скрипт кладёт webp:
+  // /public/webp/projekte/{480,800,1200}/NAME.webp
   const webpBase = `/webp/${subdir}`;
   const webp480 = `${webpBase}/480/${name}.webp`;
   const webp800 = `${webpBase}/800/${name}.webp`;
@@ -57,6 +60,7 @@ function ImageSmart({
     },
   };
 
+  // если webp есть — отдаём <picture/>, иначе <img/>
   return hasWebp ? (
     <picture>
       <source
@@ -71,8 +75,8 @@ function ImageSmart({
   );
 }
 
-/* ===== ДАННЫЕ ===== */
-const projects = [
+/* ===== ДАННЫЕ (пример; можно хранить где угодно) ===== */
+const items = [
   {
     id: 1,
     before: "/images/projekte/project1-before.jpg",
@@ -93,7 +97,7 @@ const projects = [
     id: 3,
     before: "/images/projekte/project3-before.jpg",
     after: "/images/projekte/project3-after.jpg",
-    title: "Neubau",
+    title: "⁠Neubau",
     location: "B&B Hotel Lippstadt",
     year: "2025",
   },
@@ -114,22 +118,27 @@ function CardSkeleton() {
   );
 }
 
-/* ===== Карточка ===== */
-function BeforeAfterCard({ project, isMobile, onOpen }) {
+/* ===== Карточка: десктоп hover, мобилка press&hold + tap ===== */
+function BeforeAfterCard({ item, isMobile, onOpen }) {
   const [loadedBefore, setLoadedBefore] = useState(false);
   const [loadedAfter, setLoadedAfter] = useState(false);
   const [errorBefore, setErrorBefore] = useState(false);
   const [errorAfter, setErrorAfter] = useState(false);
 
-  const [hovered, setHovered] = useState(false);
-  const [pressing, setPressing] = useState(false);
+  const [hovered, setHovered] = useState(false); // десктоп
+  const [pressing, setPressing] = useState(false); // мобилка: пока палец держим
   const touchStartRef = useRef({ t: 0, x: 0, y: 0, moved: false });
 
   const showAfter = isMobile ? pressing : hovered;
 
+  // прелоад "after" при первом наведении (десктоп)
   const handleMouseEnter = useCallback(() => setHovered(true), []);
   const handleMouseLeave = useCallback(() => setHovered(false), []);
 
+  // Мобильный UX:
+  // - touchstart: сразу показать Nachher
+  // - touchmove: если ушли >8px — считаем скроллом
+  // - touchend: если коротко (<200ms) и без движений — открыть модалку, иначе просто отпустить
   const onTouchStart = useCallback((e) => {
     const t = e.touches[0];
     touchStartRef.current = {
@@ -151,7 +160,7 @@ function BeforeAfterCard({ project, isMobile, onOpen }) {
 
   const onTouchEnd = useCallback(
     (e) => {
-      e.preventDefault();
+      e.preventDefault(); // чтобы не прилетел "лишний" click
       const s = touchStartRef.current;
       const dt = performance.now() - s.t;
       const isTap = dt < 200 && !s.moved;
@@ -163,7 +172,7 @@ function BeforeAfterCard({ project, isMobile, onOpen }) {
 
   return (
     <div
-      className="relative group rounded-lg border border-gray-200 shadow-lg overflow-hidden cursor-pointer bg-white"
+      className="relative group rounded-lg border border-gray-200 shadow-lg overflow-hidden cursor-pointer bg-white content-auto"
       style={{ aspectRatio: "4 / 3" }}
       onMouseEnter={!isMobile ? handleMouseEnter : undefined}
       onMouseLeave={!isMobile ? handleMouseLeave : undefined}
@@ -172,12 +181,14 @@ function BeforeAfterCard({ project, isMobile, onOpen }) {
       onTouchMove={isMobile ? onTouchMove : undefined}
       onTouchEnd={isMobile ? onTouchEnd : undefined}
       role="button"
-      aria-label={`Vorher/Nachher: ${project.title}`}
+      aria-label={`Vorher/Nachher: ${item.title}`}
+      title={!isMobile ? "Doppelklick für Vollbild" : "Tippen für Vollbild"}
     >
+      {/* BEFORE */}
       {(!loadedBefore || errorBefore) && <CardSkeleton />}
       <ImageSmart
-        src={errorBefore ? "/images/placeholder.jpg" : project.before}
-        alt={`Vorher: ${project.title}`}
+        src={errorBefore ? "/images/placeholder.jpg" : item.before}
+        alt={`Vorher: ${item.title}`}
         onLoad={() => setLoadedBefore(true)}
         onError={() => setErrorBefore(true)}
         className={`absolute inset-0 w-full h-full transition-all duration-400 pointer-events-none ${
@@ -188,11 +199,12 @@ function BeforeAfterCard({ project, isMobile, onOpen }) {
         mode="cover"
       />
 
+      {/* AFTER */}
       {(!loadedAfter || errorAfter) && showAfter && <CardSkeleton />}
       {(!errorAfter || errorBefore) && (
         <ImageSmart
-          src={errorAfter ? "/images/placeholder.jpg" : project.after}
-          alt={`Nachher: ${project.title}`}
+          src={errorAfter ? "/images/placeholder.jpg" : item.after}
+          alt={`Nachher: ${item.title}`}
           onLoad={() => setLoadedAfter(true)}
           onError={() => setErrorAfter(true)}
           className={`absolute inset-0 w-full h-full transition-all duration-400 pointer-events-none ${
@@ -204,58 +216,73 @@ function BeforeAfterCard({ project, isMobile, onOpen }) {
         />
       )}
 
+      {/* Бейджи */}
       <div
-        className={`absolute top-2 left-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur ${
-          showAfter ? "bg-slate-900/30 text-white/50" : "bg-slate-900/80 text-white"
+        className={`absolute top-2 left-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur
+        ${
+          showAfter
+            ? "bg-slate-900/30 text-white/50"
+            : "bg-slate-900/80 text-white"
         }`}
       >
         VORHER
       </div>
       <div
-        className={`absolute top-2 right-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur ${
-          showAfter ? "bg-emerald-600/90 text-white" : "bg-emerald-600/30 text-white/60"
+        className={`absolute top-2 right-2 px-2.5 py-1 rounded-md text-[11px] font-semibold backdrop-blur
+        ${
+          showAfter
+            ? "bg-emerald-600/90 text-white"
+            : "bg-emerald-600/30 text-white/60"
         }`}
       >
         NACHHER
       </div>
 
+      {/* Подсказка */}
       <div className="absolute bottom-10 right-2 bg-white/85 text-[11px] px-2 py-[3px] rounded shadow text-gray-800 font-medium pointer-events-none">
         {isMobile
-            ? "👆 Halten für Nachher"
-            : "🖱️ Doppelklick für Vollbild"}
+          ? "👆 Tippen (Doppeltipp: Vollbild)"
+          : "🖱️ Hover • Doppelklick: Vollbild"}
       </div>
 
+      {/* Подпись */}
       <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-sm p-2 text-center">
-        {project.title} – {project.location}, {project.year}
+        {item.title} – {item.location}, {item.year}
       </div>
     </div>
   );
 }
 
-/* ===== Слайдер ===== */
+/* ===== Слайдер: 2 карточки на десктопе, листаем страницами по 2 ===== */
 function SimpleSlider({ children, slidesPerViewDesktop = 2 }) {
   const slides = useMemo(() => React.Children.toArray(children), [children]);
   const [isMobile, setIsMobile] = useState(false);
   const [page, setPage] = useState(0);
 
-  const checkMobile = useCallback(() => setIsMobile(window.innerWidth < 768), []);
+  const checkMobile = useCallback(
+    () => setIsMobile(window.innerWidth < 768),
+    []
+  );
   useEffect(() => {
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, [checkMobile]);
 
-  const k = isMobile ? 1 : slidesPerViewDesktop;
+  const k = isMobile ? 1 : slidesPerViewDesktop; // сколько видно карточек
   const total = slides.length;
-  const pages = Math.max(1, Math.ceil(total / k));
+  const pages = Math.max(1, Math.ceil(total / k)); // сколько страниц
   const maxPage = pages - 1;
 
-  const trackWidthPct = (total * 100) / k;
-  const itemWidthPct = (100 / total) * k;
-  const translatePct = (100 / pages) * page;
+  const trackWidthPct = (total * 100) / k; // ширина трека
+  const itemWidthPct = (100 / total) * k; // ширина карточки-обёртки
+  const translatePct = (100 / pages) * page; // на сколько сдвигаем трек (в % от его ширины)
 
   const goPrev = useCallback(() => setPage((p) => Math.max(0, p - 1)), []);
-  const goNext = useCallback(() => setPage((p) => Math.min(maxPage, p + 1)), [maxPage]);
+  const goNext = useCallback(
+    () => setPage((p) => Math.min(maxPage, p + 1)),
+    [maxPage]
+  );
   const goTo = useCallback((p) => setPage(p), []);
 
   return (
@@ -342,18 +369,48 @@ function SimpleSlider({ children, slidesPerViewDesktop = 2 }) {
   );
 }
 
-/* ===== Модалка ===== */
-function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
+// Анимированные подсказки для модального окна
+function AnimatedModalHints() {
+  return (
+    <div className="text-sm text-gray-600 hidden md:block">
+      <div className="flex items-center gap-2">
+        <span>💡</span>
+        <span>Ziehen Sie den weißen Regler</span>
+      </div>
+    </div>
+  );
+}
+
+function BeforeAfterModal({ projects, startIndex, onClose }) {
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [divider, setDivider] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [showHintToast, setShowHintToast] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
   const hintTimeoutRef = useRef();
 
   const currentProject = projects[currentIndex];
 
+  // Проверка на мобильное устройство
+  const checkMobile = useCallback(
+    () => setIsMobile(window.innerWidth < 768),
+    []
+  );
+
+  useEffect(() => {
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, [checkMobile]);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  // Функции навигации
   const prev = useCallback(() => {
     setCurrentIndex((i) => (i - 1 + projects.length) % projects.length);
     setDivider(50);
@@ -366,6 +423,7 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
     showTemporaryHint();
   }, [projects.length]);
 
+  // Показ временной подсказки
   const showTemporaryHint = useCallback(() => {
     setShowHintToast(true);
     clearTimeout(hintTimeoutRef.current);
@@ -374,58 +432,62 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
     }, 3000);
   }, []);
 
-  const getLabelOpacity = useCallback((position, dividerPos) => {
-    const distance = Math.abs(position - dividerPos);
-    if (distance < 10) return 1;
-    if (distance < 30) return 0.7;
-    if (distance < 50) return 0.4;
-    return 0.2;
-  }, []);
-
-  const handleMouseDown = useCallback(() => {
+  // Обработка мыши
+  const handleMouseDown = useCallback((e) => {
+    if (!containerRef.current) return;
     setIsDragging(true);
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const newPos = ((e.clientX - rect.left) / rect.width) * 100;
+    setDivider(Math.max(0, Math.min(100, newPos)));
   }, []);
 
-  const handleMouseMove = useCallback((e) => {
-    if (!isDragging) return;
-    const container = containerRef.current;
-    if (!container) return;
-    
-    const rect = container.getBoundingClientRect();
-    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
-    setDivider((x / rect.width) * 100);
-  }, [isDragging]);
+  const handleMouseMove = useCallback(
+    (e) => {
+      if (!isDragging || !containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const newPos = ((e.clientX - rect.left) / rect.width) * 100;
+      setDivider(Math.max(0, Math.min(100, newPos)));
+    },
+    [isDragging]
+  );
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
   }, []);
 
+  // Обработка касаний
   const handleTouchStart = useCallback((e) => {
+    if (!containerRef.current) return;
     setIsDragging(true);
-    const container = containerRef.current;
-    if (!container) return;
-    
-    const rect = container.getBoundingClientRect();
-    const x = Math.max(0, Math.min(e.touches[0].clientX - rect.left, rect.width));
-    setDivider((x / rect.width) * 100);
+
+    const touch = e.touches[0];
+    const rect = containerRef.current.getBoundingClientRect();
+    const newPos = ((touch.clientX - rect.left) / rect.width) * 100;
+    setDivider(Math.max(0, Math.min(100, newPos)));
   }, []);
 
-  const handleTouchMove = useCallback((e) => {
-    if (!isDragging) return;
-    const container = containerRef.current;
-    if (!container) return;
-    
-    const rect = container.getBoundingClientRect();
-    const x = Math.max(0, Math.min(e.touches[0].clientX - rect.left, rect.width));
-    setDivider((x / rect.width) * 100);
-  }, [isDragging]);
+  const handleTouchMove = useCallback(
+    (e) => {
+      if (!isDragging || !containerRef.current) return;
+      e.preventDefault();
+
+      const touch = e.touches[0];
+      const rect = containerRef.current.getBoundingClientRect();
+      const newPos = ((touch.clientX - rect.left) / rect.width) * 100;
+      setDivider(Math.max(0, Math.min(100, newPos)));
+    },
+    [isDragging]
+  );
 
   const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
   }, []);
 
-  useEffect(() => {
-    const handleKeyDown = (e) => {
+  // Обработка клавиатуры
+  const handleKeyDown = useCallback(
+    (e) => {
       switch (e.key) {
         case "Escape":
           onClose();
@@ -438,34 +500,41 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
           break;
         case "ArrowUp":
           e.preventDefault();
-          setDivider((d) => Math.min(100, d + 5));
+          setDivider((prev) => Math.min(100, prev + 1));
           break;
         case "ArrowDown":
           e.preventDefault();
-          setDivider((d) => Math.max(0, d - 5));
-          break;
-        default:
+          setDivider((prev) => Math.max(0, prev - 1));
           break;
       }
-    };
+    },
+    [onClose, prev, next]
+  );
 
-    document.addEventListener("keydown", handleKeyDown);
+  useEffect(() => {
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
     document.addEventListener("touchmove", handleTouchMove, { passive: false });
     document.addEventListener("touchend", handleTouchEnd);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("touchmove", handleTouchMove);
       document.removeEventListener("touchend", handleTouchEnd);
+      document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd, next, onClose, prev]);
+  }, [
+    handleMouseMove,
+    handleMouseUp,
+    handleTouchMove,
+    handleTouchEnd,
+    handleKeyDown,
+  ]);
 
   useEffect(() => {
-    setMounted(true);
+    // Автоматическое скрытие подсказки через 3 секунды
     const timer = setTimeout(() => {
       setShowHintToast(false);
     }, 3000);
@@ -483,16 +552,18 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
       aria-labelledby="modal-title"
     >
       <div
-        className={`relative bg-white rounded-lg shadow-2xl overflow-hidden w-full max-w-6xl max-h-[90vh] sm:max-h-[90vh] flex flex-col transition-transform duration-300 ${
+        className={`relative bg-white rounded-lg shadow-2xl overflow-hidden w-full max-w-6xl max-h-[95vh] sm:max-h-[90vh] flex flex-col transition-transform duration-300 ${
           mounted ? "scale-100" : "scale-95"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-gray-50 flex-shrink-0">
+        {/* Заголовок модалки */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-400 bg-gray-400 flex-shrink-0">
           <div className="flex items-center gap-2">
-            {/* <span className="text-sm text-gray-600 md:hidden">
+            <AnimatedModalHints />
+            <span className="text-sm text-gray-400 md:hidden">
               {currentIndex + 1} / {projects.length}
-            </span> */}
+            </span>
           </div>
           <button
             onClick={onClose}
@@ -500,29 +571,30 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
             aria-label="Schließen"
             type="button"
           >
-           <img
-                  src="/images/close-icon.gif"
-                  alt="close"
-                  className="w-8 h-8"
-                />
+            <img src="/images/close-icon.gif" alt="close" className="w-8 h-8" />
           </button>
-          
         </div>
 
+        {/* Основная область с изображениями */}
         <div
           ref={containerRef}
-          className="relative bg-gray-100 cursor-col-resize select-none flex-1 min-h-0 touch-none"
-          style={{ minHeight: "500px" }}
+          className="relative bg-gray-400 cursor-col-resize select-none flex-1 min-h-0 touch-none"
+          style={{
+            minHeight: isMobile ? "80vh" : "600px",
+            maxHeight: isMobile ? "95vh" : "none",
+          }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
         >
+          {/* Изображение "После" (фон) */}
           <ImageSmart
             src={currentProject.after}
             alt={`Nachher: ${currentProject.title}`}
             className="absolute inset-0 w-full h-full pointer-events-none"
-            mode="contain"
+            mode={isMobile ? "cover" : "contain"}
           />
 
+          {/* Изображение "До" с маской */}
           <div
             className="absolute inset-0 overflow-hidden"
             style={{ clipPath: `inset(0 ${100 - divider}% 0 0)` }}
@@ -531,10 +603,11 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
               src={currentProject.before}
               alt={`Vorher: ${currentProject.title}`}
               className="w-full h-full pointer-events-none"
-              mode="contain"
+              mode={isMobile ? "cover" : "contain"}
             />
           </div>
 
+          {/* Разделитель */}
           <div
             className={`absolute top-0 bottom-0 w-1 bg-white shadow-lg z-20 ${
               isDragging ? "cursor-grabbing" : "cursor-col-resize"
@@ -558,56 +631,25 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
             </div>
           </div>
 
-          <div
-            className={`absolute top-4 left-4 px-3 py-1.5 rounded-md text-sm font-semibold shadow-lg transition-all duration-300 ${
-              divider < 20
-                ? "bg-red-600/90 text-white"
-                : divider < 40
-                ? "bg-red-600/70 text-white/90"
-                : "bg-red-600/50 text-white/80"
-            }`}
-            style={{
-              opacity: getLabelOpacity(90, divider),
-              transform: `translateX(${Math.max(0, 50 - (100 - divider))}px)`,
-            }}
-          >
-            VORHER
-          </div>
-
-          <div
-            className={`absolute top-4 right-4 px-3 py-1.5 rounded-md text-sm font-semibold shadow-lg transition-all duration-300 ${
-              divider > 20
-                ? "bg-green-600/90 text-white"
-                : divider > 40
-                ? "bg-green-600/30 text-white/90"
-                : "bg-green-600/50 text-white/80"
-            }`}
-            style={{
-              opacity: getLabelOpacity(10, divider),
-              transform: `translateX(${Math.min(0, 80 - divider)}px)`,
-              
-            }}
-          >
-            NACHHER
-          </div>
-
+          {/* Toast-подсказка */}
           {showHintToast && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/90 text-white text-sm px-4 py-2 rounded-lg shadow-xl animate-fade-in pointer-events-none">
+            <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 bg-black/90 text-white text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-xl animate-fade-in pointer-events-none">
               <div className="flex items-center gap-2">
                 <span className="text-yellow-400">💡</span>
                 <div>
                   <div className="font-medium">Tipp:</div>
                   <div className="text-xs">
                     {isMobile
-                      ? "Ziehen Sie den Regler zum Vergleichen"
-                      : "Verwenden Sie die Pfeiltasten für präzise Steuerung"}
+                      ? "Ziehen Sie den Regler"
+                      : "Verwenden Sie die Pfeiltasten"}
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white text-xs px-3 py-1.5 rounded-lg pointer-events-none hidden md:block">
+          {/* Постоянная подсказка снизу */}
+          <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg pointer-events-none hidden md:block">
             <div className="flex items-center gap-2">
               <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-xs">
                 ← →
@@ -619,64 +661,19 @@ function BeforeAfterModal({ projects, startIndex, onClose, isMobile }) {
               <span>Schließen</span>
             </div>
           </div>
-
-          {/* <div className="md:hidden absolute left-4 top-1/2 -translate-y-1/2">
-            <button
-              onClick={prev}
-              className="w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center"
-              aria-label="Vorheriges"
-              type="button"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-          </div> */}
-
-          {/* <div className="md:hidden absolute right-4 top-1/2 -translate-y-1/2">
-            <button
-              onClick={next}
-              className="w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center"
-              aria-label="Nächstes"
-              type="button"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div> */}
         </div>
 
-        <div className="p-4 text-center border-t border-gray-200 bg-gray-50 flex-shrink-0">
-          <h3 id="modal-title" className="text-lg font-semibold text-gray-800">
+        {/* Подвал с информацией */}
+        <div className="p-3 sm:p-4 text-center border-t border-gray-400 bg-gray-400 flex-shrink-0">
+          <h3
+            id="modal-title"
+            className="text-base sm:text-lg font-semibold text-gray-800"
+          >
             {currentProject.title}
           </h3>
           <p className="text-sm text-gray-600">
             {currentProject.location}, {currentProject.year}
-          </p>
-         {/*  <p className="text-xs text-gray-500 mt-1 hidden md:block">
-            Projekt {currentIndex + 1} von {projects.length}
-          </p> */}
+          </p>          
         </div>
       </div>
     </div>
@@ -688,7 +685,10 @@ export default function BeforeAfterSlider() {
   const [isMobile, setIsMobile] = useState(false);
   const [modalIndex, setModalIndex] = useState(null);
 
-  const checkMobile = useCallback(() => setIsMobile(window.innerWidth < 768), []);
+  const checkMobile = useCallback(
+    () => setIsMobile(window.innerWidth < 768),
+    []
+  );
   useEffect(() => {
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -718,10 +718,10 @@ export default function BeforeAfterSlider() {
 
         <div className="mt-12">
           <SimpleSlider slidesPerViewDesktop={2}>
-            {projects.map((project, i) => (
+            {items.map((it, i) => (
               <BeforeAfterCard
-                key={project.id}
-                project={project}
+                key={it.id}
+                item={it}
                 isMobile={isMobile}
                 onOpen={() => openModal(i)}
               />
@@ -732,10 +732,9 @@ export default function BeforeAfterSlider() {
 
       {modalIndex !== null && (
         <BeforeAfterModal
-          projects={projects}
+          projects={items}
           startIndex={modalIndex}
           onClose={closeModal}
-          isMobile={isMobile}
         />
       )}
     </section>
@@ -754,7 +753,7 @@ ImageSmart.propTypes = {
 };
 
 BeforeAfterCard.propTypes = {
-  project: PropTypes.shape({
+  item: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     before: PropTypes.string.isRequired,
     after: PropTypes.string.isRequired,
@@ -772,8 +771,16 @@ SimpleSlider.propTypes = {
 };
 
 BeforeAfterModal.propTypes = {
-  projects: PropTypes.arrayOf(BeforeAfterCard.propTypes.project).isRequired,
+  projects: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      before: PropTypes.string.isRequired,
+      after: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      location: PropTypes.string.isRequired,
+      year: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   startIndex: PropTypes.number.isRequired,
   onClose: PropTypes.func.isRequired,
-  isMobile: PropTypes.bool.isRequired,
 };
