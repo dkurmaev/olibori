@@ -391,6 +391,31 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
   const containerRef = useRef(null);
   const hintTimeoutRef = useRef();
 
+  // Блокировка скролла фона
+useEffect(() => {
+  if (mounted) {
+    // Сохраняем текущую позицию скролла
+    const scrollY = window.scrollY;
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+  }
+
+  return () => {
+    // Восстанавливаем скролл при закрытии
+    const scrollY = document.body.style.top;
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    // Восстанавливаем позицию скролла
+    if (scrollY) {
+      window.scrollTo(0, parseInt(scrollY) * -1);
+    }
+  };
+}, [mounted]);
+
   const currentProject = projects[currentIndex];
 
   // Проверка на мобильное устройство
@@ -398,6 +423,8 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
     () => setIsMobile(window.innerWidth < 768),
     []
   );
+
+  
 
   useEffect(() => {
     checkMobile();
@@ -555,6 +582,10 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
         className={`relative bg-white rounded-lg shadow-2xl overflow-hidden w-full max-w-6xl max-h-[95vh] sm:max-h-[90vh] flex flex-col transition-transform duration-300 ${
           mounted ? "scale-100" : "scale-95"
         }`}
+        style={{
+          height: isMobile ? "auto" : "90vh", // Фиксированная высота на десктопе
+          maxHeight: isMobile ? "75vh" : "85vh"
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Заголовок модалки */}
@@ -580,8 +611,8 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
           ref={containerRef}
           className="relative bg-gray-400 cursor-col-resize select-none flex-1 min-h-0 touch-none"
           style={{
-            minHeight: isMobile ? "80vh" : "600px",
-            maxHeight: isMobile ? "95vh" : "none",
+            minHeight: isMobile ? "45vh" : "200px",
+            //maxHeight: isMobile ? "65vh" : "400px",
           }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
