@@ -15,10 +15,6 @@ body {
   
 }
 
-.content-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: 600px 450px; /* 4:3 под карточку */
-}
 
 img { display: block; }
 
