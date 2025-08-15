@@ -391,30 +391,31 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
   const containerRef = useRef(null);
   const hintTimeoutRef = useRef();
 
+  //let scrollYBeforeOpen = 0;
+
   // Блокировка скролла фона
 useEffect(() => {
   if (mounted) {
     // Сохраняем текущую позицию скролла
-    const scrollY = window.scrollY;
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = '100%';
+    //const scrollY = window.scrollY;
+    document.body.style.position = "hidden";
+    /* document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0"; */
   }
 
   return () => {
+    document.body.style.overflow = "";
     // Восстанавливаем скролл при закрытии
-    const scrollY = document.body.style.top;
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    // Восстанавливаем позицию скролла
-    if (scrollY) {
-      window.scrollTo(0, parseInt(scrollY) * -1);
-    }
+    /* const scrollY = parseInt(document.body.style.top || '0') * -1;
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    window.scrollTo(0, scrollY); */
   };
 }, [mounted]);
+
 
   const currentProject = projects[currentIndex];
 

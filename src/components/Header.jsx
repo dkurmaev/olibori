@@ -40,7 +40,7 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    const GAP = 32;
+    const GAP = 64;
     const checkOverflow = () => {
       const container = containerRef.current;
       const brand = brandRef.current;
@@ -123,12 +123,15 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+        className={`fixed top-0 bg-teal-900 left-0 w-full z-50 transition-all duration-500${
           scrolled 
-            ? "bg-white/20 backdrop-blur-xl border-b border-white/20 shadow-lg" 
-            : "bg-white/10 backdrop-blur-xl border-b border-white/10 shadow-2xl"
+            ? "bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-lg" 
+            : "bg-white/5 backdrop-blur-xl border-b border-white/10 shadow-2xl"
         }`}
-        style={{ height: "100px" }}
+        style={{ 
+          height: "100px"
+          
+         }}
       >
         <div
           className="container mx-auto h-full flex items-center px-6 max-w-7xl"
