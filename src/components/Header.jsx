@@ -141,13 +141,13 @@ export default function Header() {
             <img
               src="/images/Logo.png"
               alt="Olidort Bedachungen"
-              className="w-20 h-14 mr-4 sm:w-16 sm:h-12 md:w-28 md:h-20"
+              className="w-10 h-8 sm:w-12 sm:h-10 md:w-24 md:h-16 mr-2 mt-1"
             />
             <div>
-              <h1 className="text-xl sm:text-2xl md:text-3xl text-teal-600 font-bold drop-shadow-lg">
-                Olidort Bedachungen
+            <h1 className="text-[clamp(1rem,3vw,1.75rem)] sm:text-2xl md:text-3xl text-teal-600 font-bold drop-shadow-lg whitespace-normal leading-tight">
+            Olidort Bedachungen
               </h1>
-              <p className="text-sm sm:text-base italic text-yellow-400 drop-shadow-md">
+              <p className="text-[clamp(0.7rem,2.5vw,1rem)] italic text-yellow-400 drop-shadow-md leading-tight">
                 &quot;Dicht ist unsere Pflicht&quot;
               </p>
             </div>
@@ -155,7 +155,7 @@ export default function Header() {
 
           <div className="flex-1">
             {!showBurger && (
-              <nav className="flex items-center justify-center gap-6">
+              <nav className="flex items-center justify-center">
                 {LINKS.map(({ href, label }) => (
                   <a
                     key={href}
@@ -220,7 +220,7 @@ export default function Header() {
                 aria-expanded={menuOpen}
               >
                 <svg
-                  className="w-7 h-7"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -228,7 +228,7 @@ export default function Header() {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth="2"
+                    strokeWidth="4"
                     d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
                   />
                 </svg>
@@ -238,23 +238,22 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Мобильное меню с анимацией - справа */}
+      
       {menuVisible && showBurger && (
         <div
           className={`fixed inset-0 z-40 transition-all duration-300 ${
             menuOpen ? 'bg-black/50 backdrop-blur-sm' : 'bg-black/0'
           }`}
-          style={{ top: '100px' }}
+          style={{ top: '90px' }}
           onClick={toggleMenu}
         >
           <nav
-            className={`absolute top-0 right-0 h-full bg-white/20 backdrop-blur-xl border-l border-white/20 shadow-2xl transition-transform duration-300 ease-out ${
-              menuOpen ? 'transform translate-x-0' : 'transform translate-x-full'
+            className={`absolute top-0 -right-2 h-auto max-h-[calc(100vh-100px)] bg-white/20 backdrop-blur-xl border-l border-white/20 rounded-xl shadow-2xl transition-transform duration-300 ease-out ${              menuOpen ? 'transform translate-x-0' : 'transform translate-x-full'
             }`}
             style={{ width: '320px' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-8 flex flex-col space-y-6">
+            <div className="p-4 flex flex-col space-y-2">
               {LINKS.map(({ href, label }) => (
                 <a
                   key={href}
@@ -296,7 +295,7 @@ export default function Header() {
         </div>
       )}
 
-      {/* Отступ для контента */}
+     
       <div style={{ height: '100px' }}></div>
     </>
   );

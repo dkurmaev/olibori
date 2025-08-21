@@ -391,41 +391,22 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
   const containerRef = useRef(null);
   const hintTimeoutRef = useRef();
 
-  //let scrollYBeforeOpen = 0;
+  useEffect(() => {
+    if (mounted) {
+      document.body.style.position = "hidden";
+    }
 
-  // Блокировка скролла фона
-useEffect(() => {
-  if (mounted) {
-    // Сохраняем текущую позицию скролла
-    //const scrollY = window.scrollY;
-    document.body.style.position = "hidden";
-    /* document.body.style.top = `-${scrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.right = "0"; */
-  }
-
-  return () => {
-    document.body.style.overflow = "";
-    // Восстанавливаем скролл при закрытии
-    /* const scrollY = parseInt(document.body.style.top || '0') * -1;
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.left = "";
-    document.body.style.right = "";
-    window.scrollTo(0, scrollY); */
-  };
-}, [mounted]);
-
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mounted]);
 
   const currentProject = projects[currentIndex];
 
-  // Проверка на мобильное устройство
   const checkMobile = useCallback(
     () => setIsMobile(window.innerWidth < 768),
     []
   );
-
-  
 
   useEffect(() => {
     checkMobile();
@@ -438,7 +419,6 @@ useEffect(() => {
     return () => setMounted(false);
   }, []);
 
-  // Функции навигации
   const prev = useCallback(() => {
     setCurrentIndex((i) => (i - 1 + projects.length) % projects.length);
     setDivider(50);
@@ -451,7 +431,6 @@ useEffect(() => {
     showTemporaryHint();
   }, [projects.length]);
 
-  // Показ временной подсказки
   const showTemporaryHint = useCallback(() => {
     setShowHintToast(true);
     clearTimeout(hintTimeoutRef.current);
@@ -460,7 +439,6 @@ useEffect(() => {
     }, 3000);
   }, []);
 
-  // Обработка мыши
   const handleMouseDown = useCallback((e) => {
     if (!containerRef.current) return;
     setIsDragging(true);
@@ -485,7 +463,6 @@ useEffect(() => {
     setIsDragging(false);
   }, []);
 
-  // Обработка касаний
   const handleTouchStart = useCallback((e) => {
     if (!containerRef.current) return;
     setIsDragging(true);
@@ -513,7 +490,6 @@ useEffect(() => {
     setIsDragging(false);
   }, []);
 
-  // Обработка клавиатуры
   const handleKeyDown = useCallback(
     (e) => {
       switch (e.key) {
@@ -562,7 +538,6 @@ useEffect(() => {
   ]);
 
   useEffect(() => {
-    // Автоматическое скрытие подсказки через 3 секунды
     const timer = setTimeout(() => {
       setShowHintToast(false);
     }, 3000);
@@ -584,8 +559,8 @@ useEffect(() => {
           mounted ? "scale-100" : "scale-95"
         }`}
         style={{
-          height: isMobile ? "auto" : "90vh", // Фиксированная высота на десктопе
-          maxHeight: isMobile ? "75vh" : "85vh"
+          height: isMobile ? "auto" : "90vh",
+          maxHeight: isMobile ? "75vh" : "85vh",
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -607,18 +582,15 @@ useEffect(() => {
           </button>
         </div>
 
-        {/* Основная область с изображениями */}
         <div
           ref={containerRef}
           className="relative bg-gray-400 cursor-col-resize select-none flex-1 min-h-0 touch-none"
           style={{
             minHeight: isMobile ? "45vh" : "200px",
-            //maxHeight: isMobile ? "65vh" : "400px",
           }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
         >
-          {/* Изображение "После" (фон) */}
           <ImageSmart
             src={currentProject.after}
             alt={`Nachher: ${currentProject.title}`}
@@ -626,7 +598,6 @@ useEffect(() => {
             mode={isMobile ? "cover" : "contain"}
           />
 
-          {/* Изображение "До" с маской */}
           <div
             className="absolute inset-0 overflow-hidden"
             style={{ clipPath: `inset(0 ${100 - divider}% 0 0)` }}
@@ -639,7 +610,6 @@ useEffect(() => {
             />
           </div>
 
-          {/* Разделитель */}
           <div
             className={`absolute top-0 bottom-0 w-1 bg-white shadow-lg z-20 ${
               isDragging ? "cursor-grabbing" : "cursor-col-resize"
@@ -663,7 +633,6 @@ useEffect(() => {
             </div>
           </div>
 
-          {/* Toast-подсказка */}
           {showHintToast && (
             <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 bg-black/90 text-white text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-xl animate-fade-in pointer-events-none">
               <div className="flex items-center gap-2">
@@ -680,7 +649,6 @@ useEffect(() => {
             </div>
           )}
 
-          {/* Постоянная подсказка снизу */}
           <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg pointer-events-none hidden md:block">
             <div className="flex items-center gap-2">
               <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-xs">
@@ -695,7 +663,6 @@ useEffect(() => {
           </div>
         </div>
 
-        {/* Подвал с информацией */}
         <div className="p-3 sm:p-4 text-center border-t border-gray-400 bg-gray-400 flex-shrink-0">
           <h3
             id="modal-title"
@@ -705,14 +672,13 @@ useEffect(() => {
           </h3>
           <p className="text-sm text-gray-600">
             {currentProject.location}, {currentProject.year}
-          </p>          
+          </p>
         </div>
       </div>
     </div>
   );
 }
 
-/* ===== Главный блок ===== */
 export default function BeforeAfterSlider() {
   const [isMobile, setIsMobile] = useState(false);
   const [modalIndex, setModalIndex] = useState(null);
@@ -773,7 +739,6 @@ export default function BeforeAfterSlider() {
   );
 }
 
-/* ===== PropTypes ===== */
 ImageSmart.propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
