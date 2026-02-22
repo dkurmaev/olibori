@@ -363,7 +363,7 @@ const Kostenberechnung = () => {
       />
       <label htmlFor="agreementCheckbox" className="text-teal-600">
       <p className="text-red-600 italic ">
-        Hinweis: Bitte beachten Sie, dass die berechnete Kosten dient nicht als verbindliche Angebot. 
+        Hinweis: Bitte beachten Sie, dass die berechneten Kosten, nicht als verbindliches Angebot dienen. 
         Für detaillierte Informationen kontaktieren Sie uns bitte.
       </p>
       </label>

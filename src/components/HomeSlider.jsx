@@ -82,7 +82,7 @@ const HomeSlider = () => {
             className="text-md sm:text-lg md:text-xl lg:text-2xl font-sans text-gray-400 cursor-pointer underline hover:text-gray-200 transition"
             onClick={toggleCertificateModal}
           >
-            Zertifizierte Meisterbetrieb
+            Zertifizierter Meisterbetrieb
           </span>
 
           <img
