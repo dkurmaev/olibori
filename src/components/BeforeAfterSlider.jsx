@@ -109,6 +109,43 @@ const items = [
     location: "Uni Campus",
     year: "2025",
   },
+
+  {
+    id: 5,
+    before: "/images/projekte/project5-before.jpg",
+    after: "/images/projekte/project5-after.jpg",
+    title: "Sanierung",
+    location: "Bergisch Gladbach",
+    year: "2025",
+  },
+
+  {
+    id: 6,
+    before: "/images/projekte/project6-before.jpg",
+    after: "/images/projekte/project6-after.jpg",
+    title: "Neubau",
+    location: "Uni Campus",
+    year: "2025",
+  },
+
+  {
+    id: 7,
+    before: "/images/projekte/project7-before.jpg",
+    after: "/images/projekte/project7-after.jpg",
+    title: "neue Dachabdichtung",
+    location: "Iserhagen",
+    year: "2025",
+  },
+
+  {
+    id: 8,
+    before: "/images/projekte/project8-before.jpg",
+    after: "/images/projekte/project8-after.jpg",
+    title: "Flachdachabdichtung",
+    location: "Jülich",
+    description: "Neubau einer Flachdachabdichtung im Gewerbebau",
+    year: "2025",
+  },
 ];
 
 /* ===== Скелетон ===== */
@@ -167,7 +204,7 @@ function BeforeAfterCard({ item, isMobile, onOpen }) {
       setPressing(false);
       if (isTap) onOpen?.();
     },
-    [onOpen]
+    [onOpen],
   );
 
   return (
@@ -176,13 +213,13 @@ function BeforeAfterCard({ item, isMobile, onOpen }) {
       style={{ aspectRatio: "4 / 3" }}
       onMouseEnter={!isMobile ? handleMouseEnter : undefined}
       onMouseLeave={!isMobile ? handleMouseLeave : undefined}
-      onDoubleClick={!isMobile ? onOpen : undefined}
+      onClick={!isMobile ? onOpen : undefined}
       onTouchStart={isMobile ? onTouchStart : undefined}
       onTouchMove={isMobile ? onTouchMove : undefined}
       onTouchEnd={isMobile ? onTouchEnd : undefined}
       role="button"
       aria-label={`Vorher/Nachher: ${item.title}`}
-      title={!isMobile ? "Doppelklick für Vollbild" : "Tippen für Vollbild"}
+      title={!isMobile ? "Klicken für Vollbild" : "Tippen für Vollbild"}
     >
       {/* BEFORE */}
       {(!loadedBefore || errorBefore) && <CardSkeleton />}
@@ -240,9 +277,7 @@ function BeforeAfterCard({ item, isMobile, onOpen }) {
 
       {/* Подсказка */}
       <div className="absolute bottom-10 right-2 bg-white/85 text-[11px] px-2 py-[3px] rounded shadow text-gray-800 font-medium pointer-events-none">
-        {isMobile
-          ? "👆 Tippen (Doppeltipp: Vollbild)"
-          : "🖱️ Hover • Doppelklick: Vollbild"}
+        {isMobile ? "👆 Tippen: Vollbild" : "🖱️ Hover • Klicken: Vollbild"}
       </div>
 
       {/* Подпись */}
@@ -255,13 +290,14 @@ function BeforeAfterCard({ item, isMobile, onOpen }) {
 
 /* ===== Слайдер: 2 карточки на десктопе, листаем страницами по 2 ===== */
 function SimpleSlider({ children, slidesPerViewDesktop = 2 }) {
-  const slides = useMemo(() => React.Children.toArray(children), [children]);
+  const rawSlides = useMemo(() => React.Children.toArray(children), [children]);
+
   const [isMobile, setIsMobile] = useState(false);
   const [page, setPage] = useState(0);
 
   const checkMobile = useCallback(
     () => setIsMobile(window.innerWidth < 768),
-    []
+    [],
   );
   useEffect(() => {
     checkMobile();
@@ -269,21 +305,41 @@ function SimpleSlider({ children, slidesPerViewDesktop = 2 }) {
     return () => window.removeEventListener("resize", checkMobile);
   }, [checkMobile]);
 
-  const k = isMobile ? 1 : slidesPerViewDesktop; // сколько видно карточек
-  const total = slides.length;
-  const pages = Math.max(1, Math.ceil(total / k)); // сколько страниц
+  const k = isMobile ? 1 : slidesPerViewDesktop;
+
+  const pages = Math.max(1, Math.ceil(rawSlides.length / k));
   const maxPage = pages - 1;
 
-  const trackWidthPct = (total * 100) / k; // ширина трека
-  const itemWidthPct = (100 / total) * k; // ширина карточки-обёртки
-  const translatePct = (100 / pages) * page; // на сколько сдвигаем трек (в % от его ширины)
+  // ✅ дополняем пустыми, чтобы последняя страница была полной
+  const paddedSlides = useMemo(() => {
+    const needed = pages * k - rawSlides.length;
+    if (needed <= 0) return rawSlides;
+
+    return [
+      ...rawSlides,
+      ...Array.from({ length: needed }, (_, i) => (
+        <div
+          key={`pad-${i}`}
+          className="invisible pointer-events-none"
+          aria-hidden="true"
+        />
+      )),
+    ];
+  }, [rawSlides, pages, k]);
+
+  // если после добавления карточек текущая страница стала > maxPage
+  useEffect(() => {
+    setPage((p) => Math.min(p, maxPage));
+  }, [maxPage]);
 
   const goPrev = useCallback(() => setPage((p) => Math.max(0, p - 1)), []);
   const goNext = useCallback(
     () => setPage((p) => Math.min(maxPage, p + 1)),
-    [maxPage]
+    [maxPage],
   );
   const goTo = useCallback((p) => setPage(p), []);
+
+  const slideBasis = `${100 / k}%`;
 
   return (
     <div className="relative" role="region" aria-label="Galerie Vorher/Nachher">
@@ -291,16 +347,15 @@ function SimpleSlider({ children, slidesPerViewDesktop = 2 }) {
         <div
           className="flex transition-transform duration-300 ease-in-out"
           style={{
-            width: `${trackWidthPct}%`,
-            transform: `translateX(-${translatePct}%)`,
+            transform: `translateX(-${page * 100}%)`, // ✅ всегда ровно по странице
           }}
           aria-live="polite"
         >
-          {slides.map((child, i) => (
+          {paddedSlides.map((child, i) => (
             <div
               key={i}
               className="px-2 md:px-3"
-              style={{ width: `${itemWidthPct}%` }}
+              style={{ flex: `0 0 ${slideBasis}` }} // ✅ ширина одной карточки
             >
               {child}
             </div>
@@ -330,6 +385,7 @@ function SimpleSlider({ children, slidesPerViewDesktop = 2 }) {
               />
             </svg>
           </button>
+
           <button
             onClick={goNext}
             disabled={page === maxPage}
@@ -356,9 +412,7 @@ function SimpleSlider({ children, slidesPerViewDesktop = 2 }) {
               <button
                 key={i}
                 onClick={() => goTo(i)}
-                className={`w-2 h-2 rounded-full ${
-                  i === page ? "bg-yellow-400" : "bg-gray-300 hover:bg-gray-400"
-                }`}
+                className={`w-2 h-2 rounded-full ${i === page ? "bg-yellow-400" : "bg-gray-300 hover:bg-gray-400"}`}
                 aria-label={`Seite ${i + 1}`}
               />
             ))}
@@ -405,7 +459,7 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
 
   const checkMobile = useCallback(
     () => setIsMobile(window.innerWidth < 768),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -456,7 +510,7 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
       const newPos = ((e.clientX - rect.left) / rect.width) * 100;
       setDivider(Math.max(0, Math.min(100, newPos)));
     },
-    [isDragging]
+    [isDragging],
   );
 
   const handleMouseUp = useCallback(() => {
@@ -483,7 +537,7 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
       const newPos = ((touch.clientX - rect.left) / rect.width) * 100;
       setDivider(Math.max(0, Math.min(100, newPos)));
     },
-    [isDragging]
+    [isDragging],
   );
 
   const handleTouchEnd = useCallback(() => {
@@ -512,7 +566,7 @@ function BeforeAfterModal({ projects, startIndex, onClose }) {
           break;
       }
     },
-    [onClose, prev, next]
+    [onClose, prev, next],
   );
 
   useEffect(() => {
@@ -685,7 +739,7 @@ export default function BeforeAfterSlider() {
 
   const checkMobile = useCallback(
     () => setIsMobile(window.innerWidth < 768),
-    []
+    [],
   );
   useEffect(() => {
     checkMobile();
@@ -776,7 +830,7 @@ BeforeAfterModal.propTypes = {
       title: PropTypes.string.isRequired,
       location: PropTypes.string.isRequired,
       year: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   startIndex: PropTypes.number.isRequired,
   onClose: PropTypes.func.isRequired,
