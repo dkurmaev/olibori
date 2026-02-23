@@ -124,7 +124,7 @@ const items = [
     before: "/images/projekte/project6-before.jpg",
     after: "/images/projekte/project6-after.jpg",
     title: "Neubau",
-    location: "Uni Campus",
+    location: "Parkhaus Heusenstamm",
     year: "2025",
   },
 
