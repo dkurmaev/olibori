@@ -1,4 +1,3 @@
-// App.js
 import { Route, Routes } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import Home from './pages/Home';
