@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import Header from "../components/Header";
 import HomeSlider from "../components/HomeSlider";
 import OurWorks from "../components/OurWorks";
@@ -20,6 +21,13 @@ const Home = () => {
   console.log("Rendering Home component");
   return (
     <div className="Home">
+      <Helmet>
+        <title>Olidort Bedachungen – Dachdecker in Bad Marienberg & Berlin</title>
+        <meta
+          name="description"
+          content="Professionelle Dachdeckerarbeiten: Flachdachabdichtung, Neubau, Sanierung, Reparatur und Wartung. Zertifizierter Meisterbetrieb – kostenlose Beratung anfragen!"
+        />
+      </Helmet>
       <Header />
       <main style={{ minBlockSize: "calc(100vh - 80px)" }}>
         <HomeSlider />
